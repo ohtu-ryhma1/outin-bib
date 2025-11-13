@@ -8,7 +8,7 @@ from util import validate_todo
 def index():
     todos = get_todos()
     unfinished = len([todo for todo in todos if not todo.done])
-    return render_template("index.html", todos=todos, unfinished=unfinished) 
+    return render_template("index.html", todos=todos, unfinished=unfinished)
 
 @app.route("/new_todo")
 def new():
@@ -31,7 +31,6 @@ def toggle_todo(todo_id):
     set_done(todo_id)
     return redirect("/")
 
-# testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")
     def reset_database():
