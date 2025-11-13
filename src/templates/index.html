@@ -1,20 +1,20 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Sources
+References
 {% endblock %}
 
 {% block body %}
 
-<h2>All sources: </h2>
+<h2>All references: </h2>
 
 <ul>
-  {% for source in sources %}
-    <li>{{ source.title }} - {{ source.author }} {{ source.year }}</li>
+  {% for reference in references %}
+    <li>{{ reference.title }} - {{ reference.author }} {{ reference.year }}</li>
   {% endfor %}
 </ul>
 
 
-<a href="/new_source">Add a new source</a>
+<a href="/new_reference">Add a new reference</a>
 
 {% endblock %}
