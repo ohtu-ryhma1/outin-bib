@@ -2,29 +2,36 @@
 
 echo "Running tests"
 
-# luodaan tietokanta
+# create database
+echo "Creating database"
 poetry run python src/db_helper.py
+echo "Database created"
 
-echo "DB setup done"
 
-# käynnistetään Flask-palvelin taustalle
+# launch Flask-server
+echo "Starting Flask server"
 poetry run python3 src/index.py &
+echo "Flask server started"
 
-echo "started Flask server"
 
-# odetetaan, että palvelin on valmiina ottamaan vastaan pyyntöjä
+# wait until server is ready
+echo "Waiting for server"
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:5001)" != "200" ]];
   do sleep 1;
 done
+echo "Server ready"
 
-echo "Flask server is ready"
 
-# suoritetaan testit
+# run robot tests
+echo "Running robot tests"
 poetry run robot --variable HEADLESS:true src/story_tests
-
 status=$?
+echo "Robot tests complete"
 
-# pysäytetään Flask-palvelin portissa 5001
+
+# stop the server
 kill $(lsof -t -i:5001)
 
+
+# exit
 exit $status
