@@ -3,7 +3,7 @@ name: CI
 env:
   DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
   TEST_ENV: true
-  SECRET_KEY: secret_key
+  SECRET_KEY: key
 
 on:
   push:
