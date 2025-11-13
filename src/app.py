@@ -25,6 +25,15 @@ def ref_creation():
         flash(str(error))
         return  redirect("/new_reference")
 
+@app.route("/create_refrence", methods=["GET", "POST"])
+def refrence_creation():
+
+    if request.method == "GET":
+        return render_template("new_refrence.html")
+
+    if request.method == "POST":
+        return jsonify(request.form)
+
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
     set_done(todo_id)

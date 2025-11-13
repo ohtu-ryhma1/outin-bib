@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}Create a new refrence{% endblock %}
+
+{% block body %}
+
+<h2>Create a new refrence</h2>
+
+<form action="/create_refrence" method="post">
+    <label>Refrence: book</label> <br />
+    <label for="Author">Author: </label>
+    <input type="data" name="Author" required> <br />
+    <label for="Title">Title: </label>
+    <input type="data" name="Title" required> <br />
+    <label for="Publisher">Publisher: </label>
+    <input type="data" name="Publisher" required> <br />
+    <label for="Year">Year: </label>
+    <input type="date" name="Year" required> <br />
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
