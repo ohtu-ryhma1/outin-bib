@@ -8,11 +8,11 @@ def index():
     references = get_references()
     return render_template("index.html", references=references)
 
-@app.route("/new_ref")
+@app.route("/new_reference")
 def new():
-    return render_template("new_ref.html")
+    return render_template("new_reference.html")
 
-@app.route("/create_ref", methods=["POST"])
+@app.route("/create_reference", methods=["POST"])
 def ref_creation():
     title = request.form.get("title")
     author = request.form.get("author")
@@ -23,7 +23,7 @@ def ref_creation():
         return redirect("/")
     except Exception as error:
         flash(str(error))
-        return  redirect("/new_ref")
+        return  redirect("/new_reference")
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
