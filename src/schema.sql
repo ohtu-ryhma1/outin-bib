@@ -4,6 +4,6 @@ CREATE TABLE todos (
     done BOOLEAN DEFAULT FALSE
 )
 
-CREATE TABLE references (
+CREATE TABLE refs (
 
 )
