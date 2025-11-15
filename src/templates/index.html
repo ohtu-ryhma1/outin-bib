@@ -10,7 +10,9 @@ References
 
 <ul>
     {% for reference in references %}
-        <li>{{ reference.title }} - {{ reference.author }} {{ reference.year }}</li>
+        {% for key, value in reference.items() %}
+            <strong>{{ key }}:</strong>  {{ value }} <br>
+        {% endfor %}
     {% endfor %}
 </ul>
 
