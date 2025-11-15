@@ -1,5 +1,5 @@
 class Field:
-    def __init__(self, allowed_field_id, name, value):
-        self.allowed_field_id = allowed_field_id
+    def __init__(self, field_type_id, name, value):
+        self.field_type_id = field_type_id
         self.name = name
         self.value = value
