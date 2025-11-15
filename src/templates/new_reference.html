@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
-{% block title %}Create a new refrence{% endblock %}
+{% block title %}Create a new reference{% endblock %}
 
 {% block body %}
 
-<h2>Create a new refrence</h2>
+<h2>Create a new reference</h2>
 
 <form action="/create_refrence" method="post">
     {% with messages = get_flashed_messages() %}
@@ -16,14 +16,54 @@
       </ul>
     {% endif %}
     {% endwith %}
-    <label>Refrence: book</label> <br />
-    <label for="Author">Author: </label>
-    <input type="data" name="Author" required> <br />
-    <label for="Title">Title: </label>
-    <input type="data" name="Title" required> <br />
-    <label for="Year">Year: </label>
-    <input type="date" name="Year" required> <br />
+
+    <div>
+        <label for="Type">Reference type:</label>
+        <select name="Type" id="Type" required>
+            <option value="book">Book</option>
+            <option value="article">Article</option>
+            <option value="website">Website</option>
+        </select>
+    </div>
+
+    <div id="fields-container">
+        <div>
+            <label for="Title">Title:</label>
+            <input type="text" name="Title" required>
+        </div>
+        <div>
+            <label for="Author">Author:</label>
+            <input type="text" name="Author" required>
+        </div>
+    </div>
+
+    <button type="button" id="add-field">Add field</button><br><br>
     <input type="submit" value="Submit">
 </form>
+
+<script>
+const container = document.getElementById("fields-container");
+const addBtn = document.getElementById("add-field");
+
+addBtn.addEventListener("click", () => {
+    const fieldDiv = document.createElement("div");
+
+    const fieldName = prompt("Enter field name:");
+    if (!fieldName) return;
+
+    const label = document.createElement("label");
+    label.textContent = fieldName + ":";
+    label.htmlFor = fieldName;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.name = fieldName;
+
+    fieldDiv.appendChild(label);
+    fieldDiv.appendChild(input);
+    container.appendChild(fieldDiv);
+
+})
+</script>
 
 {% endblock %}
