@@ -13,14 +13,5 @@ class Reference:
     def __repr__(self):
         return f"<Reference id={self.entry_id} type={self.type_name} fields={len(self.fields)}>"
 
-    @property
-    def title(self):
-        return self.get("title")
-
-    @property
-    def author(self):
-        return self.get("author")
-
-    @property
-    def year(self):
-        return self.get("year")
+    def as_dict(self):
+        return {f.name: f.value for f in self.fields}

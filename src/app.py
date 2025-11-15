@@ -14,18 +14,15 @@ def new_ref():
         return render_template("new_reference.html")
 
     if request.method == "POST":
-        entry_id = request.form.get("entry_id")
-        title = request.form.get("title")
-        author = request.form.get("author")
-        year = request.form.get("year")
+        fields = {key: value for key, value in request.form.items() if key != "Type"}
+        type_name = request.form.get("Type")
+
         try:
-            create_reference(entry_id, title, author, year)
+            create_reference(type_name, fields)
             return redirect("/")
         except Exception as error:
             flash(str(error))
-            return  redirect("/new_reference")
-
-
+            return redirect("/new_reference")
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
