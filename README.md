@@ -5,6 +5,15 @@
 1. Install [Poetry](https://python-poetry.org/)
 2. Clone the repository `git clone https://github.com/ohtu-ryhma1/outin-bib.git`
 3. Run `db_helper.py`: `poetry run python src/db_helper.py`
+4. Define .env file in project root with following variables:
+```
+DATABASE_URL=
+TEST_ENV=true
+SECRET_KEY=
+```
+> DATABASE_URL: URI to postgreSQL database
+> TEST_ENV: Enables or disables resetting the database via /reset_db
+> SECRET_KEY: Defines Flask- secret key (unused)
 
 ### Usage
 1. Start the Flask server: `poetry run python src/index.py`
