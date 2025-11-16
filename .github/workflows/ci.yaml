@@ -8,6 +8,11 @@ env:
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "*.md"
+      - "README.md"
+      - "ci.yaml"
   pull_request:
     branches: [main]
 
