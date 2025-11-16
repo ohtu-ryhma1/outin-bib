@@ -20,5 +20,5 @@ class Reference:
         return self._fields
 
     def get_field(self, field_name):
-        fields = set(filter(lambda f: f.name == field_name, self.fields))
+        fields = [f for f in self.fields if f.name == field_name]
         return fields[0] if fields else None

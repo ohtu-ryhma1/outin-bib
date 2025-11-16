@@ -29,5 +29,6 @@ build-backend = "poetry.core.masonry.api"
 [dependency-groups]
 dev = [
     "robotframework (>=7.3.2,<8.0.0)",
-    "pytest (>=9.0.0,<10.0.0)"
+    "pytest (>=9.0.0,<10.0.0)",
+    "pylint (>=4.0.3,<5.0.0)"
 ]
