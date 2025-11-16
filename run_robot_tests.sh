@@ -17,7 +17,7 @@ echo "Flask server started"
 # wait until server is ready
 echo "Waiting for server"
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:5001)" != "200" ]];
-  do sleep 1;
+    do sleep 1;
 done
 echo "Server ready"
 
