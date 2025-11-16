@@ -30,4 +30,4 @@ if test_env:
     @app.route("/reset_db")
     def reset_database():
         reset_db()
-        return jsonify({ 'message': "db reset" })
+        return redirect("/")

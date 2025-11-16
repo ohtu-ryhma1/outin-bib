@@ -3,12 +3,12 @@ from sqlalchemy import text
 import os
 
 def reset_db():
-    print("Clearing contents from table: references")
-    sql = text("DELETE FROM references")
-    db.session.execute(sql)
-
     print("Clearing contents from table: field")
     sql = text("DELETE FROM fields")
+    db.session.execute(sql)
+
+    print("Clearing contents from table: references")
+    sql = text("DELETE FROM \"references\"")
     db.session.execute(sql)
 
     db.session.commit()
@@ -67,4 +67,5 @@ def add_test_types():
 if __name__ == "__main__":
     with app.app_context():
         # setup_db()
-        add_test_types()
+        # add_test_types()
+        reset_db()
