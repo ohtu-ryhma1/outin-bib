@@ -8,6 +8,7 @@ References
 
 <h2>All references: </h2>
 
+{% if references %}
 <ul>
     {% for reference in references %}
     <div>
@@ -18,6 +19,9 @@ References
     </div>
     {% endfor %}
 </ul>
+{% else %}
+<p>No references</p>
+{% endif %}
 
 
 <p><a href="/new_reference">Add a new reference</a></p>
