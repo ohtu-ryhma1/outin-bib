@@ -10,13 +10,16 @@ References
 
 <ul>
     {% for reference in references %}
-        {% for key, value in reference.items() %}
-            <strong>{{ key }}:</strong>  {{ value }} <br>
+    <div>
+        <p>{{reference.name}}, type: {{reference.reference_type}}</p>
+        {% for field in reference.fields %}
+            <p>{{field.name}}: {{field.value}}</p>
         {% endfor %}
+    </div>
     {% endfor %}
 </ul>
 
 
-<a href="/new_reference">Add a new reference</a>
+<p><a href="/new_reference">Add a new reference</a></p>
 
 {% endblock %}
