@@ -21,4 +21,4 @@ SECRET_KEY=
 
 ## Links
 - [Product / Sprint Backlog](https://github.com/orgs/ohtu-ryhma1/projects/1)
-- [CI](https://github.com/ohtu-ryhma1/outin-bib/actions/CI)
+- [CI](https://github.com/ohtu-ryhma1/outin-bib/actions/workflows/ci.yaml)
