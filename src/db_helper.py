@@ -3,9 +3,14 @@ from sqlalchemy import text
 import os
 
 def reset_db():
-    print("Clearing contents from table references")
+    print("Clearing contents from table: references")
     sql = text("DELETE FROM references")
     db.session.execute(sql)
+
+    print("Clearing contents from table: field")
+    sql = text("DELETE FROM fields")
+    db.session.execute(sql)
+
     db.session.commit()
 
 
