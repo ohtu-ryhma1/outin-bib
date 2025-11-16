@@ -1,3 +1,4 @@
+"""Class to support dynamic fields"""
 class Field:
     def __init__(self, name, value):
         self._name = name
