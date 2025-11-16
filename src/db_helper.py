@@ -66,6 +66,5 @@ def add_test_types():
 
 if __name__ == "__main__":
     with app.app_context():
-        # setup_db()
-        # add_test_types()
-        reset_db()
+        setup_db()
+        add_test_types()
