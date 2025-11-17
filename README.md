@@ -11,9 +11,9 @@ DATABASE_URL=
 TEST_ENV=true
 SECRET_KEY=
 ```
-> DATABASE_URL: URI to postgreSQL database
-> TEST_ENV: Enables or disables resetting the database via /reset_db
-> SECRET_KEY: Defines Flask- secret key (unused)
+> DATABASE_URL: URI to postgreSQL database <br>
+> TEST_ENV: Enables or disables resetting the database via /reset_db <br>
+> SECRET_KEY: Defines Flask- secret key (unused) <br>
 
 ### Usage
 1. Start the Flask server: `poetry run python src/index.py`
@@ -21,4 +21,5 @@ SECRET_KEY=
 
 ## Links
 - [Product / Sprint Backlog](https://github.com/orgs/ohtu-ryhma1/projects/1)
+
 - [CI](https://github.com/ohtu-ryhma1/outin-bib/actions/workflows/ci.yaml)
