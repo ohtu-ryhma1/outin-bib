@@ -91,7 +91,7 @@ types = {
                     "doi", "eprint", "eprintclass", "eprinttype", "url", "urldate"]
     },
 
-    "type": {
+    "suppcollection": {
         "required" ["booktitle", "year/date"],
         "optional" ["author", "title", "bookauthor", "editor", "editora", "editorb", "editorc", "translator", "annotator", "commentator",
                     "introduction", "foreword", "afterword", "subtitle", "titleaddon", "maintitle", "mainsubtitle", "maintitleaddon",
