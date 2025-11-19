@@ -1,8 +1,10 @@
 from flask import redirect, render_template, request, jsonify, flash
-from db_helper import reset_db
-from config import app, test_env
+from config import app
+from config import test_env
 
 from services.reference_service import reference_service
+
+from db_helper import reset_db
 
 @app.route("/")
 def index():
@@ -26,6 +28,7 @@ def new_reference():
             flash(str(error))
             return redirect("/new_reference")
 
+# testing routes
 if test_env:
     @app.route("/reset_db")
     def reset_database():
