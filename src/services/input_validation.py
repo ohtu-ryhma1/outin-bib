@@ -1,22 +1,8 @@
-"""
-input_validation.py
+"""Functions to validate user input for reference creation."""
+from reference_types import get_reference_fields
 
-Functions to validate user input for reference creation.
-Raises ValueError if input is invalid.
-"""
-from scripts.bibtex_types import types
 
-def get_reference_fields(reference_type):
-    """Return required and optional fields for a given BibTeX reference type."""
-    if reference_type not in types:
-        raise ValueError(f"Invalid reference type: {reference_type}")
-
-    required_fields = types[reference_type]["required"]
-    optional_fields = types[reference_type]["optional"]
-
-    return required_fields, optional_fields
-
-def validate_reference(reference_type, reference_name, fields):
+def validate_reference(ref_type: str, ref_name: str, fields: dict):
     """
     Validate a new reference input
 
@@ -28,10 +14,10 @@ def validate_reference(reference_type, reference_name, fields):
     Raises:
         ValueError: If any validation rule fails.
     """
-    if not reference_name.strip() or len(reference_name) > 100:
+    if not ref_name.strip() or len(ref_name) > 100:
         raise ValueError("Reference name must be 1-100 characters long")
 
-    required_fields, optional_fields = get_reference_fields(reference_type)
+    required_fields, optional_fields = get_reference_fields(ref_type)
 
     missing_required = [name for name in required_fields if name not in fields or not fields[name].strip()]
     if missing_required:
