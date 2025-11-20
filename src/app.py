@@ -13,7 +13,7 @@ def index():
 @app.route("/new_reference", methods=["GET", "POST"])
 @app.route("/new_reference/", methods=["GET", "POST"])
 @app.route("/new_reference/<ref_type>", methods=["GET", "POST"])
-def new_reference(ref_type="book": str):
+def new_reference(ref_type="book"):
     if request.method == "GET":
         required, optional = get_reference_fields(ref_type)
         all_refs = ["book", "article", "website"] # add function for this is services-reference_types 
