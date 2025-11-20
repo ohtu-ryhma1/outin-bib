@@ -3,6 +3,7 @@ from db_helper import reset_db
 from config import app, test_env
 
 from services.reference_service import reference_service
+from services.reference_typs import get_reference_fields
 
 @app.route("/")
 def index():
@@ -10,9 +11,13 @@ def index():
     return render_template("index.html", references=references)
 
 @app.route("/new_reference", methods=["GET", "POST"])
-def new_reference():
+@app.route("/new_reference/", methods=["GET", "POST"])
+@app.route("/new_reference/<ref_type>", methods=["GET", "POST"])
+def new_reference(ref_type="book": str):
     if request.method == "GET":
-        return render_template("new_reference.html")
+        required, optional = get_reference_fields(ref_type)
+        all_refs = ["book", "article", "website"] # add function for this is services-reference_types 
+        return render_template("new_reference.html", all_refs = all_refs, ref_type = ref_type, required = required, optional = optional)
 
     if request.method == "POST":
         reference_type = request.form.get("type")

@@ -20,9 +20,13 @@
     <div>
         <label for="type">Reference type:</label>
         <select name="type" id="type" required>
-            <option value="book">Book</option>
-            <option value="article">Article</option>
-            <option value="website">Website</option>
+            {% for type in all_refs %}
+                {% if type == ref_type %}
+                <option value="{{ type }}" selected>{{ type }}</option>
+                {% else %}
+                <option value="{{ type }}">{{ type }}</option>
+                {% endif %}
+            {% endfor %}
         </select>
     </div>
 
@@ -31,44 +35,34 @@
         <input type="text" name="name" id="name">
     </div>
 
-    <div id="fields-container">
-        <div>
-            <label for="title">Title:</label>
-            <input type="text" name="title" required>
-        </div>
-        <div>
-            <label for="author">Author:</label>
-            <input type="text" name="author" required>
-        </div>
+    <div id="required-fields">
+        Required Fields:
+        {% for field in required %}
+        <label for="{{ field }}">{{ field }}</label>
+        <input type="text" name="{{ field }}" id="{{ field }}" required > <br>
+        {% endfor %}
     </div>
 
-    <button type="button" id="add-field">Add field</button><br><br>
+    <div id="optional-fields">
+        Optional Fields:
+        {% for field in optional %}
+        <label for="{{ field }}">{{ field }}</label>
+        <input type="text" name="{{ field }}" id="{{ field }}"> <br>
+        {% endfor %}
+    </div>
+
     <input type="submit" value="Submit">
 </form>
 
 <script>
-const container = document.getElementById("fields-container");
-const addBtn = document.getElementById("add-field");
-
-addBtn.addEventListener("click", () => {
-    const fieldDiv = document.createElement("div");
-
-    const fieldName = prompt("Enter field name:");
-    if (!fieldName) return;
-
-    const label = document.createElement("label");
-    label.textContent = fieldName + ":";
-    label.htmlFor = fieldName;
-
-    const input = document.createElement("input");
-    input.type = "text";
-    input.name = fieldName;
-
-    fieldDiv.appendChild(label);
-    fieldDiv.appendChild(input);
-    container.appendChild(fieldDiv);
-
-})
+const select = document.getElementById("type")
+select.addEventListener("change", () => {
+    const options = select.children
+    const next = options[select.selectedIndex].value
+    document.location.replace(`/new_reference/${next}`)
+}, true)
+    
 </script>
+
 
 {% endblock %}
