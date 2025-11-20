@@ -12,10 +12,12 @@ References
 <ul>
     {% for reference in references %}
     <div>
-        <p>{{reference.name}}, type: {{reference.reference_type}}</p>
+        <p>{{reference.name}}, type: {{reference.reference_type}} <br>
         {% for field in reference.fields %}
-            <p>{{field.name}}: {{field.value}}</p>
+            {{field.name}}: {{field.value}} <br>
         {% endfor %}
+        <hr>
+        </p>
     </div>
     {% endfor %}
 </ul>
