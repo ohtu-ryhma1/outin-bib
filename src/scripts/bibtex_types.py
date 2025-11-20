@@ -41,7 +41,7 @@ types = {
     },
 
      "bookinbook": {
-        "required": [["author", "title", "booktitle", "year/date"]],
+        "required": ["author", "title", "booktitle", "year/date"],
         "optional": ["editor", "editora", "editorb", "editorc", "translator", "annotator",
                     "commentator", "introduction", "foreword", "afterword", "subtitle",
                     "titleaddon", "maintitle", "mainsubtitle", "maintitleaddon", "language",
