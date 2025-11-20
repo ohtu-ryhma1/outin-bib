@@ -1,5 +1,5 @@
 """Functions to validate user input for reference creation."""
-from reference_types import get_reference_fields
+from services.reference_types import get_reference_fields
 
 
 def validate_reference(ref_type: str, ref_name: str, fields: dict):
