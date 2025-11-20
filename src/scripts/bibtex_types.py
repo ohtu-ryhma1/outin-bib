@@ -40,7 +40,7 @@ types = {
                     "eprinttype", "url", "urldate"]
     },
 
-     "bookinbook": {
+    "bookinbook": {
         "required": ["author", "title", "booktitle", "year/date"],
         "optional": ["editor", "editora", "editorb", "editorc", "translator", "annotator",
                     "commentator", "introduction", "foreword", "afterword", "subtitle",
@@ -51,7 +51,7 @@ types = {
                     "url", "urldate"]
     },
 
-     "suppbook": {
+    "suppbook": {
         "required": ["booktitle", "year/date"],
         "optional": ["author", "title", "bookauthor", "editor", "editora", "editorb", "editorc",
                     "translator", "annotator", "commentator", "introduction", "foreword",
@@ -62,14 +62,14 @@ types = {
                     "eprint", "eprintclass", "eprinttype", "url", "urldate"]
     },
 
-     "booklet": {
+    "booklet": {
         "required": ["author/editor", "title", "year/date"],
         "optional": ["subtitle", "titleaddon", "language", "howpublished", "type", "note",
                     "location", "eid", "chapter", "pages", "pagetotal", "addendum", "pubstate",
                     "doi", "eprint", "eprintclass", "eprinttype", "url", "urldate"]
     },
 
-     "collection": {
+    "collection": {
         "required": ["editor", "title", "year/date"],
         "optional": ["editora", "editorb", "editorc", "translator", "annotator", "commentator",
                     "introduction", "foreword", "afterword", "subtitle", "titleaddon",
@@ -80,7 +80,7 @@ types = {
                     "urldate"]
     },
 
-     "mvcollection": {
+    "mvcollection": {
         "required": ["editor", "title", "year/date"],
         "optional": ["editora", "editorb", "editorc", "translator", "annotator", "commentator",
                     "introduction", "foreword", "afterword", "subtitle", "titleaddon", "language",
@@ -253,7 +253,7 @@ types = {
                     "urldate"]
     },
 
-    "custom[a–f]": {
+    "custom[a-f]": {
         "required": ["author/editor", "title", "year/date"],
         "optional": ["subtitle", "titleaddon", "language", "howpublished", "type", "version",
                     "note", "organization", "location", "month", "addendum", "pubstate", "doi",
