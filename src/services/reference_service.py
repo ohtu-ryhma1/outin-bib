@@ -1,4 +1,8 @@
+from services.input_validation import validate_reference
+from models.reference import Reference
 from repositories.reference_repository import reference_repository
+from typing import Iterable
+from sqlalchemy import ScalarResult
 
 
 class ReferenceService:
@@ -9,6 +13,7 @@ class ReferenceService:
         return self._repo.get_all()
 
     def create(self, ref_data: dict) -> Reference:
+        validate_reference(ref_data)
         return self._repo.create(ref_data)
 
 
