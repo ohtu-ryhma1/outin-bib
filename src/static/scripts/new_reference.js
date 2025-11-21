@@ -2,7 +2,7 @@ const select = document.getElementById("type")
 select.addEventListener("change", () => {
     const options = select.children
     const next = options[select.selectedIndex].value
-    document.location.replace(`/new_reference/${next}`)
+    document.location.replace(`/new_reference?type=${next}`)
 }, true)
 
 const optionalBtn = document.getElementById("optional-button")
@@ -33,8 +33,9 @@ optionalBtn.addEventListener("click", () => {
     fieldDiv.appendChild(input)
     optionalDiv.appendChild(fieldDiv)
 
-    //delete field
+    // delete field
     optionalSelect.removeChild(selectedOption)
+    // check if no more options, then remove selection and add appropriate message
     if (optionalSelect.children.length === 0 ) {
         optionalSelect.remove()
         optionalBtn.remove()
