@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, jsonify, flash
 
 from config import app, db
-from config import test_env
 
 from services.reference_service import reference_service as ref_service
 
