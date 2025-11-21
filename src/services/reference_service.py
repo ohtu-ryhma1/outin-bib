@@ -13,10 +13,7 @@ class ReferenceService:
         return self._repo.get_all()
 
     def create(self, ref_data: dict) -> Reference:
-        ref_type = ref_data["type"]
-        ref_name = ref_data["name"]
-        ref_fields = ref_data["fields"]
-        validate_reference(ref_type, ref_name, ref_fields)
+        validate_reference(ref_data)
         return self._repo.create(ref_data)
 
 

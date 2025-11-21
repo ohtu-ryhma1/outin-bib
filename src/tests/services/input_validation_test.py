@@ -10,42 +10,41 @@ class TestValidateReference(unittest.TestCase):
             "journaltitle": "Journal of Examples",
             "year/date": "2025"
         }
-
-    def test_validate_reference_success(self):
-        validate_reference("article", "ref1", self.valid_fields)
-
-    def test_validate_reference_missing_required(self):
-        fields = {
-            "author": "Random Author",
-            "title": "Example Article"
+        self.ref_data = {
+            "type": "article",
+            "name": "ref1",
+            "fields": self.valid_fields
         }
 
+    def test_validate_reference_success(self):
+        validate_reference(self.ref_data)
+
+    def test_validate_reference_missing_required(self):
+        self.valid_fields.pop("year/date")
         with self.assertRaises(ValueError) as context:
-            validate_reference("article", "ref2", fields)
+            validate_reference(self.ref_data)
         self.assertIn("Required fields missing", str(context.exception))
 
     def test_validate_reference_unknown_field(self):
-        fields = self.valid_fields.copy()
-        fields["nonexistent"] = "unknown"
-
+        self.valid_fields["nonexistent"] = "unknown"
         with self.assertRaises(ValueError) as context:
-            validate_reference("article", "ref3", fields)
+            validate_reference(self.ref_data)
         self.assertIn("Unknown fields", str(context.exception))
 
-    def test_validate_reference_name_length(self):
+    def test_validate_reference_name_min_length(self):
+        self.ref_data["name"] = ""
         with self.assertRaises(ValueError) as context:
-            validate_reference("article", "", self.valid_fields)
+            validate_reference(self.ref_data)
         self.assertIn("Reference name must be 1-100 characters long", str(context.exception))
 
-        long_name = "x" * 101
+    def test_validate_reference_name_max_length(self):
+        self.ref_data["name"] = "x" * 101
         with self.assertRaises(ValueError) as context:
-            validate_reference("article", long_name, self.valid_fields)
+            validate_reference(self.ref_data)
         self.assertIn("Reference name must be 1-100 characters long", str(context.exception))
 
     def test_validate_reference_field_too_long(self):
-        fields = self.valid_fields.copy()
-        fields["title"] = "x" * 501
-
+        self.valid_fields["title"] = "x" * 501
         with self.assertRaises(ValueError) as context:
-            validate_reference("article", "ref5", fields)
+            validate_reference(self.ref_data)
         self.assertIn("cannot exceed 500 characters", str(context.exception))
