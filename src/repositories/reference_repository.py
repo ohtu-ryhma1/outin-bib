@@ -1,4 +1,5 @@
 from typing import Iterable
+from sqlalchemy import ScalarResult
 
 from config import db
 from sqlalchemy import select
