@@ -39,6 +39,15 @@ class TestReferenceWithField(BaseTestCase):
         field = self.reference.fields[0]
         self.assertEqual(field.value, "test_author")
 
+    def test_reference_repr(self):
+        string = "Reference(id=1, type='book', name='test_name')"
+        self.assertEqual(repr(self.reference), string)
+
+    def test_field_repr(self):
+        field = self.reference.fields[0]
+        string = "Field(id=1, type='author', value='test_author')"
+        self.assertEqual(repr(field), string)
+
 
 class TestReferenceWithoutField(BaseTestCase):
     def setUp(self):
@@ -56,3 +65,7 @@ class TestReferenceWithoutField(BaseTestCase):
 
     def test_fields_not_exist(self):
         self.assertEqual(self.reference.fields, [])
+
+    def test_reference_repr(self):
+        string = "Reference(id=1, type='book', name='test_name')"
+        self.assertEqual(repr(self.reference), string)
