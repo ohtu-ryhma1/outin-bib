@@ -6,3 +6,4 @@ output.xml
 report.html
 *.log
 *.png
+.coverage
