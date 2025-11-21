@@ -1,38 +1,33 @@
 from flask import redirect, render_template, request, jsonify, flash
-from db_helper import reset_db
-from config import app, test_env
 
-from services.reference_service import reference_service
-from services.reference_typs import get_reference_fields
+from config import app, db
 
-@app.route("/")
+from services.reference_service import reference_service as ref_service
+
+
+@app.get("/")
 def index():
-    references = reference_service.get_references()
+    references = ref_service.get_all()
     return render_template("index.html", references=references)
+        
+@app.get("/new_reference")
+def show_new_reference():
+    ref_type = request.args.get("type") 
+    ref_type = ref_type if ref_type else "book"
+    required, optional = get_reference_fields(ref_type)
+    all_refs = ["book", "article", "website"] # add function for this is services-reference_types 
+    return render_template("new_reference.html", all_refs = all_refs, ref_type = ref_type, required = required, optional = optional)
 
-@app.route("/new_reference", methods=["GET", "POST"])
-@app.route("/new_reference/", methods=["GET", "POST"])
-@app.route("/new_reference/<ref_type>", methods=["GET", "POST"])
-def new_reference(ref_type="book"):
-    if request.method == "GET":
-        required, optional = get_reference_fields(ref_type)
-        all_refs = ["book", "article", "website"] # add function for this is services-reference_types 
-        return render_template("new_reference.html", all_refs = all_refs, ref_type = ref_type, required = required, optional = optional)
+@app.post("/new_reference")
+def create_new_reference():
+    ref_type = request.form.get("type")
+    ref_name = request.form.get("name")
+    fields = {key: value for key, value in request.form.items() if key not in ("type", "name")}
+    ref_data = {
+        "type": ref_type,
+        "name": ref_name,
+        "fields": fields
+    }
 
-    if request.method == "POST":
-        reference_type = request.form.get("type")
-        reference_name = request.form.get("name")
-        fields = {key: value for key, value in request.form.items() if key != "type"}
-
-        try:
-            reference_service.create_reference(reference_type, reference_name, fields)
-            return redirect("/")
-        except Exception as error:
-            flash(str(error))
-            return redirect("/new_reference")
-
-if test_env:
-    @app.route("/reset_db")
-    def reset_database():
-        reset_db()
-        return redirect("/")
+    ref_service.create(ref_data)
+    return redirect("/")

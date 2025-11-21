@@ -59,7 +59,7 @@ const select = document.getElementById("type")
 select.addEventListener("change", () => {
     const options = select.children
     const next = options[select.selectedIndex].value
-    document.location.replace(`/new_reference/${next}`)
+    document.location.replace(`/new_reference?type=${next}`)
 }, true)
     
 </script>
