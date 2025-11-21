@@ -1,5 +1,8 @@
-from input_validation import validate_reference
+from services.input_validation import validate_reference
+from models.reference import Reference
 from repositories.reference_repository import reference_repository
+from typing import Iterable
+from sqlalchemy import ScalarResult
 
 
 class ReferenceService:
