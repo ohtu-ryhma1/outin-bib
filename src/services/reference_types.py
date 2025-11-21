@@ -1,6 +1,10 @@
 from scripts.bibtex_types import types
 
 
+def get_reference_types() -> set:
+    """Return all reference types in a set"""
+    return set(types.keys())
+
 def get_reference_fields(ref_type: str) -> tuple:
     """Return required and optional fields for a given BibTeX reference type."""
     if ref_type not in types:

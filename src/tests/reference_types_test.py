@@ -1,6 +1,10 @@
 import pytest
-from services.reference_types import get_reference_fields
+from services.reference_types import get_reference_fields, get_reference_types
 from scripts.bibtex_types import types
+
+
+def test_get_reference_types_matches_keys():
+    assert get_reference_types() == set(types.keys())
 
 def test_get_reference_fields_valid():
     for ref_type in types:
