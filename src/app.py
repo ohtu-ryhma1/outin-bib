@@ -14,7 +14,8 @@ def index():
 def show_new_reference():
     ref_type = request.args.get("type") 
     ref_type = ref_type if ref_type else "book"
-    required, optional = get_reference_fields(ref_type)
+    #required, optional = get_reference_fields(ref_type)
+    required, optional = ["title", "author", "year"], ["editor", "language", "translator"]
     all_refs = ["book", "article", "website"] # add function for this is services-reference_types 
     return render_template("new_reference.html", all_refs = all_refs, ref_type = ref_type, required = required, optional = optional)
 
