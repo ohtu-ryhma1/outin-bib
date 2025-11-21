@@ -1,20 +1,30 @@
 name: CI
 
 env:
-  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
-  TEST_ENV: true
-  SECRET_KEY: key
+  TEST_DB_URL=postgresql://postgres:postgres@localhost:5432/postgres
+  TEST_ENV=true
+  TEST_DB=true
+  SECRET_KEY=key
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - dev
+      - release/*
     paths-ignore:
-      - "docs/**"
-      - "*.md"
-      - "README.md"
-      - "ci.yaml"
+      - '*.md'
+      - docs/*
+      - ci.yaml
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - dev
+      - release/*
+    paths-ignore:
+      - '*.md'
+      - docs/*
+      - ci.yaml
 
 jobs:
   build:
@@ -35,10 +45,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - name: Set up Python 3.12
+      - name: Set up Python 3.14
         uses: actions/setup-python@v6
         with:
-          python-version: '3.14'
+          python-version: "3.14"
 
       - name: Install Poetry
         run: pip install poetry
