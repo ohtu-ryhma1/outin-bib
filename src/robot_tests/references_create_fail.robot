@@ -75,6 +75,21 @@ Creating a reference fails
     Element Should Be Visible  id=type
     Element Should Be Visible  id=name
 
-    Input Text  id=year/date  2000
 
     Click Button  Submit
+
+Not adding Reference name fails
+    Go To  ${HOME_URL}
+    Click Link  Add a new reference
+    Title Should Be  Create a new reference
+
+    Select From List By Value  id=type  book
+
+    Page Should Contain  Required Fields:
+    Input Text  id=author  Fail
+    Input Text  id=title  Test Fail
+    Input Text  id=year/date  202
+
+    Click Button  Submit
+
+    Page Should Contain  ValueError
