@@ -12,7 +12,7 @@ Creating a reference succeeds
 
     Select From List By Value  id=type  book
 
-    #Pakolliset
+    Page Should Contain  Required Fields:
     Input Text  id=name  Test Book
     Input Text  id=author  Test Author
     Input Text  id=title  Test Title
@@ -20,7 +20,6 @@ Creating a reference succeeds
 
     Page Should Contain  Optional Fields:
 
-    #Valinnaiset
     Select From List By Value  id=optional-select  editor
     Click Button  id=optional-button
     Wait Until Element Is Visible  name=editor  5s
@@ -40,15 +39,32 @@ Creating a reference succeeds
     Page Should Contain  year/date: 2025
     Page Should Contain  editor: EditorNimi
     Page Should Contain  translator: TranslatorNimi
-########
 
 Creating a reference fails 
     Go To  ${HOME_URL}
     Click Link  Add a new reference
     Title Should Be  Create a new reference
-    Select From List By Value  type  mvbook
-    Page Should Contain  eprint
-    Input Text  name  TestMVbook
-    Input Text  title  TitleMVBook
-    Input Text  titleaddon  TitleAddonTest
+
+    Select From List By Value  id=type  mvbook
+
+    Page Should Contain  Required Fields:
+    Input Text  id=name  Test2
+    Input Text  id=author  TestAuthor2
+    Input Text  id=title  TestTitle2
+
+    Page Should Contain  Optional Fields:
+
+    Select From List By Value  id=optional-select  subtitle
+    Click Button  id=optional-button
+    Wait Until Element Is Visible  name=subtitle  5s
+    Input Text  name=subtitle  SubTiName
+
+    Select From List By Value  id=optional-select  series
+    Click Button  id=optional-button
+    Wait Until Element Is Visible  name=series  5s
+    Input Text  name=series  SeriesName
+
     Click Button  Submit
+
+    Element Should Be Visible  id=type
+    Element Should Be Visible  id=name
