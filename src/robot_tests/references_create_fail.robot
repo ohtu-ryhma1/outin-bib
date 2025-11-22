@@ -50,7 +50,6 @@ Creating a reference fails
     Page Should Contain  Required Fields:
     Input Text  id=name  Test2
     Input Text  id=author  TestAuthor2
-    Input Text  id=title  TestTitle2
 
     Page Should Contain  Optional Fields:
 
@@ -68,3 +67,14 @@ Creating a reference fails
 
     Element Should Be Visible  id=type
     Element Should Be Visible  id=name
+
+    Input Text  id=title  TestTitle2
+
+    Click Button  Submit
+
+    Element Should Be Visible  id=type
+    Element Should Be Visible  id=name
+
+    Input Text  id=year/date  2000
+
+    Click Button  Submit
