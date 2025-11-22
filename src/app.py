@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, jsonify, flash
+from flask import redirect, render_template, request, jsonify, flash, url_for
 
 from config import app, db
 
@@ -30,5 +30,15 @@ def create_new_reference():
         "fields": fields
     }
 
-    ref_service.create(ref_data)
-    return redirect("/")
+    try:
+        ref_service.create(ref_data)
+        flash("New reference created!")
+        return redirect("/")
+
+    except ValueError as error:
+        flash(str(error), "error")
+        return redirect(url_for("show_new_reference", type=ref_type))
+
+    except Exception:
+        flash("Unexpected error!")
+        return redirect(url_for("show_new_reference", type=ref_type))

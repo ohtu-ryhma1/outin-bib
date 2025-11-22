@@ -34,14 +34,14 @@
 
     <div>
         <label for="name">Reference name:</label>
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" maxlength="100" required>
     </div>
     <br>
     <div id="required-fields">
         Required Fields:<br>
         {% for field in required %}
         <label for="{{ field }}">{{ field }}: </label>
-        <input type="text" name="{{ field }}" id="{{ field }}" required > <br>
+        <input type="text" name="{{ field }}" id="{{ field }}" required maxlength="500"> <br>
         {% endfor %}
         <br>
     </div>
