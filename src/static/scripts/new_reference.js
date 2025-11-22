@@ -27,6 +27,7 @@ optionalBtn.addEventListener("click", () => {
     const input = document.createElement("input")
     input.type = "text"
     input.name = selectedValue
+    input.maxLength = 500
 
     const optionalDiv = document.getElementById("optional-fields")
     fieldDiv.appendChild(label)
