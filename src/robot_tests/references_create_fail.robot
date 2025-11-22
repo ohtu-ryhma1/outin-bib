@@ -92,4 +92,5 @@ Not adding Reference name fails
 
     Click Button  Submit
 
-    Page Should Contain  ValueError
+    Element Should Be Visible  id=type
+    Element Should Be Visible  id=author
