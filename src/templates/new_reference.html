@@ -2,6 +2,8 @@
 
 {% block title %}Create a new reference{% endblock %}
 
+{% block head %} <script src="../static/scripts/new_reference.js" defer></script> {% endblock %}
+
 {% block body %}
 
 <h2>Create a new reference</h2>
@@ -20,9 +22,13 @@
     <div>
         <label for="type">Reference type:</label>
         <select name="type" id="type" required>
-            <option value="book">Book</option>
-            <option value="article">Article</option>
-            <option value="website">Website</option>
+            {% for type in all_refs %}
+                {% if type == ref_type %}
+                <option value="{{ type }}" selected>{{ type }}</option>
+                {% else %}
+                <option value="{{ type }}">{{ type }}</option>
+                {% endif %}
+            {% endfor %}
         </select>
     </div>
 
@@ -30,45 +36,38 @@
         <label for="name">Reference name:</label>
         <input type="text" name="name" id="name">
     </div>
-
-    <div id="fields-container">
-        <div>
-            <label for="title">Title:</label>
-            <input type="text" name="title" required>
-        </div>
-        <div>
-            <label for="author">Author:</label>
-            <input type="text" name="author" required>
-        </div>
+    <br>
+    <div id="required-fields">
+        Required Fields:<br>
+        {% for field in required %}
+        <label for="{{ field }}">{{ field }}: </label>
+        <input type="text" name="{{ field }}" id="{{ field }}" required > <br>
+        {% endfor %}
+        <br>
     </div>
 
-    <button type="button" id="add-field">Add field</button><br><br>
+    <div id="optional-fields">
+        Optional Fields:
+        <p id="no-optionals">
+            No optional fields added.
+        </p>
+    </div>
+
     <input type="submit" value="Submit">
 </form>
 
-<script>
-const container = document.getElementById("fields-container");
-const addBtn = document.getElementById("add-field");
+<hr>
 
-addBtn.addEventListener("click", () => {
-    const fieldDiv = document.createElement("div");
+<div id="optional-fields-adder">
+    <label for="optional-select" id="optional-label">Optional fields:</label>
+        <select name="optional-select" id="optional-select">
+            {% for field in optional %}
+                <option value="{{ field }}">{{ field }}</option>
+            {% endfor %}
+        </select>
+    <button type="button" id="optional-button">Add optional field</button>
+</div>
 
-    const fieldName = prompt("Enter field name:");
-    if (!fieldName) return;
-
-    const label = document.createElement("label");
-    label.textContent = fieldName + ":";
-    label.htmlFor = fieldName;
-
-    const input = document.createElement("input");
-    input.type = "text";
-    input.name = fieldName;
-
-    fieldDiv.appendChild(label);
-    fieldDiv.appendChild(input);
-    container.appendChild(fieldDiv);
-
-})
-</script>
+<hr>
 
 {% endblock %}
