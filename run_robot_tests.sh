@@ -2,9 +2,9 @@
 
 echo "Running robot tests"
 
-# launch Flask-server
+# launch Flask-server in the background
 echo "Starting Flask server"
-poetry run invoke start
+poetry run invoke start &
 echo "Flask server started"
 
 
