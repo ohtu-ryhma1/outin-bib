@@ -9,6 +9,7 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
+
 # load environment variables
 load_dotenv()
 

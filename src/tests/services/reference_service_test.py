@@ -3,7 +3,7 @@ import sys
 import unittest
 
 # add src to sys.path to locate modules
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from base import BaseTestCase
 
@@ -23,9 +23,9 @@ class TestReferenceServiceWithReference(BaseTestCase):
             "name": "test_name",
             "fields": {
                 "author": "test_author",
-                "title" : "test_title",
-                "year/date": "2025"
-                }
+                "title": "test_title",
+                "year/date": "2025",
+            },
         }
 
         self.service.create(ref_data)
@@ -74,9 +74,9 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
             "name": "test_name",
             "fields": {
                 "author": "test_author",
-                "title" : "test_title",
-                "year/date": "2025"
-                }
+                "title": "test_title",
+                "year/date": "2025",
+            },
         }
 
     def test_missing_name(self):

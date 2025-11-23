@@ -19,14 +19,16 @@ class ReferenceRepository:
     def create(self, ref_data: dict) -> Reference:
         reference = Reference(
             type=ref_data["type"],
-            name=ref_data["name"]
+            name=ref_data["name"],
         )
 
         for field_type, field_value in ref_data["fields"].items():
-            reference.fields.append(Field(
-                type=field_type,
-                value=field_value
-            ))
+            reference.fields.append(
+                Field(
+                    type=field_type,
+                    value=field_value,
+                )
+            )
 
         self._db.session.add(reference)
         self._db.session.commit()

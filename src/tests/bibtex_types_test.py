@@ -10,6 +10,7 @@ def test_each_reference_has_required_and_optional():
         assert isinstance(fields["required"], list)
         assert isinstance(fields["optional"], list)
 
+
 def test_all_fields_are_nonempty_strings():
     for _, fields in types.items():
         for f in fields["required"] + fields["optional"]:

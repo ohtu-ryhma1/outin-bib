@@ -10,23 +10,33 @@ def index():
     references = ref_service.get_all()
     return render_template("index.html", references=references)
 
+
 @app.get("/new_reference")
 def show_new_reference():
     ref_type = request.args.get("type")
     ref_type = ref_type if ref_type else "book"
     required, optional = get_reference_fields(ref_type)
     all_refs = sorted(list(get_reference_types()))
-    return render_template("new_reference.html", all_refs = all_refs, ref_type = ref_type, required = required, optional = optional)
+    return render_template(
+        "new_reference.html",
+        all_refs=all_refs,
+        ref_type=ref_type,
+        required=required,
+        optional=optional,
+    )
+
 
 @app.post("/new_reference")
 def create_new_reference():
     ref_type = request.form.get("type")
     ref_name = request.form.get("name")
-    fields = {key: value for key, value in request.form.items() if key not in ("type", "name")}
+    fields = {
+        key: value for key, value in request.form.items() if key not in ("type", "name")
+    }
     ref_data = {
         "type": ref_type,
         "name": ref_name,
-        "fields": fields
+        "fields": fields,
     }
 
     try:

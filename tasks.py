@@ -5,9 +5,11 @@ from invoke import task
 def start(ctx):
     ctx.run("python src/index.py")
 
+
 @task
 def coverage(ctx):
     ctx.run("coverage run --branch -m pytest")
+
 
 @task(coverage)
 def coverage_report(ctx):
