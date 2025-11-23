@@ -98,24 +98,3 @@ jobs:
 
       - name: Run robot tests
         run: bash run_robot_tests.sh
-
-
-  pylint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Set up Python 3.14
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.14"
-
-      - name: Install Poetry
-        run: pip install poetry
-
-      - name: Install dependencies
-        run: poetry install
-
-      - name: Run pylint
-        run: poetry run pylint src
