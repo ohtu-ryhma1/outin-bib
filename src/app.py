@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request
+from flask import flash, redirect, render_template, request, url_for
 
 from src.config import app
 from src.services.reference_service import reference_service as ref_service
@@ -46,8 +46,4 @@ def create_new_reference():
 
     except ValueError as error:
         flash(str(error), "error")
-        return redirect(url_for("show_new_reference", type=ref_type))
-
-    except Exception:
-        flash("Unexpected error!")
         return redirect(url_for("show_new_reference", type=ref_type))
