@@ -11,10 +11,10 @@ repos:
       - id: black
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.11.2
+    rev: 7.0.0
     hooks:
       - id: isort
-        name: isort (python)
+        name: isort
 
   - repo: local
     hooks:
