@@ -1,5 +1,6 @@
 """Functions to validate user input for reference creation."""
-from services.reference_types import get_reference_fields
+
+from src.services.reference_types import get_reference_fields
 
 
 def validate_reference(ref_data: dict):
@@ -23,11 +24,21 @@ def validate_reference(ref_data: dict):
 
     required_fields, optional_fields = get_reference_fields(ref_type)
 
-    missing_required = [name for name in required_fields if name not in ref_fields or not ref_fields[name].strip()]
+    missing_required = [
+        name
+        for name in required_fields
+        if name not in ref_fields or not ref_fields[name].strip()
+    ]
+
     if missing_required:
         raise ValueError("Required fields missing: " + ", ".join(missing_required))
 
-    unknown_fields = [name for name in ref_fields if name not in required_fields and name not in optional_fields]
+    unknown_fields = [
+        name
+        for name in ref_fields
+        if name not in required_fields and name not in optional_fields
+    ]
+
     if unknown_fields:
         raise ValueError("Unknown fields: " + ", ".join(unknown_fields))
 

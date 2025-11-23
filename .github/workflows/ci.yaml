@@ -1,23 +1,37 @@
 name: CI
 
 env:
-  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
-  TEST_ENV: true
+  TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+  TEST_DB: true
   SECRET_KEY: key
 
 on:
+  workflow_dispatch:
+
   push:
-    branches: [main]
+    branches:
+      - main
+      - dev
+      - release/*
     paths-ignore:
-      - "docs/**"
-      - "*.md"
-      - "README.md"
-      - "ci.yaml"
+      - .gitignore
+      - '*.md'
+      - docs/*
+      - ci.yaml
+
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - dev
+      - release/*
+    paths-ignore:
+      - .gitignore
+      - '*.md'
+      - docs/*
+      - ci.yaml
 
 jobs:
-  build:
+  unit-tests:
     runs-on: ubuntu-latest
 
     services:
@@ -35,10 +49,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - name: Set up Python 3.12
+
+      - name: Set up Python 3.14
         uses: actions/setup-python@v6
         with:
-          python-version: '3.14'
+          python-version: "3.14"
 
       - name: Install Poetry
         run: pip install poetry
@@ -47,7 +62,45 @@ jobs:
         run: poetry install
 
       - name: Run unit tests
-        run: poetry run pytest src/tests
+        run: poetry run coverage run --branch -m pytest
+
+      - name: Create coverage report
+        run: poetry run coverage xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  robot-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
 
       - name: Setup chromedriver
         uses: nanasess/setup-chromedriver@master

@@ -2,7 +2,6 @@
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
-Test Setup       Reset Application
 
 *** Test Cases ***
 Creating a reference succeeds
@@ -40,7 +39,7 @@ Creating a reference succeeds
     Page Should Contain  editor: EditorNimi
     Page Should Contain  translator: TranslatorNimi
 
-Creating a reference fails 
+Creating a reference fails
     Go To  ${HOME_URL}
     Click Link  Add a new reference
     Title Should Be  Create a new reference

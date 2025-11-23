@@ -1,10 +1,8 @@
-from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.orm import relationship
-
 from typing import List
 
-from config import db
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from src.config import db
 
 
 class Reference(db.Model):

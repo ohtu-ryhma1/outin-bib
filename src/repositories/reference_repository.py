@@ -1,11 +1,10 @@
 from typing import Iterable
-from sqlalchemy import ScalarResult
 
-from config import db
-from sqlalchemy import select
+from sqlalchemy import ScalarResult, select
 
-from models.reference import Reference
-from models.field import Field
+from src.config import db
+from src.models.field import Field
+from src.models.reference import Reference
 
 
 class ReferenceRepository:
@@ -20,14 +19,16 @@ class ReferenceRepository:
     def create(self, ref_data: dict) -> Reference:
         reference = Reference(
             type=ref_data["type"],
-            name=ref_data["name"]
+            name=ref_data["name"],
         )
 
         for field_type, field_value in ref_data["fields"].items():
-            reference.fields.append(Field(
-                type=field_type,
-                value=field_value
-            ))
+            reference.fields.append(
+                Field(
+                    type=field_type,
+                    value=field_value,
+                )
+            )
 
         self._db.session.add(reference)
         self._db.session.commit()

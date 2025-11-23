@@ -1,11 +1,5 @@
-import sys
-import os
-
-# add src to sys.path to locate modules
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from base import BaseTestCase
-from repositories.reference_repository import ReferenceRepository
+from src.repositories.reference_repository import ReferenceRepository
+from src.tests.base import BaseTestCase
 
 
 class TestReferenceRepositoryWithReference(BaseTestCase):
@@ -17,7 +11,7 @@ class TestReferenceRepositoryWithReference(BaseTestCase):
         ref_data = {
             "type": "book",
             "name": "test_name",
-            "fields": {"author": "test_author"}
+            "fields": {"author": "test_author"},
         }
 
         self.repo.create(ref_data)

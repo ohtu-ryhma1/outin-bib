@@ -1,13 +1,7 @@
-import unittest
-import sys
-import os
+from src.models.field import Field
+from src.models.reference import Reference
+from src.tests.base import BaseTestCase
 
-# add src to sys.path to locate modules
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from base import BaseTestCase
-from models.reference import Reference
-from models.field import Field
 
 class TestReferenceWithField(BaseTestCase):
     def setUp(self):

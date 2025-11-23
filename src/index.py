@@ -1,4 +1,5 @@
-from app import app, db
+from src.app import app
+from src.config import db
 
 if __name__ == "__main__":
 
