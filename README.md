@@ -39,3 +39,4 @@ SECRET_KEY=key
 ### Testing
 - Run unit tests and coverage with `poetry run invoke coverage`
 - To generate a coverage report, run `poetry run invoke coverage-report`
+- Run robot tests with `poetry run invoke robot_tests`
