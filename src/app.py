@@ -17,6 +17,7 @@ def show_new_reference():
     ref_type = ref_type if ref_type else "book"
     required, optional = get_reference_fields(ref_type)
     all_refs = sorted(list(get_reference_types()))
+
     return render_template(
         "new_reference.html",
         all_refs=all_refs,
@@ -33,6 +34,7 @@ def create_new_reference():
     fields = {
         key: value for key, value in request.form.items() if key not in ("type", "name")
     }
+
     ref_data = {
         "type": ref_type,
         "name": ref_name,
@@ -47,3 +49,24 @@ def create_new_reference():
     except ValueError as error:
         flash(str(error), "error")
         return redirect(url_for("show_new_reference", type=ref_type))
+
+
+@app.get("/edit_reference")
+def show_edit_reference():
+
+    # get reference
+    ref_id = request.args.get("id")
+    ref = ref_service.get(ref_id=ref_id)
+
+    required, optional = get_reference_fields(ref.type)
+    ref_types = sorted(list(get_reference_types()))
+
+    ref.optional = set(field.type for field in ref.fields if field.type in optional)
+
+    return render_template(
+        "edit_reference.html",
+        ref=ref,
+        ref_types=ref_types,
+        required=required,
+        optional=optional,
+    )
