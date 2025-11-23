@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
-{% block title %}Edit reference: {{ reference.name }}{% endblock %}
+{% block title %}Edit reference {{ ref.name }}{% endblock %}
 
-{% block head %} 
-<script src="../static/scripts/new_reference.js" defer></script> 
+{% block head %}
+<script src="../static/scripts/new_reference.js" defer></script>
 {% endblock %}
 
 {% block body %}
 
-<h2>Edit reference: {{ reference.name }}</h2>
+<h2>Edit reference: {{ ref.name }}</h2>
 
-<form action="/edit_reference/{{ reference.id }}" method="post">
+<form action="/edit_reference" method="post">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul>
@@ -24,8 +24,8 @@
     <div>
         <label for="type">Reference type:</label>
         <select name="type" id="type" required>
-            {% for type in all_refs %}
-                {% if type == reference.type %}
+            {% for type in ref_types %}
+                {% if type == ref.type %}
                 <option value="{{ type }}" selected>{{ type }}</option>
                 {% else %}
                 <option value="{{ type }}">{{ type }}</option>
@@ -36,36 +36,29 @@
 
     <div>
         <label for="name">Reference name:</label>
-        <input type="text" name="name" id="name" value="{{ reference.name }}" maxlength="100" required>
+        <input type="text" name="name" id="name" value="{{ ref.name }}" maxlength="100" required>
     </div>
     <br>
 
     <div id="required-fields">
-        Required Fields:<br>
-        {% for field_name in required %}
-            {% set field_obj = reference.fields | selectattr("type", "equalto", field_name) | first %}
-            <label for="{{ field_name }}">{{ field_name }}: </label>
-            <input type="text" name="{{ field_name }}" id="{{ field_name }}" 
-                   value="{{ field_obj.value if field_obj else '' }}" required maxlength="500"> <br>
+        Required fields:<br>
+        {% for field in ref.fields if field.type in required %}
+        <label for="{{ field.type }}">{{ field.type }}: </label>
+        <input type="text" name="{{ field.type }}" id="{{ field.type }}"
+                value="{{ field.value }}" required maxlength="500"> <br>
         {% endfor %}
-        <br>
     </div>
 
     <div id="optional-fields">
         Optional Fields:<br>
-        {% set optional_fields_present = false %}
-        {% for field_name in optional %}
-            {% set field_obj = reference.fields | selectattr("type", "equalto", field_name) | first %}
-            {% if field_obj %}
-                {% set optional_fields_present = true %}
-                <div>
-                    <label for="{{ field_name }}">{{ field_name }}: </label>
-                    <input type="text" name="{{ field_name }}" id="{{ field_name }}" value="{{ field_obj.value }}" maxlength="500">
-                </div>
-            {% endif %}
-        {% endfor %}
-        {% if not optional_fields_present %}
-        <p id="no-optionals">No optional fields added.</p>
+        {% if optional %}
+            {% for field in ref.fields if field.type in optional %}
+            <label for="{{ field.type }}">{{ field.type }}: </label>
+            <input type="text" name="{{ field.type }}" id="{{ field.type }}"
+                    value="{{ field.value }}" required maxlength="500"> <br>
+            {% endfor %}
+        {% else %}
+        <p id="no-optional-fields">No optional fields</p>
         {% endif %}
     </div>
 
@@ -77,11 +70,8 @@
 <div id="optional-fields-adder">
     <label for="optional-select" id="optional-label">Optional fields:</label>
     <select name="optional-select" id="optional-select">
-        {% for field_name in optional %}
-            {% set exists = reference.fields | selectattr("type", "equalto", field_name) | list %}
-            {% if not exists %}
-                <option value="{{ field_name }}">{{ field_name }}</option>
-            {% endif %}
+        {% for type in optional if type not in ref.optional %}
+        <option value="{{ type }}">{{ type }}</option>
         {% endfor %}
     </select>
     <button type="button" id="optional-button">Add optional field</button>
