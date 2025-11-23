@@ -1,11 +1,10 @@
 from typing import Iterable
-from sqlalchemy import ScalarResult
+
+from sqlalchemy import ScalarResult, select
 
 from config import db
-from sqlalchemy import select
-
-from models.reference import Reference
 from models.field import Field
+from models.reference import Reference
 
 
 class ReferenceRepository:

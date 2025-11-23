@@ -1,5 +1,7 @@
 import pytest
+
 from scripts.bibtex_types import types
+
 
 def test_each_reference_has_required_and_optional():
     for _, fields in types.items():
