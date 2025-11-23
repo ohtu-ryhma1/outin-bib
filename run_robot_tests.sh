@@ -1,16 +1,10 @@
 #!/bin/bash
 
-echo "Running tests"
-
-# create database
-echo "Creating database"
-poetry run python src/db_helper.py
-echo "Database created"
-
+echo "Running robot tests"
 
 # launch Flask-server
 echo "Starting Flask server"
-poetry run python3 src/index.py &
+poetry run invoke start
 echo "Flask server started"
 
 
@@ -23,7 +17,7 @@ echo "Server ready"
 
 
 # run robot tests
-echo "Running robot tests"
+echo "Starting robot tests"
 poetry run robot --variable HEADLESS:true src/robot_tests
 status=$?
 echo "Robot tests complete"
