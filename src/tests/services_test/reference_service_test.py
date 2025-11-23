@@ -10,7 +10,7 @@ class TestReferenceServiceWithReference(BaseTestCase):
         repo = ReferenceRepository(self.db)
         self.service = ReferenceService(repo)
 
-        ref_data = {
+        self.ref_data = {
             "type": "book",
             "name": "test_name",
             "fields": {
@@ -20,23 +20,31 @@ class TestReferenceServiceWithReference(BaseTestCase):
             },
         }
 
-        self.service.create(ref_data)
+        self.service.create(self.ref_data)
 
     def test_creation(self):
         self.assertIsNotNone(self.service)
 
     def test_references(self):
-        reference = self.service.get_all().first()
+        reference = self.service.get()
         self.assertIsNotNone(reference)
 
     def test_reference_type(self):
-        reference = self.service.get_all().first()
+        reference = self.service.get()
         self.assertEqual(reference.type, "book")
 
     def test_reference_field(self):
-        reference = self.service.get_all().first()
+        reference = self.service.get()
         field = reference.fields[0]
         self.assertEqual(field.type, "author")
+
+    def test_update_reference_name(self):
+        ref_id = self.service.get().id
+        self.ref_data["name"] = "new_test_name"
+        self.service.update(ref_id, self.ref_data)
+
+        ref_name = self.service.get(ref_id=ref_id).name
+        self.assertEqual(ref_name, "new_test_name")
 
 
 class TestReferenceServiceWithoutReference(BaseTestCase):
@@ -50,8 +58,8 @@ class TestReferenceServiceWithoutReference(BaseTestCase):
         self.assertIsNotNone(self.service)
 
     def test_references(self):
-        reference = self.service.get_all().first()
-        self.assertIsNone(reference)
+        with self.assertRaises(ValueError):
+            self.service.get()
 
 
 class TestReferenceServiceWithIncorrectInput(BaseTestCase):
@@ -105,3 +113,35 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
         result = self.service.create(self.ref_data)
         self.assertIsNotNone(result)
         self.assertEqual(result.name, self.ref_data["name"])
+
+
+class TestReferenceServiceUpdateWithIncorrectInput(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+
+        repo = ReferenceRepository(self.db)
+        self.service = ReferenceService(repo)
+
+        self.ref_data = {
+            "type": "book",
+            "name": "test_name",
+            "fields": {
+                "author": "test_author",
+                "title": "test_title",
+                "year/date": "2025",
+            },
+        }
+
+        self.service.create(self.ref_data)
+
+    def test_update_incorrect_reference_name(self):
+        ref_id = self.service.get().id
+        self.ref_data["name"] = "new_test_name" * 50
+        with self.assertRaises(ValueError):
+            self.service.update(ref_id, self.ref_data)
+
+    def test_update_missing_required_field(self):
+        ref_id = self.service.get().id
+        self.ref_data["fields"].pop("author")
+        with self.assertRaises(ValueError):
+            self.service.update(ref_id, self.ref_data)
