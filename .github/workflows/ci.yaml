@@ -1,9 +1,9 @@
 name: CI
 
 env:
-  TEST_DB_URL=postgresql://postgres:postgres@localhost:5432/postgres
-  TEST_DB=true
-  SECRET_KEY=key
+  TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
+  TEST_DB: true
+  SECRET_KEY: key
 
 on:
   workflow_dispatch:
