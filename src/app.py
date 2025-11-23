@@ -1,8 +1,8 @@
-from flask import flash, jsonify, redirect, render_template, request
+from flask import redirect, render_template, request
 
-from config import app, db
-from services.reference_service import reference_service as ref_service
-from services.reference_types import get_reference_fields, get_reference_types
+from src.config import app
+from src.services.reference_service import reference_service as ref_service
+from src.services.reference_types import get_reference_fields, get_reference_types
 
 
 @app.get("/")

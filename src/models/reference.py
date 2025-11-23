@@ -2,7 +2,7 @@ from typing import List
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from config import db
+from src.config import db
 
 
 class Reference(db.Model):

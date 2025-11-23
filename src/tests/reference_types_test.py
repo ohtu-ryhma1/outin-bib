@@ -1,7 +1,7 @@
 import pytest
 
-from scripts.bibtex_types import types
-from services.reference_types import get_reference_fields, get_reference_types
+from src.scripts.bibtex_types import types
+from src.services.reference_types import get_reference_fields, get_reference_types
 
 
 def test_get_reference_types_matches_keys():

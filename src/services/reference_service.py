@@ -2,9 +2,9 @@ from typing import Iterable
 
 from sqlalchemy import ScalarResult
 
-from models.reference import Reference
-from repositories.reference_repository import reference_repository
-from services.input_validation import validate_reference
+from src.models.reference import Reference
+from src.repositories.reference_repository import reference_repository
+from src.services.input_validation import validate_reference
 
 
 class ReferenceService:

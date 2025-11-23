@@ -1,4 +1,4 @@
-from scripts.bibtex_types import types
+from src.scripts.bibtex_types import types
 
 
 def get_reference_types() -> set:

@@ -2,9 +2,9 @@ from typing import Iterable
 
 from sqlalchemy import ScalarResult, select
 
-from config import db
-from models.field import Field
-from models.reference import Reference
+from src.config import db
+from src.models.field import Field
+from src.models.reference import Reference
 
 
 class ReferenceRepository:

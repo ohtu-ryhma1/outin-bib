@@ -1,14 +1,6 @@
-import os
-import sys
-import unittest
-
-# add src to sys.path to locate modules
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from base import BaseTestCase
-
-from repositories.reference_repository import ReferenceRepository
-from services.reference_service import ReferenceService
+from src.repositories.reference_repository import ReferenceRepository
+from src.services.reference_service import ReferenceService
+from src.tests.base import BaseTestCase
 
 
 class TestReferenceServiceWithReference(BaseTestCase):
