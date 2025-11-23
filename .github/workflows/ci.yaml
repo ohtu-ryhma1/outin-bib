@@ -2,32 +2,36 @@ name: CI
 
 env:
   TEST_DB_URL=postgresql://postgres:postgres@localhost:5432/postgres
-  TEST_ENV=true
   TEST_DB=true
   SECRET_KEY=key
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - main
       - dev
       - release/*
     paths-ignore:
+      - .gitignore
       - '*.md'
       - docs/*
       - ci.yaml
+
   pull_request:
     branches:
       - main
       - dev
       - release/*
     paths-ignore:
+      - .gitignore
       - '*.md'
       - docs/*
       - ci.yaml
 
 jobs:
-  build:
+  unit-tests:
     runs-on: ubuntu-latest
 
     services:
@@ -45,6 +49,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+
       - name: Set up Python 3.14
         uses: actions/setup-python@v6
         with:
@@ -67,6 +72,23 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+  robot-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
       - name: Setup chromedriver
         uses: nanasess/setup-chromedriver@master
       - run: |
@@ -76,3 +98,24 @@ jobs:
 
       - name: Run robot tests
         run: bash run_robot_tests.sh
+
+
+  pylint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run pylint
+        run: poetry run pylint src
