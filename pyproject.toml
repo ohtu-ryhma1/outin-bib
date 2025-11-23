@@ -24,7 +24,7 @@ dev = [
     "robotframework-seleniumlibrary (>=6.8.0,<7.0.0)",
     "pre-commit (>=4.5.0,<5.0.0)",
     "black (>=25.11.0,<26.0.0)",
-    "isort (>=7.0.0,<8.0.0)"
+    "isort (>=7.0.0,<8.0.0)",
 ]
 
 [tool.poetry]
@@ -35,3 +35,14 @@ line-length = 88
 
 [tool.isort]
 profile = "black"
+
+[tool.pylint]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-few-public-methods",
+]
+
+[tool.pylint.format]
+max-line-length = "88"
