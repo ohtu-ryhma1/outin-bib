@@ -10,8 +10,6 @@ class Base(DeclarativeBase):
 
 # load environment variables
 load_dotenv()
-test_env = getenv("TEST_ENV") == "true"
-print(f"Test environment: {test_env}")
 
 # create app instance
 app = Flask(__name__)
