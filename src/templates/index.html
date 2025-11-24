@@ -8,9 +8,9 @@
 
 {% block body %}
 
-{% if references %}
+{% if refs.first() %}
 <div class="refs">
-    {% for ref in references %}
+    {% for ref in refs %}
     <div class="ref-card">
         <div class="ref-info">
             <p class="ref-name">@{{ ref.name }}</p>

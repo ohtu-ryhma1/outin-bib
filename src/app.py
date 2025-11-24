@@ -7,11 +7,11 @@ from src.services.reference_types import get_reference_fields, get_reference_typ
 
 @app.get("/")
 def index():
-    references = ref_service.get_all()
+    refs = ref_service.get_all()
     return render_template(
         "index.html",
         nav="index",
-        references=references,
+        refs=refs,
     )
 
 
