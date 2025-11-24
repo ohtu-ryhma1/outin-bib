@@ -10,12 +10,14 @@ References
 
 {% if references %}
 <ul>
-    {% for reference in references %}
+    {% for ref in references %}
     <div>
-        <p>{{reference.name}}, type: {{reference.reference_type}}</p>
-        {% for field in reference.fields %}
-            <p>{{field.name}}: {{field.value}}</p>
+        <p>{{ref.name}}, type: {{ref.type}} | <a href="/edit_reference?id={{ ref.id }}" class="edit-reference">Edit reference</a></p>
+        {% for field in ref.fields %}
+            <p>{{field.type}}: {{field.value}}</p>
         {% endfor %}
+        <hr>
+        </p>
     </div>
     {% endfor %}
 </ul>
@@ -23,7 +25,16 @@ References
 <p>No references</p>
 {% endif %}
 
-
 <p><a href="/new_reference">Add a new reference</a></p>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
 
 {% endblock %}

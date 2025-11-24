@@ -1,16 +1,27 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
 from os import getenv
 
+from dotenv import load_dotenv
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+# load environment variables
 load_dotenv()
 
-test_env = getenv("TEST_ENV") == "true"
-print(f"Test environment: {test_env}")
-
-# define app objects
+# create app instance
 app = Flask(__name__)
 app.secret_key = getenv("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 
-db = SQLAlchemy(app)
+# use in-memory database if test_db is true
+test_db = getenv("TEST_DB") == "true"
+DB_URL = getenv("TEST_DB_URL") if test_db else getenv("PRODUCTION_DB_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = DB_URL
+
+# initialize database instance and connect it to the app instance
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)

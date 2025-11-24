@@ -1,108 +1,74 @@
-from sqlalchemy import text
-from config import db
+from typing import Iterable
 
-from entities.reference import Reference
-from entities.field import Field
+from sqlalchemy import ScalarResult, select
+
+from src.config import db
+from src.models.field import Field
+from src.models.reference import Reference
+
 
 class ReferenceRepository:
-    def __init__(self):
-        pass
 
-    def get_reference_types(self):
-        """Returns a set containing all available reference types with their ids"""
+    def __init__(self, db):
+        self._db = db
 
-        sql = text(
-            "SELECT reference_type_id AS id, name"
-            "  FROM reference_types"
+    def get_all(self) -> Iterable[ScalarResult]:
+        refs = self._db.session.scalars(select(Reference))
+        return refs
+
+    def get(self, ref_id: int = None) -> Reference:
+        if not ref_id:
+            ref = self._db.session.scalar(select(Reference))
+        else:
+            ref = self._db.session.scalar(
+                select(Reference).where(Reference.id == ref_id)
+            )
+
+        if not ref and not ref_id:
+            raise ValueError("There are no references in this repository")
+        if not ref:
+            raise ValueError(f"Reference with id {ref_id} does not exist")
+        return ref
+
+    def create(self, ref_data: dict) -> Reference:
+        ref = Reference(
+            type=ref_data["type"],
+            name=ref_data["name"],
         )
 
-        reference_types = db.session.execute(sql).fetchall()
-        return set((rt.id, rt.name) for rt in reference_types)
+        for field_type, field_value in ref_data["fields"].items():
+            ref.fields.append(
+                Field(
+                    type=field_type,
+                    value=field_value,
+                )
+            )
 
-    def get_field_types(self):
-        """Returns a set containing all available field types with their ids"""
+        self._db.session.add(ref)
+        self._db.session.commit()
 
-        sql = text(
-            "SELECT field_type_id AS id, name"
-            "  FROM field_types"
-        )
+        return ref
 
-        field_types = db.session.execute(sql).fetchall()
-        return set((ft.id, ft.name) for ft in field_types)
+    def update(self, ref_id: int, ref_data: dict) -> Reference:
+        ref = self.get(ref_id)
 
-    def get_references(self):
-        """Returns a list of all references as Reference objects"""
+        ref.type = ref_data["type"]
+        ref.name = ref_data["name"]
 
-        # get all references
-        sql = text(
-            "SELECT r.reference_id AS id, t.name AS type, r.name AS name"
-            "  FROM \"references\" AS r"
-            "  JOIN reference_types AS t"
-            "       ON r.reference_type_id = t.reference_type_id"
-        )
+        ref.fields.clear()
 
-        references = db.session.execute(sql).fetchall()
+        for field_type, field_value in ref_data["fields"].items():
+            ref.fields.append(
+                Field(
+                    type=field_type,
+                    value=field_value,
+                )
+            )
 
-        # get all fields for all references
-        sql = text(
-            "SELECT t.name AS name, f.value AS value"
-            "  FROM fields AS f"
-            "  JOIN field_types AS t"
-            "       ON f.field_type_id = t.field_type_id"
-            " WHERE f.reference_id = :reference_id"
-        )
+        self._db.session.commit()
 
-        # create dictionary for each reference
-        new_references = []
-        for reference in references:
-            # get fields for reference
-            params = {"reference_id": reference.id}
-            fields = db.session.execute(sql, params).fetchall()
-            fields = [Field(field.name, field.value) for field in fields]
+        return ref
 
-            # construct the reference object
-            new_reference = Reference(reference.type, reference.name, fields=fields)
-            new_references.append(new_reference)
 
-        return new_references
-
-    def create_reference(self, reference):
-        """Add a new reference to the database"""
-
-        # check if reference type is valid
-        reference_type = next((t for t in self.get_reference_types() if t[1] == reference.reference_type), None)
-        if not reference_type:
-            return None
-
-        # add reference into database
-        sql = text(
-            "INSERT INTO \"references\" (reference_type_id, name)"
-            "     VALUES (:reference_type_id, :name)"
-            "  RETURNING reference_id"
-        )
-
-        params = {"reference_type_id": reference_type[0], "name": reference.name}
-        new_reference_id = db.session.execute(sql, params).scalar()
-
-        # add fields to database
-        sql = text(
-            "INSERT INTO fields (field_type_id, reference_id, value)"
-            "     VALUES (:field_type_id, :reference_id, :value)"
-        )
-
-        field_types = self.get_field_types()
-        for field in reference.fields:
-            # check if field type is valid
-            field_type = next((t for t in field_types if t[1] == field.name), None)
-            if not field_type:
-                continue
-
-            # add field to database
-            params = {"field_type_id": field_type[0], "reference_id": new_reference_id,"value": field.value}
-            db.session.execute(sql, params)
-
-        db.session.commit()
-
-        return new_reference_id
-
-reference_repository = ReferenceRepository()
+# default repository
+reference_repository = ReferenceRepository(db)
