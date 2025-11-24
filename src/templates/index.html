@@ -1,40 +1,40 @@
 {% extends "layout.html" %}
 
-{% block title %}
-References
-{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="../static/styles/index.css">
+ {% endblock %}
+
+{% block title %}References{% endblock %}
 
 {% block body %}
 
-<h2>All references: </h2>
-
 {% if references %}
-<ul>
+<div class="refs">
     {% for ref in references %}
-    <div>
-        <p>{{ref.name}}, type: {{ref.type}} | <a href="/edit_reference?id={{ ref.id }}" class="edit-reference">Edit reference</a></p>
+    <div class="ref-card">
+        <div class="ref-info">
+            <p class="ref-name">@{{ ref.name }}</p>
+            <p class="separator">|</p>
+            <p class="ref-type">{{ ref.type }}</p>
+            <div class="edit-button">
+                <a href="/edit_reference" class="icon-link">
+                    <span class="material-symbols-outlined">edit</span>
+                </a>
+            </div>
+        </div>
+        <div class="fields">
         {% for field in ref.fields %}
-            <p>{{field.type}}: {{field.value}}</p>
+            <div class="field">
+                <p class="field-type">{{ field.type }}: </p>
+                <p class="field-value">{{ field.value }}</p>
+            </div>
         {% endfor %}
-        <hr>
-        </p>
+        </div>
     </div>
     {% endfor %}
-</ul>
+</div>
 {% else %}
-<p>No references</p>
+<p class="no-references">No references</p>
 {% endif %}
-
-<p><a href="/new_reference">Add a new reference</a></p>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-{% endwith %}
 
 {% endblock %}
