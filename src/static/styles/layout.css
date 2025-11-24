@@ -1,0 +1,129 @@
+:root {
+    color-scheme: light;
+
+    --color-bg-1: #eee;
+    --color-bg-2: #fff;
+    --color-text-1: #222;
+
+    --color-accent-1: #e29abe;
+
+    --color-success: #4ade80;
+    --color-error: #f87171;
+}
+
+::selection {
+    color: var(--color-bg-1);
+    background: var(--color-text-1);
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(calc(100% + 1.5rem));
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(100% + 1.5rem));
+    }
+}
+
+* {
+    font-family: "Lexend", serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    color: var(--color-text-1);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    grid-auto-flow: row;
+    place-content: start;
+
+    background: linear-gradient(var(--color-bg-1), var(--color-bg-2))
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+input[type=text] {
+    /* background: var(--color-bg-1); */
+    border-radius: 4px;
+    /* padding: 0.5rem; */
+}
+
+.flash {
+    position: fixed;
+    display: grid;
+    place-content: center;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 1rem;
+    background: var(--color-bg-2);
+    max-width: 15vw;
+    border: 2px solid var(--color-text-1);
+    animation: slide-in 1s ease-out forwards, slide-out 1s ease-in 5s forwards;
+}
+
+.flash.success {
+    border: 2px solid var(--color-success);
+}
+
+.flash.error {
+    border: 2px solid var(--color-error);
+}
+
+.navbar {
+    display: grid;
+    background-color: var(--color-bg-2);
+    width: 100vw;
+}
+
+.nav-list {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    list-style: none;
+    padding: 0;
+}
+
+.nav-item {
+    display: grid;
+    align-items: center;
+}
+
+.nav-item.current {
+    background: var(--color-text-1);
+}
+
+.nav-link {
+    font-family: "Playfair Display";
+    font-size: 1.5rem;
+    padding: 1rem;
+    white-space: nowrap;
+}
+
+.nav-item.current .nav-link {
+    color: var(--color-bg-1);
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
