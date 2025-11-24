@@ -8,7 +8,11 @@ from src.services.reference_types import get_reference_fields, get_reference_typ
 @app.get("/")
 def index():
     references = ref_service.get_all()
-    return render_template("index.html", references=references)
+    return render_template(
+        "index.html",
+        nav="index",
+        references=references,
+    )
 
 
 @app.get("/new_reference")
@@ -20,6 +24,7 @@ def show_new_reference():
 
     return render_template(
         "new_reference.html",
+        nav="new",
         all_refs=all_refs,
         ref_type=ref_type,
         required=required,
@@ -63,6 +68,7 @@ def show_edit_reference():
 
     return render_template(
         "edit_reference.html",
+        nav="index",
         ref=ref,
         ref_types=ref_types,
         required=required,
