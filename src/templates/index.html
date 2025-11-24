@@ -25,7 +25,16 @@ References
 <p>No references</p>
 {% endif %}
 
-
 <p><a href="/new_reference">Add a new reference</a></p>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
 
 {% endblock %}
