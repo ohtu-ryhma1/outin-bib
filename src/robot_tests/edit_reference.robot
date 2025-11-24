@@ -6,7 +6,7 @@ Suite Teardown   Close Browser
 *** Test Cases ***
 Creating a reference succeeds
     Go To  ${HOME_URL}
-    Click Link  Add a new reference
+    Click Element  css:a.nav-link[href='/new_reference']
     Title Should Be  Create a new reference
 
     Select From List By Value  id=type  dataset
@@ -39,15 +39,15 @@ Creating a reference succeeds
     Click Button  Submit
 
     Title Should Be  References
-    Page Should Contain  Test dataset, type: dataset
-    Page Should Contain  author/editor: Test Author
-    Page Should Contain  title: Test Title
-    Page Should Contain  year/date: 2010
-    Page Should Contain  eprint: EprintName
-    Page Should Contain  publisher: PublisherName
+    Page Should Contain  @Test dataset
+    Page Should Contain  Test Author
+    Page Should Contain  Test Title
+    Page Should Contain  2010
+    Page Should Contain  EprintName
+    Page Should Contain  PublisherName
 
     #Edit the reference
-    Click Link  Edit reference
+    Click Element  css:a.icon-link
 
     #Checking that prior information is visible
     Element Attribute Value Should Be  id=name  value  Test dataset
@@ -89,11 +89,11 @@ Creating a reference succeeds
 
     Click Button  Submit
 
-    Page Should Contain  TestName, type: online
-    Page Should Contain  author: AuthorTest
-    Page Should Contain  editor: EditorTest
-    Page Should Contain  title: TitleTest
-    Page Should Contain  year/date:  2010
-    Page Should Contain  doi: DoiTest
-    Page Should Contain  eprint: EprintTest
-    Page Should Contain  url: TestUrl
+    Page Should Contain  @TestName
+    Page Should Contain  AuthorTest
+    Page Should Contain  EditorTest
+    Page Should Contain  TitleTest
+    Page Should Contain  2010
+    Page Should Contain  DoiTest
+    Page Should Contain  EprintTest
+    Page Should Contain  TestUrl
