@@ -12,7 +12,7 @@ References
 <ul>
     {% for ref in references %}
     <div>
-        <p>{{ref.name}}, type: {{ref.type}}</p>
+        <p>{{ref.name}}, type: {{ref.type}} | <a href="/edit_reference?id={{ ref.id }}" class="edit-reference">Edit reference</a></p>
         {% for field in ref.fields %}
             <p>{{field.type}}: {{field.value}}</p>
         {% endfor %}
