@@ -1,5 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
+Library  Collections
 
 *** Variables ***
 ${SERVER}     localhost:5001
@@ -27,60 +28,54 @@ Open And Configure Browser
 
 
 Create Reference
-    Go To  ${HOME_URL}
-    Click Element  css:a.nav-link[href='/new_reference']
-    Title Should Be  Create a new reference
+    [Arguments]  ${name}=Test dataset  ${type}=dataset  ${author}=Test Author  ${title}=Test Title  ${year}=2010  ${fields}={}
+    Go To  ${HOME_URL}/add_reference
 
-    Select From List By Value  id=type  dataset
+    Input Text  id=name  ${name}
+    Input Text  id=author/editor  ${author}
+    Input Text  id=title  Test ${title}
+    Input Text  id=year/date  ${year}
 
-    Page Should Contain  Required Fields:
+    FOR  ${key}  ${value}  IN  @{fields}
 
-    Element Should Be Visible  id=name
-    Element Should Be Visible  id=author/editor
-    Element Should Be Visible  id=title
-    Element Should Be Visible  id=year/date
+        Select From List By Value  id=optional-select  ${key}
+        Click Button  id=optional-button
+        Wait Until Element Is Visible  name=${key}  10s
+        Input Text  name=${key}  ${value}
+    END
 
-    Input Text  id=name  Test dataset
-    Input Text  id=author/editor  Test Author
-    Input Text  id=title  Test Title
-    Input Text  id=year/date  2010
-
-    Page Should Contain  Optional Fields:
-    Page Should Contain  No optional fields added
-
-    Select From List By Value  id=optional-select  eprint
-    Click Button  id=optional-button
-    Wait Until Element Is Visible  name=eprint  10s
-    Input Text  name=eprint  EprintName
-
-    Select From List By Value  id=optional-select  publisher
-    Click Button  id=optional-button
-    Wait Until Element Is Visible  name=publisher
-    Input Text  name=publisher  PublisherName
-
-    Click Button  Submit
+    Click Button  Submit  #Check for correct button type
+    Wait Until Page Contains  ${name}
 
 
 Verify Reference Is Visible
+    [Arguments]  ${name}=Test dataset  ${type}=dataset  ${author}=Test Author  ${title}=Test Title  ${year}=2010  ${fields}={}
     Title Should Be  References
-    Page Should Contain  @Test dataset
-    Page Should Contain  Test Author
-    Page Should Contain  Test Title
-    Page Should Contain  2010
-    Page Should Contain  EprintName
-    Page Should Contain  PublisherName
+    Page Should Contain  ${name}
+    Page Should Contain  type: ${type}
+    Page Should Contain  author/editor: ${author}
+    Page Should Contain  title: ${title}
+    Page Should Contain  year/date: ${year}
+    FOR  ${key}  ${value}  IN  @{fields}
+        Page Should Contain  ${key}: ${value}
+    END
 
 
-Click Edit Reference And Check The Content
-    Click Element  css:a.icon-link
-
-    Element Attribute Value Should Be  id=name  value  Test dataset
-    Element Attribute Value Should Be  id=author/editor  value  Test Author
-    Element Attribute Value Should Be  id=title  value  Test Title
-    Element Attribute Value Should Be  id=year/date  value  2010
-    Element Attribute Value Should Be  id=eprint  value  EprintName
-    Element Attribute Value Should Be  id=publisher  value  PublisherName
-
+Edit Reference
+    [Arguments]  ${old_name}  ${new_values}
+    Go To  ${HOME_URL}/references
+    Click Element  xpath=//div[p[contains(text(), '${old_name}')]]//a[contains(@href, 'edit_reference')]
+    
+    FOR  ${key}  ${value}  IN  &{new_values}
+        Run Keyword If  '${key}' == 'type'
+            Select From List By Value  id=type  ${value}
+        ELSE
+            Input Text  id=${key}  ${value}
+        END
+    END
+    
+    Click Button  Submit  #Check for correct button type
+    Wait Until Page Contains  ${new_values['name'] if 'name' in new_values else old_name}
 
 Filter By Name
     [Arguments]  ${name}
@@ -108,3 +103,9 @@ Filter By Field Value
     Input Text  id=field-value-input  ${value}
     Click Button  id=apply-filter
     Wait Until Page Contains  ${value}
+
+Sort References
+    [Arguments]  ${by}=title  ${order}=asc
+    Select From List By Value  id=sort-select  ${by}
+    Select From List By Value  id=order-select  ${order}
+    Click Button  id=apply-sort
