@@ -28,7 +28,7 @@ Open And Configure Browser
 
 Create Reference
     Go To  ${HOME_URL}
-    Click Link  Add a new reference
+    Click Element  css:a.nav-link[href='/new_reference']
     Title Should Be  Create a new reference
 
     Select From List By Value  id=type  dataset
@@ -60,11 +60,23 @@ Create Reference
 
     Click Button  Submit
 
+
 Verify Reference Is Visible
     Title Should Be  References
-    Page Should Contain  Test dataset, type: dataset
-    Page Should Contain  author/editor: Test Author
-    Page Should Contain  title: Test Title
-    Page Should Contain  year/date: 2010
-    Page Should Contain  eprint: EprintName
-    Page Should Contain  publisher: PublisherName
+    Page Should Contain  @Test dataset
+    Page Should Contain  Test Author
+    Page Should Contain  Test Title
+    Page Should Contain  2010
+    Page Should Contain  EprintName
+    Page Should Contain  PublisherName
+
+
+Click Edit Reference And Check The Content
+    Click Element  css:a.icon-link
+
+    Element Attribute Value Should Be  id=name  value  Test dataset
+    Element Attribute Value Should Be  id=author/editor  value  Test Author
+    Element Attribute Value Should Be  id=title  value  Test Title
+    Element Attribute Value Should Be  id=year/date  value  2010
+    Element Attribute Value Should Be  id=eprint  value  EprintName
+    Element Attribute Value Should Be  id=publisher  value  PublisherName
