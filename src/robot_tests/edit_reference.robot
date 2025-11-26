@@ -4,61 +4,14 @@ Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
 
 *** Test Cases ***
-Creating a reference succeeds
-    Go To  ${HOME_URL}
-    Click Link  Add a new reference
-    Title Should Be  Create a new reference
-
-    Select From List By Value  id=type  dataset
-
-    Page Should Contain  Required Fields:
-
-    Element Should Be Visible  id=name
-    Element Should Be Visible  id=author/editor
-    Element Should Be Visible  id=title
-    Element Should Be Visible  id=year/date
-
-    Input Text  id=name  Test dataset
-    Input Text  id=author/editor  Test Author
-    Input Text  id=title  Test Title
-    Input Text  id=year/date  2010
-
-    Page Should Contain  Optional Fields:
-    Page Should Contain  No optional fields added
-
-    Select From List By Value  id=optional-select  eprint
-    Click Button  id=optional-button
-    Wait Until Element Is Visible  name=eprint  10s
-    Input Text  name=eprint  EprintName
-
-    Select From List By Value  id=optional-select  publisher
-    Click Button  id=optional-button
-    Wait Until Element Is Visible  name=publisher
-    Input Text  name=publisher  PublisherName
-
-    Click Button  Submit
-
-    Title Should Be  References
-    Page Should Contain  Test dataset, type: dataset
-    Page Should Contain  author/editor: Test Author
-    Page Should Contain  title: Test Title
-    Page Should Contain  year/date: 2010
-    Page Should Contain  eprint: EprintName
-    Page Should Contain  publisher: PublisherName
-
-    #Edit the reference
-    Click Link  Edit reference
-
-    #Checking that prior information is visible
-    Element Attribute Value Should Be  id=name  value  Test dataset
-    Element Attribute Value Should Be  id=author/editor  value  Test Author
-    Element Attribute Value Should Be  id=title  value  Test Title
-    Element Attribute Value Should Be  id=year/date  value  2010
-    Element Attribute Value Should Be  id=eprint  value  EprintName
-    Element Attribute Value Should Be  id=publisher  value  PublisherName
+Editing A Reference Succeeds
+    Open And Configure Browser
+    Create Reference
+    Verify Reference Is Visible
+    Click Edit Reference And Check The Content
 
     Select From List By Value  id=type  online
-    
+
     #Checking that old information is not visible
     Element Attribute Value Should Be  id=name  value  ${EMPTY}
     Element Attribute Value Should Be  id=author  value  ${EMPTY}
@@ -66,6 +19,7 @@ Creating a reference succeeds
     Element Attribute Value Should Be  id=year/date  value  ${EMPTY}
     Element Attribute Value Should Be  id=eprint  value   ${EMPTY}
 
+    Input Text  id=name  TestName
     Input Text  id=author  AuthorTest
     Input Text  id=editor  EditorTest
     Input Text  id=title  TitleTest
@@ -75,25 +29,38 @@ Creating a reference succeeds
     Input Text  id=url  TestUrl
 
     Click Button  Submit
-    
-    #Checking that the submission doesnt go through
-    Element Should Be Visible  id=author
-    Element Should Be Visible  id=editor
-    Element Should Be Visible  id=title
-    Element Should Be Visible  id=year/date
-    Element Should Be Visible  id=doi
-    Element Should Be Visible  id=eprint
-    Element Should Be Visible  id=url
 
-    Input Text  id=name  TestName
+    #Checking that there is new information
+    Page Should Contain  @TestName
+    Page Should Contain  AuthorTest
+    Page Should Contain  EditorTest
+    Page Should Contain  TitleTest
+    Page Should Contain  2010
+    Page Should Contain  DoiTest
+    Page Should Contain  EprintTest
+    Page Should Contain  TestUrl
+
+Editing A Reference Fails:
+    Open And Configure Browser
+    Create Reference
+    Verify Reference Is Visible
+    Click Edit Reference And Check The Content
+
+    Select From List By Value  id=type  suppbook
+
+    Input Text  id=booktitle  BookTitleTest
+    Input Text  id=year/date  1900
 
     Click Button  Submit
 
-    Page Should Contain  TestName, type: online
-    Page Should Contain  author: AuthorTest
-    Page Should Contain  editor: EditorTest
-    Page Should Contain  title: TitleTest
-    Page Should Contain  year/date:  2010
-    Page Should Contain  doi: DoiTest
-    Page Should Contain  eprint: EprintTest
-    Page Should Contain  url: TestUrl
+    #Checking that the submission doesn't go through
+    Element Should Be Visible  id=booktitle
+    Element Should Be Visible  id=year/date
+
+    Input Text  id=name  SuppBookName
+
+    Click Button  Submit
+
+    Page Should Contain  @SuppBookName
+    Page Should Contain  BookTitleTest
+    Page Should Contain  1900
