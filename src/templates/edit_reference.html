@@ -3,7 +3,7 @@
 {% block title %}Edit reference {{ ref.name }}{% endblock %}
 
 {% block head %}
-<script src="../static/scripts/new_reference.js" defer></script>
+<script src="../static/scripts/edit_reference.js" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -21,20 +21,11 @@
     {% endif %}
     {% endwith %}
 
+    
     <div>
         <label for="type">Reference type:</label>
-        <select name="type" id="type" required>
-            {% for type in ref_types %}
-                {% if type == ref.type %}
-                <option value="{{ type }}" selected>{{ type }}</option>
-                {% else %}
-                <option value="{{ type }}">{{ type }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-    </div>
-
-    <div>
+        <input type="text" name="type" id="type" value="{{ ref.type }}" readonly disabled required>
+        <br>
         <label for="name">Reference name:</label>
         <input type="text" name="name" id="name" value="{{ ref.name }}" maxlength="100" required>
     </div>
