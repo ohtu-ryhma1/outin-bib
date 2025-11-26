@@ -24,3 +24,47 @@ Open And Configure Browser
         Set Selenium Speed  ${DELAY}
     END
     Open Browser  browser=${BROWSER}  options=${options}
+
+
+Create Reference
+    Go To  ${HOME_URL}
+    Click Link  Add a new reference
+    Title Should Be  Create a new reference
+
+    Select From List By Value  id=type  dataset
+
+    Page Should Contain  Required Fields:
+
+    Element Should Be Visible  id=name
+    Element Should Be Visible  id=author/editor
+    Element Should Be Visible  id=title
+    Element Should Be Visible  id=year/date
+
+    Input Text  id=name  Test dataset
+    Input Text  id=author/editor  Test Author
+    Input Text  id=title  Test Title
+    Input Text  id=year/date  2010
+
+    Page Should Contain  Optional Fields:
+    Page Should Contain  No optional fields added
+
+    Select From List By Value  id=optional-select  eprint
+    Click Button  id=optional-button
+    Wait Until Element Is Visible  name=eprint  10s
+    Input Text  name=eprint  EprintName
+
+    Select From List By Value  id=optional-select  publisher
+    Click Button  id=optional-button
+    Wait Until Element Is Visible  name=publisher
+    Input Text  name=publisher  PublisherName
+
+    Click Button  Submit
+
+Verify Reference Is Visible
+    Title Should Be  References
+    Page Should Contain  Test dataset, type: dataset
+    Page Should Contain  author/editor: Test Author
+    Page Should Contain  title: Test Title
+    Page Should Contain  year/date: 2010
+    Page Should Contain  eprint: EprintName
+    Page Should Contain  publisher: PublisherName
