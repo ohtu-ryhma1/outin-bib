@@ -39,6 +39,9 @@ class ReferenceService:
         validate_reference(ref_data)
         return self._repo.update(ref_id, ref_data)
 
+    def delete_all(self):
+        return self._repo.delete_all()
+
 
 # default service
 reference_service = ReferenceService(reference_repository)

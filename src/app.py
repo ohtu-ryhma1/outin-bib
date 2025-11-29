@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, jsonify, redirect, render_template, request, url_for
 
 from src.config import app
 from src.services.reference_service import reference_service as ref_service
@@ -103,3 +103,12 @@ def edit_reference():
     except ValueError as error:
         flash(str(error), "error")
         return redirect(url_for("edit_reference", ref_id=ref_id))
+
+
+if app.config["TEST_ENV"]:
+
+    @app.post("/test/reset-db")
+    def reset_db():
+        if ref_service.delete_all():
+            return jsonify("database reset succesfully"), 200
+        return jsonify("database reset unsuccesfull"), 500

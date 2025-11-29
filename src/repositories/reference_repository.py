@@ -68,6 +68,11 @@ class ReferenceRepository:
 
         return ref
 
+    def delete_all(self):
+        self._db.session.query(Reference).delete(synchronize_session=False)
+        self._db.session.commit()
+        return True
+
 
 # default repository
 reference_repository = ReferenceRepository(db)
