@@ -24,14 +24,14 @@ References
 <form method="get" action="/" class="filters" id="search-form">
   <div>
     <label for="name">Name:</label>
-    <input type="text" name="name" id="name" placeholder="Search by name" value="{{ name_q }}">
+    <input type="text" name="name" id="name" placeholder="Search by name" value="{{ selected_name }}">
   </div>
 
   <div style="margin-top:0.5rem;">
     <label for="types">Types:</label>
     <select id="types" name="types" multiple>
       {% for t in all_types %}
-        <option value="{{ t }}" {% if t in types_q %}selected{% endif %}>{{ t }}</option>
+        <option value="{{ t }}" {% if t in selected_types %}selected{% endif %}>{{ t }}</option>
       {% endfor %}
     </select>
   </div>
@@ -39,21 +39,21 @@ References
 <div style="margin-top:0.75rem;">
   <label>Field filters:</label>
   <div id="field-filters" data-all-fields='{{ all_fields | tojson }}'>
-    {% if field_filters and field_filters|length > 0 %}
-      {% for ff in field_filters %}
+    {% if selected_filters and selected_filters|length > 0 %}
+      {% for ff in selected_filters %}
         <div class="filter-row">
-          <select name="field[]">
+          <select name="field">
             {% for f in all_fields %}
               <option value="{{ f }}" {% if f == ff.field %}selected{% endif %}>{{ f }}</option>
             {% endfor %}
           </select>
-          <select name="op[]">
+          <select name="op">
             {% set ops = ['contains', 'equals', 'startswith', 'endswith'] %}
             {% for o in ops %}
               <option value="{{ o }}" {% if o == ff.op %}selected{% endif %}>{{ o }}</option>
             {% endfor %}
           </select>
-          <input type="text" name="value[]" value="{{ ff.value }}" placeholder="Value">
+          <input type="text" name="value" value="{{ ff.value }}" placeholder="Value">
           <button type="button" class="remove-filter" aria-label="Remove filter">&times;</button>
         </div>
       {% endfor %}

@@ -72,4 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
       fieldFiltersContainer.appendChild(createFilterRow(html));
     });
   }
+  
+  // 
+  document.getElementById('search-form').addEventListener('submit', () => {
+    // Get all filter rows
+    const rows = document.querySelectorAll('#field-filters .filter-row');
+    rows.forEach((row, i) => {
+      // For each input/select in the row, set the correct name
+      row.querySelector('[name^="field"]').name = `filters[${i}][field]`;
+      row.querySelector('[name^="op"]').name = `filters[${i}][op]`;
+      row.querySelector('[name^="value"]').name = `filters[${i}][value]`;
+    });
+  });
+
 });

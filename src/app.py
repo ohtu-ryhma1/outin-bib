@@ -7,8 +7,41 @@ from src.services.reference_types import get_reference_fields, get_reference_typ
 
 @app.get("/")
 def index():
+    # get filters for template and service
+    selected_filters = []
+    template_selected_filters = []
+    i = 0
+    while True:
+        field = request.args.get(f'filters[{i}][field]')
+        op = request.args.get(f'filters[{i}][op]')
+        value = request.args.get(f'filters[{i}][value]')
+        if field is None and op is None and value is None:
+            break
+        if field or op or value:
+            selected_filters.append(f"{field}:{op}:{value}")
+            template_selected_filters.append({"field": field, "op": op, "value": value})
+        i += 1
+    # get types
+    selected_types = request.args.getlist("types")
+    # get name
+    name = request.args.get("name")
+
+    # get references with filters
     references = ref_service.get_all()
-    return render_template("index.html", references=references)
+
+    # get all possible fields and types
+    all_fields = ["title", "date", "year"] # need service function!
+    all_types = sorted(list(get_reference_types()))
+    
+    return render_template(
+        "index.html",
+        references=references,
+        all_fields=all_fields,
+        selected_filters=template_selected_filters,
+        all_types=all_types,
+        selected_types=selected_types,
+        selected_name = name
+     )
 
 
 @app.get("/new_reference")
