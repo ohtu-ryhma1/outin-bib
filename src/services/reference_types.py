@@ -15,3 +15,18 @@ def get_reference_fields(ref_type: str) -> tuple:
     optional_fields = types[ref_type]["optional"]
 
     return required_fields, optional_fields
+
+
+def get_all_reference_fields() -> list:
+    """
+    Return a sorted list of BibTeX field names.
+    """
+    fields = set()
+
+    for _, defs in types.items():
+        for f in defs.get("required", []):
+            fields.add(f)
+        for f in defs.get("optional", []):
+            fields.add(f)
+
+    return sorted(fields)
