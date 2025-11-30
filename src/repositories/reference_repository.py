@@ -69,7 +69,9 @@ class ReferenceRepository:
         return ref
 
     def delete_all(self):
-        self._db.session.query(Reference).delete(synchronize_session=False)
+        refs = self._db.session.scalars(select(Reference))
+        for ref in refs:
+            self._db.session.delete(ref)
         self._db.session.commit()
         return True
 
