@@ -18,12 +18,12 @@ def coverage_report(ctx):
 
 @task()
 def robot(ctx):
-    ctx.run("robot src/robot_tests")
+    ctx.run("robot src/robot/tests")
 
 
 @task()
 def robot_headless(ctx):
-    ctx.run("robot --variable HEADLESS:true src/robot_tests")
+    ctx.run("robot --variable HEADLESS:true src/robot/tests")
 
 
 @task()
