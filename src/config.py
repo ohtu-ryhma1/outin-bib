@@ -18,9 +18,12 @@ app = Flask(__name__)
 app.secret_key = getenv("SECRET_KEY")
 
 # use in-memory database if test_db is true
-test_db = getenv("TEST_DB") == "true"
+test_db = getenv("TEST_DB").lower() == "true"
 DB_URL = getenv("TEST_DB_URL") if test_db else getenv("PRODUCTION_DB_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = DB_URL
+
+# enable test-specific functionality if test_env is true
+app.config["TEST_ENV"] = getenv("TEST_ENV").lower() == "true"
 
 # initialize database instance and connect it to the app instance
 db = SQLAlchemy(model_class=Base)
