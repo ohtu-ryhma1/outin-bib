@@ -3,28 +3,15 @@ from flask import flash, redirect, render_template, request, url_for
 from src.config import app
 from src.services.reference_service import reference_service as ref_service
 from src.services.reference_types import get_reference_fields, get_reference_types
+from src.services.request_parser import parse_filters
 
 
 @app.get("/")
 def index():
-    # get filters for template and service
-    selected_filters = []
-    template_selected_filters = []
-    i = 0
-    while True:
-        field = request.args.get(f'filters[{i}][field]')
-        op = request.args.get(f'filters[{i}][op]')
-        value = request.args.get(f'filters[{i}][value]')
-        if field is None and op is None and value is None:
-            break
-        if field or op or value:
-            selected_filters.append(f"{field}:{op}:{value}")
-            template_selected_filters.append({"field": field, "op": op, "value": value})
-        i += 1
-    # get types
-    selected_types = request.args.getlist("types")
-    # get name
+    # get name, types, and filters from service and straight from request
     name = request.args.get("name")
+    selected_types = request.args.getlist("types[]")
+    selected_filters = parse_filters(request.args.to_dict())
 
     # get references with filters
     references = ref_service.get_all()
@@ -37,7 +24,7 @@ def index():
         "index.html",
         references=references,
         all_fields=all_fields,
-        selected_filters=template_selected_filters,
+        selected_filters=selected_filters,
         all_types=all_types,
         selected_types=selected_types,
         selected_name = name
