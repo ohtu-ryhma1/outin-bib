@@ -1,9 +1,3 @@
-*** Settings ***
-Resource  resource.robot
-Suite Setup      Open And Configure Browser
-Suite Teardown   Close Browser
-
-*** Test Cases ***
 Filter By Name Works
     Create Reference
     Verify Reference Is Visible
