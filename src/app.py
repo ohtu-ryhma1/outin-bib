@@ -111,4 +111,4 @@ if app.config["TEST_ENV"]:
     def reset_db():
         if ref_service.delete_all():
             return jsonify("database reset succesfully"), 200
-        return jsonify("database reset unsuccesfull"), 500
+        return jsonify("database reset unsuccesful"), 500
