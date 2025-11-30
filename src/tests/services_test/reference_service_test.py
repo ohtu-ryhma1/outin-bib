@@ -58,7 +58,7 @@ class TestReferenceServiceWithoutReference(BaseTestCase):
         self.assertIsNotNone(self.service)
 
     def test_references(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(LookupError):
             self.service.get()
 
 

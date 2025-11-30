@@ -16,11 +16,22 @@ def coverage_report(ctx):
     ctx.run("coverage html")
 
 
-@task(coverage)
+@task()
 def robot(ctx):
-    ctx.run("robot src/robot_tests")
+    ctx.run("robot src/robot/tests")
 
 
-@task(coverage)
+@task()
 def robot_headless(ctx):
-    ctx.run("robot --variable HEADLESS:true src/robot_tests")
+    ctx.run("robot --variable HEADLESS:true src/robot/tests")
+
+
+@task()
+def format(ctx):
+    ctx.run("isort .")
+    ctx.run("black .")
+
+
+@task()
+def lint(ctx):
+    ctx.run("pylint src")

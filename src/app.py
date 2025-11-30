@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, jsonify, redirect, render_template, request, url_for
 
 from src.config import app
 from src.services.reference_service import reference_service as ref_service
@@ -17,9 +17,9 @@ def index():
     references = ref_service.get_all()
 
     # get all possible fields and types
-    all_fields = ["title", "date", "year"] # need service function!
+    all_fields = ["title", "date", "year"]  # need service function!
     all_types = sorted(list(get_reference_types()))
-    
+
     return render_template(
         "index.html",
         references=references,
@@ -27,19 +27,28 @@ def index():
         selected_filters=selected_filters,
         all_types=all_types,
         selected_types=selected_types,
-        selected_name = name
-     )
+        selected_name=name,
+    )
 
 
-@app.get("/new_reference")
+# feat/ui code
+# refs = ref_service.get_all_meta()
+# return render_template(
+#     "index.html",
+#     nav="index",
+#     refs=refs,
+# )
+
+
+@app.get("/new-reference")
 def show_new_reference():
-    ref_type = request.args.get("type")
-    ref_type = ref_type if ref_type else "book"
+    ref_type = request.args.get("type") or "book"
     required, optional = get_reference_fields(ref_type)
     all_refs = sorted(list(get_reference_types()))
 
     return render_template(
-        "new_reference.html",
+        "new-reference.html",
+        nav="new",
         all_refs=all_refs,
         ref_type=ref_type,
         required=required,
@@ -47,17 +56,19 @@ def show_new_reference():
     )
 
 
-@app.post("/new_reference")
+@app.post("/new-reference")
 def new_reference():
-    ref_type = request.form.get("type")
-    ref_name = request.form.get("name")
+    ref_type = request.form.get("ref-type-input")
+    ref_key = request.form.get("ref-key-input")
     fields = {
-        key: value for key, value in request.form.items() if key not in ("type", "name")
+        key: value
+        for key, value in request.form.items()
+        if key not in ("ref-type-input", "ref-key-input", "field-select") and value
     }
 
     ref_data = {
         "type": ref_type,
-        "name": ref_name,
+        "name": ref_key,
         "fields": fields,
     }
 
@@ -71,7 +82,7 @@ def new_reference():
         return redirect(url_for("show_new_reference", type=ref_type))
 
 
-@app.get("/edit_reference")
+@app.get("/edit-reference")
 def show_edit_reference():
     ref_id = request.args.get("id")
     ref = ref_service.get(ref_id=ref_id)
@@ -82,7 +93,8 @@ def show_edit_reference():
     ref.optional = set(field.type for field in ref.fields if field.type in optional)
 
     return render_template(
-        "edit_reference.html",
+        "edit-reference.html",
+        nav="index",
         ref=ref,
         ref_types=ref_types,
         required=required,
@@ -90,20 +102,21 @@ def show_edit_reference():
     )
 
 
-@app.post("/edit_reference")
+@app.post("/edit-reference")
 def edit_reference():
-    ref_id = request.form.get("id")
-    ref_type = request.form.get("type")
-    ref_name = request.form.get("name")
+    ref_id = request.args.get("id")
+    ref_type = request.form.get("ref-type-input")
+    ref_key = request.form.get("ref-key-input")
     fields = {
         key: value
         for key, value in request.form.items()
-        if key not in ("id", "type", "name")
+        if key not in ("id", "ref-type-input", "ref-key-input", "field-select")
+        and value
     }
 
     ref_data = {
         "type": ref_type,
-        "name": ref_name,
+        "name": ref_key,
         "fields": fields,
     }
 
@@ -114,4 +127,13 @@ def edit_reference():
 
     except ValueError as error:
         flash(str(error), "error")
-        return redirect(url_for("edit_reference", ref_id=ref_id, type=ref_type))
+        return redirect(url_for("edit_reference", ref_id=ref_id))
+
+
+if app.config["TEST_ENV"]:
+
+    @app.post("/test/reset-db")
+    def reset_db():
+        if ref_service.delete_all():
+            return jsonify("database reset succesfully"), 200
+        return jsonify("database reset unsuccesful"), 500

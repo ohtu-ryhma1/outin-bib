@@ -3,6 +3,7 @@ name: CI
 env:
   TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/postgres
   TEST_DB: true
+  TEST_ENV: true
   SECRET_KEY: key
 
 on:
