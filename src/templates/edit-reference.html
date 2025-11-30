@@ -40,10 +40,11 @@
         {% for field in ref.fields %}
         {% if field.type in required %}
         <label for="{{ field.type }}">{{ field.type }}<span>*</span></label>
+        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" required maxlength="500" rows="1">{{ field.value }}</textarea>
         {% else %}
         <label for="{{ field.type }}">{{ field.type }}</label>
+        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" maxlength="500" rows="1">{{ field.value }}</textarea>
         {% endif %}
-        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" required maxlength="500" rows="1">{{ field.value }}</textarea>
         {% endfor %}
     </div>
     <input type="hidden" name="ref-type-input" value="{{ ref.type }}">
