@@ -36,7 +36,7 @@ Editing Reference Required And Optional Fields Succeeds
     ${dict_book_combined} =      Evaluate    {**${DICT_BOOK_REQUIRED}, **${DICT_BOOK_OPTIONAL}}
     ${dict_book_combined_2} =    Evaluate    {**${DICT_BOOK_REQUIRED_2}, **${DICT_BOOK_OPTIONAL_2}}
     Create Reference Directly    book    test_key    ${dict_book_combined}
-    Edit Reference    test_key    test_key    ${DICT_BOOK_OPTIONAL_2}
+    Edit Reference    test_key    test_key    ${dict_book_combined_2}
     Homepage Should Be Open
     Reference Card Should Display Correct Info    test_key    book    ${DICT_BOOK_REQUIRED_2}
     Reference Should Have Correct Fields    test_key    book    ${dict_book_combined_2}
