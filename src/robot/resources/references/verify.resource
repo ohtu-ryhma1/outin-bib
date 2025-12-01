@@ -6,12 +6,10 @@ Resource    references.resource
 *** Keywords ***
 Reference Should Exist
     [Arguments]    ${ref_key}
-    Go To Homepage
     Element Should Be Visible    xpath://p[@class='ref-key' and text()='${ref_key}']
 
 Reference Should Not Exist
     [Arguments]   ${ref_key}
-    Go To Homepage
     Element Should Not Be Visible   xpath://p[@class='ref-key' and text()='${ref_key}']
 
 Reference Card Should Display Correct Info
