@@ -141,8 +141,8 @@ if app.config["TEST_ENV"]:
     @app.post("/test/reset-db")
     def reset_db():
         if ref_service.delete_all():
-            return jsonify("database reset succesfully"), 200
-        return jsonify("database reset unsuccesful"), 500
+            return jsonify("database reset successfully"), 200
+        return jsonify("database reset unsuccessful"), 500
 
 
 @app.get("/import-export")

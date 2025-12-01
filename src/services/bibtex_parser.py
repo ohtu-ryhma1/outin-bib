@@ -1,6 +1,5 @@
 """BibTeX tokenizer and parser for importing BibTeX entries."""
 
-import re
 from enum import Enum, auto
 
 
