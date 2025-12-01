@@ -4,46 +4,28 @@ Documentation    Keywords for using the search/filter modal on the homepage.
 ...              added dynamically with the “Add filter” button.
 
 Library          SeleniumLibrary
-Resource         ../shared/browser.resource
+Resource         references.resource
 
 
 *** Keywords ***
-Open Filter Modal
-    # TODO: Replace with actual selector
-    Click Element    xpath=//button[@id='open-filter-modal']    # TODO: update
-    Wait Until Page Contains Element    id=search-form
+Filter By Key
+    [Arguments]    ${key}
+    Go To Homepage
+    Open Search Window
+    Input Search Key    ${key}
+    Submit Search
 
-
-Filter By Name
-    [Arguments]    ${name}
-    Open Filter Modal
-    Input Text    id=name    ${name}
-
-    # Submit the form
-    Click Button    xpath=//button[@type="submit"]    # TODO: verify selector
-    Wait Until Page Contains    ${name}
-
-
-Select Types
+Filter By Types
     [Arguments]    @{types}
-    Open Filter Modal
+    Open Search Window
 
-    # Choices.js hides the real <select>, so type into search field
-    FOR    ${t}    IN    @{types}
-        # TODO: Update selectors; Choices.js uses dynamically generated structure.
-        # Something like:
-        # Click Element   xpath=//div[contains(@class,'choices__inner')]
-        # Input Text      xpath=//input[contains(@class,'choices__input')]    ${t}
-        # Press Key       xpath=//input[contains(@class,'choices__input')]    ENTER
-        Click Element    xpath=//div[@id="types"]    # TODO
-        # This must be updated once HTML is final
+    FOR    ${type}    IN    @{types}
+        Select Search Type    ${type}
     END
 
-    Click Button    xpath=//button[@type="submit"]
-    Sleep    0.5
+    Submit Search
 
-
-Add Field Filter Row
+Add Field Filter
     # Click “Add filter” to append a row dynamically
     # TODO: verify id
     Click Button    id=add-field-filter
@@ -75,43 +57,3 @@ Set Field Filter
     # Enter value
     Input Text    xpath=(//div[contains(@class,"filter-row")])[${index + 1}]//input    ${value}
 
-
-Submit Filters
-    Open Filter Modal
-    Click Button    xpath=//button[@type="submit"]    # TODO confirm
-    Sleep    0.5
-
-#### old code #####
-
-Filter By Name
-    [Arguments]  ${name}
-    Input Text  id=search-bar  ${name}
-    Press Key  id=search-bar  ENTER
-    Wait Until Page Contains  ${name}
-
-
-Filter By Type
-    [Arguments]  ${type}
-    Input Text  id=search-bar  ${type}
-    Press Key  id=search-bar  ENTER
-    Wait Until Page Contains  ${type}
-
-
-Filter By Field
-    [Arguments]  ${field_type}
-    Select From List By Value  id=field-filter-select  ${field_type}
-    Click Button  id=apply-filter
-
-
-Filter By Field Value
-    [Arguments]  ${field_type}  ${value}
-    Select From List By Value  id=field-select  ${field_type}
-    Input Text  id=field-value-input  ${value}
-    Click Button  id=apply-filter
-    Wait Until Page Contains  ${value}
-
-Sort References
-    [Arguments]  ${by}=title  ${order}=asc
-    Select From List By Value  id=sort-select  ${by}
-    Select From List By Value  id=order-select  ${order}
-    Click Button  id=apply-sort
