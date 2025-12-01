@@ -1,88 +1,51 @@
-// Runs after the page DOM is ready, so elements exist
-document.addEventListener("DOMContentLoaded", () => {
-  // Enables tag-style multiselect for reference types: users can pick multiple types,
-  // search options, and remove selected ones with an “x” (Choices.js)
-  const typesSelect = document.getElementById("types");
-  if (typesSelect) {
-    new Choices(typesSelect, {
-      removeItemButton: true,
-      placeholder: true,
-      placeholderValue: 'Select types',
-      searchPlaceholderValue: 'Search type',
-      shouldSort: true,
-    });
-  }
+// toggle the search window via the search icon
+const searchIcon = document.querySelector("#search-icon");
+const searchOverlay = document.querySelector("#search-overlay");
+searchIcon.addEventListener("click", () => {
+  searchOverlay.classList.toggle("active");
+});
 
-  // References to the container that holds filter rows and the button that adds new rows
-  const fieldFiltersContainer = document.getElementById("field-filters");
-  const addFilterBtn = document.getElementById("add-field-filter");
+// create Choises object for reference type filter
+const refTypesSelect = document.querySelector("#ref-type");
+new Choices(refTypesSelect, {
+  removeItemButton: true,
+  placeholder: true,
+  placeholderValue: "Select types",
+  searchPlaceholderValue: "Search type",
+  shouldSort: true,
+});
 
-  // Builds <option> list for the field dropdown from server-provided JSON (data-all-fields)
-  function buildOptionsHtmlFromData() {
-    const data = fieldFiltersContainer.dataset.allFields;
-    if (!data) return "";
-    try {
-      const fields = JSON.parse(data);
-      return fields.map(f => `<option value="${f}">${f}</option>`).join("");
-    } catch (e) {
-      console.error("Failed to parse all_fields:", e);
-      return "";
-    }
-  }
+const fieldFilters = document.querySelector("#field-filters");
 
-  // Gets field dropdown options: reuse existing row’s options if present, otherwise generate from JSON data
-  function getAllFieldOptionsHtml() {
-    const existingSelect = fieldFiltersContainer.querySelector('select[name="field[]"]');
-    if (existingSelect) return existingSelect.innerHTML;
-    return buildOptionsHtmlFromData();
-  }
+// add a new filter
+const addFilterBtn = document.querySelector("#add-field-filter");
+addFilterBtn.addEventListener("click", () => {
+  const fieldTypes = JSON.parse(fieldFilters.dataset.list)
 
-  // Creates one filter row: field selector + operator selector + value input + remove button
-  function createFilterRow(allFieldOptionsHtml) {
-    const row = document.createElement("div");
-    row.className = "filter-row";
-    row.innerHTML = `
-      <select name="field[]">
-        ${allFieldOptionsHtml}
-      </select>
-      <select name="op[]">
-        <option value="contains">contains</option>
-        <option value="equals">equals</option>
-        <option value="startswith">startswith</option>
-        <option value="endswith">endswith</option>
-      </select>
-      <input type="text" name="value[]" placeholder="Value">
-      <button type="button" class="remove-filter" aria-label="Remove filter">&times;</button>
-    `;
-    // Removes this filter row when the user clicks the “×” button
-    row.querySelector(".remove-filter").addEventListener("click", () => {
-      row.remove();
-    });
-    return row;
-  }
-
-  // Adds a new filter row when the user clicks “Add field filter”; warns if field list is unavailable
-  if (addFilterBtn) {
-    addFilterBtn.addEventListener("click", () => {
-      const html = getAllFieldOptionsHtml();
-      if (!html) {
-        alert("Field list is not available.");
-        return;
-      }
-      fieldFiltersContainer.appendChild(createFilterRow(html));
-    });
-  }
-  
-  // 
-  document.getElementById('search-form').addEventListener('submit', () => {
-    // Get all filter rows
-    const rows = document.querySelectorAll('#field-filters .filter-row');
-    rows.forEach((row, i) => {
-      // For each input/select in the row, set the correct name
-      row.querySelector('[name^="field"]').name = `filters[${i}][field]`;
-      row.querySelector('[name^="op"]').name = `filters[${i}][op]`;
-      row.querySelector('[name^="value"]').name = `filters[${i}][value]`;
-    });
+  // create select element and append the options
+  let selectHTML = '<select name="field-type">';
+  fieldTypes.forEach(function (field) {
+    selectHTML += `<option>${field}</option>`;
   });
+  selectHTML += "</select>";
 
+  // construct the rest of the filter element
+  const filterDiv = document.createElement("div");
+  filterDiv.className = "field-filter";
+  filterDiv.innerHTML = `
+        ${selectHTML}
+        <input type="text" name="field-value" placeholder="Value">
+        <button type="button" class="remove-filter-button">
+            <span class="material-symbols-outlined">close</span>
+        </button>`;
+
+  // remove this field when the remove button is clicked
+  filterDiv
+    .querySelector(".remove-filter-button")
+    .addEventListener("click", () => {
+      filterDiv.remove();
+    });
+
+  // add the field to the DOM
+  document.querySelector("#field-filters").appendChild(filterDiv);
 });
