@@ -15,3 +15,12 @@ def get_reference_fields(ref_type: str) -> tuple:
     optional_fields = types[ref_type]["optional"]
 
     return required_fields, optional_fields
+
+
+def get_all_field_types() -> set:
+    field_types = set()
+    for ref in get_reference_types():
+        required, optional = get_reference_fields(ref)
+        field_types = field_types.union(set(required), set(optional))
+
+    return field_types

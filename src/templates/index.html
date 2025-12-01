@@ -1,12 +1,75 @@
 {% extends "layout.html" %}
 
 {% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 <link rel="stylesheet" href="../static/styles/index.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
+<script src="../static/scripts/index.js" defer></script>
 {% endblock %}
 
 {% block title %}References{% endblock %}
 
+{% block navbar %}
+<li id="search-toggle">
+    <span id="search-icon" class="material-symbols-outlined">search</span>
+</li>
+{% endblock %}
+
 {% block body %}
+<div id="search-overlay">
+    <form action="/" method="get" id="search-form">
+        <div id="ref-key-search" class="search-container">
+            <label for="ref-key">Search by key</label>
+            {% if key %}
+            <input type="text" name="ref-key" id="ref-key" placeholder="Search by key" value="{{ key }}">
+            {% else %}
+            <input type="text" name="ref-key" id="ref-key" placeholder="Search by key">
+            {% endif %}
+        </div>
+
+        <div id="ref-type-filter" class="search-container">
+            <label for="ref-type">Filter by type</label>
+            <select id="ref-type" name="ref-type" multiple>
+                {% for type in all_ref_types %}
+                {% if type in ref_types %}
+                <option selected>{{ type }}</option>
+                {% else %}
+                <option>{{ type }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="field-search" class="search-container">
+            <label for="field-filters">Filter by field</label>
+            <button type="button" id="add-field-filter">
+                <span id="add-field-filter" class="material-symbols-outlined">add</span>
+            </button>
+            <div id="field-filters" data-list='{{ all_field_types | tojson }}''>
+                {% for field_filter in field_filters %}
+                <div class="field-filter">
+                    <select name="field-type">
+                        {% for field in all_field_types %}
+                        {% if field == field_filter[0] %}
+                        <option selected>{{ field }}</option>
+                        {% else %}
+                        <option>{{ field }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="field-value" value="{{ field_filter[1]}}" placeholder="Value">
+                    <button type="button" class="remove-filter-button">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button id="submit-search" type="submit">Search</button>
+    </div>
+    </form>
+</div>
 
 {% if refs %}
 <div id="refs">
@@ -17,8 +80,6 @@
             <p class="ref-key">{{ ref.name }}</p>
             {% if ref.optional_count %}
             <p class="field-count">+{{ ref.optional_count }} fields</p>
-            {% else %}
-            <p class="field-count">{{ ref.optional_count }} fields</p>
             {% endif %}
         </div>
         <div class="fields">

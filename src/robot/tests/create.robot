@@ -9,8 +9,10 @@ Suite Setup       Open And Configure Browser
 Suite Teardown    Close Browser
 Test Setup        Reset Db
 
+
 *** Variables ***
 &{DICT_BOOK_REQUIRED}    author=test_author    title=test_title    year/date=test_year/date
+
 
 *** Test Cases ***
 Creating A Reference Succeeds

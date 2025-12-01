@@ -11,8 +11,10 @@ class ReferenceService:
     def get_all(self) -> list:
         return self._repo.get_all()
 
-    def get_all_meta(self) -> list:  # injects useful data about fields
-        refs = self._repo.get_all()
+    def get_all_meta(
+        self, name: str = None, types: list = None, field_filters: list = None
+    ) -> list:
+        refs = self._repo.get_all(name, types, field_filters)
         for ref in refs:
             ref.required, ref.optional = get_reference_fields(ref.type)
             ref.required_count = len([f for f in ref.fields if f.type in ref.required])
