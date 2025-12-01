@@ -49,3 +49,11 @@ addFilterBtn.addEventListener("click", () => {
   // add the field to the DOM
   document.querySelector("#field-filters").appendChild(filterDiv);
 });
+
+// add remove button functionality to existing filters
+const existingButtons = document.querySelectorAll(".remove-filter-button")
+existingButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    btn.parentElement.remove()
+  })
+})
