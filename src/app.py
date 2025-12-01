@@ -196,7 +196,9 @@ def import_from_file():
     try:
         bibtex_text = file.read().decode("utf-8")
     except UnicodeDecodeError:
-        flash("Could not read file. Please ensure it is a valid UTF-8 text file.", "error")
+        flash(
+            "Could not read file. Please ensure it is a valid UTF-8 text file.", "error"
+        )
         return redirect(url_for("show_import_export"))
 
     if not bibtex_text.strip():

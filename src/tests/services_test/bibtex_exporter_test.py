@@ -41,7 +41,9 @@ class TestReferenceToBibtex(unittest.TestCase):
 
     def test_book_reference(self):
         ref = MockReference(
-            "book", "bookkey", {"author": "Jane Smith", "title": "A Book", "year/date": "2023"}
+            "book",
+            "bookkey",
+            {"author": "Jane Smith", "title": "A Book", "year/date": "2023"},
         )
 
         result = reference_to_bibtex(ref)
@@ -63,7 +65,12 @@ class TestReferencesToBibtex(unittest.TestCase):
             MockReference(
                 "article",
                 "key1",
-                {"author": "Author One", "title": "Title One", "journaltitle": "Journal", "year/date": "2020"},
+                {
+                    "author": "Author One",
+                    "title": "Title One",
+                    "journaltitle": "Journal",
+                    "year/date": "2020",
+                },
             ),
             MockReference(
                 "book",
@@ -86,7 +93,14 @@ class TestReferencesToBibtex(unittest.TestCase):
     def test_single_reference(self):
         refs = [
             MockReference(
-                "article", "single", {"author": "Solo Author", "title": "Solo", "journaltitle": "Journal", "year/date": "2024"}
+                "article",
+                "single",
+                {
+                    "author": "Solo Author",
+                    "title": "Solo",
+                    "journaltitle": "Journal",
+                    "year/date": "2024",
+                },
             )
         ]
 

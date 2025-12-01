@@ -172,7 +172,8 @@ class TestBibtexParser(unittest.TestCase):
             entry["fields"]["title"], "The independence of the continuum hypothesis"
         )
         self.assertEqual(
-            entry["fields"]["journal"], "Proceedings of the National Academy of Sciences"
+            entry["fields"]["journal"],
+            "Proceedings of the National Academy of Sciences",
         )
         self.assertEqual(entry["fields"]["year"], "1963")
 

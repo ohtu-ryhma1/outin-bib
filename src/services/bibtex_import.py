@@ -62,6 +62,8 @@ def import_bibtex_text(text: str) -> tuple:
         except ValueError as err:
             errors.append(f"Entry '{entry['name']}': {str(err)}")
         except IntegrityError:
-            errors.append(f"Entry '{entry['name']}': Reference with this key already exists")
+            errors.append(
+                f"Entry '{entry['name']}': Reference with this key already exists"
+            )
 
     return success_count, errors
