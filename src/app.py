@@ -2,7 +2,11 @@ from flask import flash, jsonify, redirect, render_template, request, url_for
 
 from src.config import app
 from src.services.reference_service import reference_service as ref_service
-from src.services.reference_types import get_reference_fields, get_reference_types
+from src.services.reference_types import (
+    get_all_reference_fields,
+    get_reference_fields,
+    get_reference_types,
+)
 from src.services.request_parser import parse_filters
 
 
@@ -10,14 +14,14 @@ from src.services.request_parser import parse_filters
 def index():
     # get name, types, and filters from service and straight from request
     name = request.args.get("name")
-    selected_types = request.args.getlist("types[]")
+    selected_types = request.args.getlist("types")
     selected_filters = parse_filters(request.args.to_dict())
 
     # get references with filters
     references = ref_service.get_all()
 
     # get all possible fields and types
-    all_fields = ["title", "date", "year"]  # need service function!
+    all_fields = get_all_reference_fields()
     all_types = sorted(list(get_reference_types()))
 
     return render_template(
