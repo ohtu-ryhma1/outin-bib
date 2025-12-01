@@ -10,11 +10,16 @@ ${NEW_REFERENCE_URL}    new-reference
 ${EDIT_REFERENCE_URL}   edit-reference
 
 # locators
-${SELECT_REF_TYPE}      id:ref-type-input
-${INPUT_REF_KEY}        id:ref-key-input
-${SELECT_FIELD_TYPE}    id:field-select
-${BUTTON_ADD_FIELD}     id:field-select
-${BUTTON_SUBMIT}        id:submit
+${SELECT_REF_TYPE}            id:ref-type-input
+${INPUT_REF_KEY}              id:ref-key-input
+${SELECT_FIELD_TYPE}          id:field-select
+${BUTTON_ADD_FIELD}           id:field-select
+${BUTTON_SUBMIT}              id:submit
+${BUTTON_SEARCH_LINK}         id:search-icon
+${INPUT_SEARCH_KEY}           id:ref-key
+${SELECT_FILTER_REF_TYPE}     id:ref-type
+${BUTTON_FILTER_ADD_FIELD}    id:add-field-filter
+${BUTTON_SEARCH_SUBMIT}       id:submit-search
 
 
 *** Keywords ***
@@ -67,3 +72,20 @@ Does Field Exist
 
 Submit Reference Form
     Click Button    ${BUTTON_SUBMIT}
+
+Open Search Window
+    Click Element    ${BUTTON_SEARCH_LINK}
+
+Input Search Key
+    [Arguments]    ${search_key}
+    Input Text    ${INPUT_SEARCH_KEY}    ${search_key}
+
+Select Search Type
+    [Arguments]    ${search_type}
+    Select From List By Label    ${SELECT_FILTER_REF_TYPE}    ${search_type}
+
+Add Search Field Filter
+    Click Button    ${BUTTON_FILTER_ADD_FIELD}
+
+Submit Search
+    Click Button    ${BUTTON_SEARCH_SUBMIT}
