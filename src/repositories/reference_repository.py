@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import and_, select
 
 from src.config import db
 from src.models.field import Field
@@ -10,8 +10,11 @@ class ReferenceRepository:
     def __init__(self, database):
         self._db = database
 
-    def get_all(self) -> list:
-        refs = self._db.session.scalars(select(Reference))
+    def get_all(
+        self, name: str = None, types: list = None, field_filters: list = None
+    ) -> list:
+        stmt = self._query(name, types, field_filters)
+        refs = self._db.session.scalars(stmt)
         return list(refs)
 
     def get(self, ref_id: int = None) -> Reference:
@@ -74,6 +77,27 @@ class ReferenceRepository:
             self._db.session.delete(ref)
         self._db.session.commit()
         return True
+
+    def _query(self, name=None, types=None, field_filters=None):
+        stmt = select(Reference)
+
+        if name:
+            stmt = stmt.where(Reference.name.contains(name))
+
+        if types:
+            stmt = stmt.where(Reference.type.in_(types))
+
+        if field_filters:
+            for field_type, field_value in field_filters:
+                stmt = stmt.where(
+                    Reference.fields.any(
+                        and_(
+                            Field.type == field_type, Field.value.contains(field_value)
+                        )
+                    )
+                )
+
+        return stmt
 
 
 # default repository
