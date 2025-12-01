@@ -1,6 +1,4 @@
-from typing import Iterable
-
-from sqlalchemy import ScalarResult, select
+from sqlalchemy import select
 
 from src.config import db
 from src.models.field import Field
@@ -9,12 +7,12 @@ from src.models.reference import Reference
 
 class ReferenceRepository:
 
-    def __init__(self, db):
-        self._db = db
+    def __init__(self, database):
+        self._db = database
 
-    def get_all(self) -> Iterable[ScalarResult]:
+    def get_all(self) -> list:
         refs = self._db.session.scalars(select(Reference))
-        return refs
+        return list(refs)
 
     def get(self, ref_id: int = None) -> Reference:
         if not ref_id:
@@ -25,9 +23,10 @@ class ReferenceRepository:
             )
 
         if not ref and not ref_id:
-            raise ValueError("There are no references in this repository")
+            raise LookupError("There are no references in this repository")
         if not ref:
-            raise ValueError(f"Reference with id {ref_id} does not exist")
+            raise LookupError(f"Reference with id {ref_id} does not exist")
+
         return ref
 
     def create(self, ref_data: dict) -> Reference:
@@ -68,6 +67,13 @@ class ReferenceRepository:
         self._db.session.commit()
 
         return ref
+
+    def delete_all(self):
+        refs = self._db.session.scalars(select(Reference))
+        for ref in refs:
+            self._db.session.delete(ref)
+        self._db.session.commit()
+        return True
 
 
 # default repository

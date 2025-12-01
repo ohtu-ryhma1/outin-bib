@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Reference{% endblock %}
+
+{% block head %}
+<script src="../static/scripts/edit-reference.js" defer></script>
+<link rel="stylesheet" href="../static/styles/edit-reference.css">
+{% endblock %}
+
+
+{% block body %}
+<form id="form" action="/edit-reference" method="post">
+    <div id="header">
+        <div id="ref-type">
+            <label for="ref-type-input">@</label>
+            <select name="ref-type-input" id="ref-type-input" disabled required>
+                <option selected>{{ ref.type }}</option>
+            </select>
+        </div>
+        <div id="ref-key">
+            <label for="ref-key-input">Key</label>
+            <input type="text" name="ref-key-input" id="ref-key-input" value="{{ ref.name }}" maxlength="100" required>
+        </div>
+    </div>
+
+    <div id="fields">
+        <div id="field-adder">
+            <label for="field-select">Add Field</label>
+            <div id="field-adder-input">
+                <select name="field-select" id="field-select">
+                    {% for field in optional if field not in ref.optional %}
+                    <option>{{ field }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" id="add-field">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+        </div>
+        {% for field in ref.fields %}
+        {% if field.type in required %}
+        <label for="{{ field.type }}">{{ field.type }}<span>*</span></label>
+        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" required maxlength="500" rows="1">{{ field.value }}</textarea>
+        {% else %}
+        <label for="{{ field.type }}">{{ field.type }}</label>
+        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" maxlength="500" rows="1">{{ field.value }}</textarea>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <input type="hidden" name="ref-type-input" value="{{ ref.type }}">
+    <input id="submit" type="submit" value="Edit">
+</form>
+
+{% endblock %}

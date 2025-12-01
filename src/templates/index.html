@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
-{% block title %}
-References
+{% block head %}
+<link rel="stylesheet" href="../static/styles/index.css">
 {% endblock %}
 
 {% block head %}
@@ -78,17 +78,39 @@ References
         <p>{{ref.name}}, type: {{ref.type}} | <a href="/edit_reference?id={{ ref.id }}" class="edit-reference">Edit reference</a></p>
         {% for field in ref.fields %}
             <p>{{field.type}}: {{field.value}}</p>
+{% block title %}References{% endblock %}
+
+{% block body %}
+
+{% if refs %}
+<div id="refs">
+    {% for ref in refs %}
+    <a href="/edit-reference?id={{ ref.id }}" class="ref-card">
+        <div class="ref-info">
+            <p class="ref-type">@{{ ref.type }}</p>
+            <p class="ref-key">{{ ref.name }}</p>
+            {% if ref.optional_count %}
+            <p class="field-count">+{{ ref.optional_count }} fields</p>
+            {% else %}
+            <p class="field-count">{{ ref.optional_count }} fields</p>
+            {% endif %}
+        </div>
+        <div class="fields">
+        {% for field in ref.fields if field.type in ref.required %}
+            <div class="field">
+                <p class="field-type">{{ field.type }}</p>
+                <p class="field-value">{{ field.value }}</p>
+            </div>
         {% endfor %}
-        <hr>
-        </p>
-    </div>
+        </div>
+    </a>
     {% endfor %}
-</ul>
+</div>
 {% else %}
-<p>No references</p>
+<div id="no-references">
+    <p>It's quiet here...</p>
+    <p>Get started by creating a reference.</p>
+</div>
 {% endif %}
-
-
-<p><a href="/new_reference">Add a new reference</a></p>
 
 {% endblock %}

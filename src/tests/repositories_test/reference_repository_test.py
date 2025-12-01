@@ -69,5 +69,5 @@ class TestReferenceRepositoryWithoutReference(BaseTestCase):
         self.assertIsNotNone(self.repo)
 
     def test_references(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(LookupError):
             self.repo.get()
