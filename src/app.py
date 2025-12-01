@@ -1,6 +1,16 @@
-from flask import flash, jsonify, redirect, render_template, request, url_for
+from flask import (
+    Response,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 
 from src.config import app
+from src.services.bibtex_exporter import references_to_bibtex
+from src.services.bibtex_import import import_bibtex_text
 from src.services.reference_service import reference_service as ref_service
 from src.services.reference_types import (
     get_all_field_types,
@@ -133,3 +143,72 @@ if app.config["TEST_ENV"]:
         if ref_service.delete_all():
             return jsonify("database reset succesfully"), 200
         return jsonify("database reset unsuccesful"), 500
+
+
+@app.get("/import-export")
+def show_import_export():
+    return render_template("import-export.html", nav="import-export")
+
+
+@app.post("/export")
+def export_references():
+    refs = ref_service.get_all()
+    bibtex_text = references_to_bibtex(refs)
+
+    return Response(
+        bibtex_text,
+        mimetype="application/x-bibtex",
+        headers={"Content-Disposition": "attachment;filename=references.bib"},
+    )
+
+
+@app.post("/import/text")
+def import_from_text():
+    bibtex_text = request.form.get("bibtex-text", "")
+
+    if not bibtex_text.strip():
+        flash("No BibTeX text provided", "error")
+        return redirect(url_for("show_import_export"))
+
+    success_count, errors = import_bibtex_text(bibtex_text)
+
+    if success_count > 0:
+        flash(f"Successfully imported {success_count} reference(s)")
+
+    for error in errors:
+        flash(error, "error")
+
+    return redirect(url_for("show_import_export"))
+
+
+@app.post("/import/file")
+def import_from_file():
+    if "bibtex-file" not in request.files:
+        flash("No file provided", "error")
+        return redirect(url_for("show_import_export"))
+
+    file = request.files["bibtex-file"]
+
+    if file.filename == "":
+        flash("No file selected", "error")
+        return redirect(url_for("show_import_export"))
+
+    try:
+        bibtex_text = file.read().decode("utf-8")
+    except UnicodeDecodeError:
+        flash("Could not read file. Please ensure it is a valid UTF-8 text file.", "error")
+        return redirect(url_for("show_import_export"))
+
+    if not bibtex_text.strip():
+        flash("File is empty", "error")
+        return redirect(url_for("show_import_export"))
+
+    success_count, errors = import_bibtex_text(bibtex_text)
+
+    if success_count > 0:
+        flash(f"Successfully imported {success_count} reference(s)")
+
+    for error in errors:
+        flash(error, "error")
+
+    return redirect(url_for("show_import_export"))

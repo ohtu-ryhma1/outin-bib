@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}Import / Export{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/styles/import-export.css">
+{% endblock %}
+
+{% block body %}
+<div id="import-export-container">
+    <section id="export-section">
+        <h2>Export References</h2>
+        <p>Download all your references as a BibTeX file.</p>
+        <form action="/export" method="post">
+            <button type="submit" class="action-btn">
+                <span class="material-symbols-outlined">download</span>
+                Export All
+            </button>
+        </form>
+    </section>
+
+    <section id="import-section">
+        <h2>Import References</h2>
+        
+        <div id="import-text">
+            <h3>Import from Text</h3>
+            <p>Paste BibTeX entries below:</p>
+            <form action="/import/text" method="post">
+                <textarea name="bibtex-text" id="bibtex-text" rows="10" placeholder="@article{example,
+  author = {Author Name},
+  title = {Article Title},
+  journaltitle = {Journal Name},
+  year = {2024},
+}"></textarea>
+                <button type="submit" class="action-btn">
+                    <span class="material-symbols-outlined">content_paste</span>
+                    Import from Text
+                </button>
+            </form>
+        </div>
+
+        <div id="import-file">
+            <h3>Import from File</h3>
+            <p>Upload a .bib file:</p>
+            <form action="/import/file" method="post" enctype="multipart/form-data">
+                <input type="file" name="bibtex-file" id="bibtex-file" accept=".bib,.bibtex,text/plain">
+                <button type="submit" class="action-btn">
+                    <span class="material-symbols-outlined">upload_file</span>
+                    Import from File
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
