@@ -17,6 +17,7 @@ Filter By Key
 
 Filter By Types
     [Arguments]    @{types}
+    Go To Homepage
     Open Search Window
 
     FOR    ${type}    IN    @{types}
