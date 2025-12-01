@@ -2,7 +2,9 @@
 
 from sqlalchemy.exc import IntegrityError
 
+from src.repositories.reference_repository import reference_repository
 from src.services.bibtex_parser import parse_bibtex
+from src.services.input_validation import validate_reference
 from src.services.reference_service import reference_service
 
 
@@ -57,7 +59,15 @@ def import_bibtex_text(text: str) -> tuple:
                 "fields": normalized_fields,
             }
 
-            reference_service.create(ref_data)
+            # If entry uses crossref, skip strict required-field validation
+            # per BibLaTeX rules - entries with crossref inherit fields from parent
+            if "crossref" in normalized_fields:
+                # Skip validation and directly create the reference
+                reference_repository.create(ref_data)
+            else:
+                # Normal validation and creation
+                reference_service.create(ref_data)
+
             success_count += 1
         except ValueError as err:
             errors.append(f"Entry '{entry['name']}': {str(err)}")
