@@ -58,6 +58,29 @@ class TestReferenceToBibtex(unittest.TestCase):
 
         self.assertEqual(result, "@misc{emptykey,\n}")
 
+    def test_with_generic_fields(self):
+        """Test that generic fields are included in the export."""
+        ref = MockReference(
+            "article",
+            "withgeneric",
+            {
+                "author": "John Doe",
+                "title": "Test Article",
+                "journaltitle": "Test Journal",
+                "year/date": "2024",
+                "abstract": "This is an abstract for the article.",
+                "keywords": "testing, python",
+                "annotation": "A note about this article",
+            },
+        )
+
+        result = reference_to_bibtex(ref)
+
+        self.assertIn("@article{withgeneric,", result)
+        self.assertIn("abstract = {This is an abstract for the article.},", result)
+        self.assertIn("keywords = {testing, python},", result)
+        self.assertIn("annotation = {A note about this article},", result)
+
 
 class TestReferencesToBibtex(unittest.TestCase):
     def test_multiple_references(self):

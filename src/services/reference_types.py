@@ -1,4 +1,4 @@
-from src.scripts.bibtex_types import types
+from src.scripts.bibtex_types import generic_fields, types
 
 
 def get_reference_types() -> set:
@@ -7,14 +7,27 @@ def get_reference_types() -> set:
 
 
 def get_reference_fields(ref_type: str) -> tuple:
-    """Return required and optional fields for a given BibTeX reference type."""
+    """Return required and optional fields for a given BibTeX reference type.
+
+    The optional fields include both type-specific optional fields and
+    all generic biblatex fields, without duplicates. Required fields
+    are never included in the optional list.
+    """
     if ref_type not in types:
         raise ValueError(f"Invalid reference type: {ref_type}")
 
     required_fields = types[ref_type]["required"]
-    optional_fields = types[ref_type]["optional"]
+    type_optional = types[ref_type]["optional"]
 
-    return required_fields, optional_fields
+    # Combine type-specific optional fields with generic fields
+    required_set = set(required_fields)
+    combined_optional = set(type_optional)
+    combined_optional.update(generic_fields)
+
+    # Remove any fields that are in required (avoid duplicates across lists)
+    combined_optional -= required_set
+
+    return required_fields, list(combined_optional)
 
 
 def get_all_field_types() -> set:
