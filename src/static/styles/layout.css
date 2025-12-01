@@ -74,7 +74,7 @@ body {
 .flash-message {
     max-width: 20rem;
     position: fixed;
-    top: 1.5rem;
+    top: 5.5rem;
     right: 1.5rem;
     display: grid;
     place-content: center;
