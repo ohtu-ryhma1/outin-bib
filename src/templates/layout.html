@@ -3,10 +3,40 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="../static/styles/reset.css">
+        <link rel="stylesheet" href="../static/styles/layout.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
         {% block head %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
     </head>
+
     <body>
+        <div class="bg"></div>
+
+        <header class="navbar">
+            <nav id="nav">
+                <ul class="nav-list">
+                    <li class="nav-item {% if nav == 'index' %}current{% endif %}"><a class="nav-link" href="/">References</a></li>
+                    <li class="nav-item {% if nav == 'new' %}current{% endif %}"><a class="nav-link" href="/new-reference">New Reference</a></li>
+                </ul>
+                {% block navbar %}{% endblock %}
+            </nav>
+        </header>
+
         {% block body %}{% endblock %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <p class="flash-message">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </body>
 </html>

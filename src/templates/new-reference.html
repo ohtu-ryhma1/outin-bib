@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}New reference{% endblock %}
+
+{% block head %}
+<script src="../static/scripts/new-reference.js" defer></script>
+<link rel="stylesheet" href="../static/styles/new-reference.css">
+{% endblock %}
+
+
+{% block body %}
+<form id="form" action="/new-reference" method="post">
+    <div id="header">
+        <div id="ref-type">
+            <label for="ref-type-input">@</label>
+            <select name="ref-type-input" id="ref-type-input" required>
+                {% for type in all_refs %}
+                {% if type == ref_type %}
+                <option selected>{{ type }}</option>
+                {% else %}
+                <option>{{ type }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div id="ref-key">
+            <label for="ref-key-input">Key</label>
+            <input type="text" name="ref-key-input" id="ref-key-input" maxlength="100" required>
+        </div>
+    </div>
+
+    <div id="fields">
+        <div id="field-adder">
+            <label for="field-select">Add Field</label>
+            <div id="field-adder-input">
+                <select name="field-select" id="field-select">
+                    {% for field in optional %}
+                    <option>{{ field }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" id="add-field">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+        </div>
+        {% for field in required %}
+        <label for="{{ field }}">{{ field }}<span>*</span></label>
+        <textarea name="{{ field }}" id="{{ field }}" class="field-value" required maxlength="500" rows="1"></textarea>
+        {% endfor %}
+    </div>
+    <input id="submit" type="submit" value="Create">
+</form>
+
+{% endblock %}
