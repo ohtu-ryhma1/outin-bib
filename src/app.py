@@ -2,42 +2,38 @@ from flask import flash, jsonify, redirect, render_template, request, url_for
 
 from src.config import app
 from src.services.reference_service import reference_service as ref_service
-from src.services.reference_types import get_reference_fields, get_reference_types
-from src.services.request_parser import parse_filters
+from src.services.reference_types import (
+    get_all_field_types,
+    get_reference_fields,
+    get_reference_types,
+)
 
 
 @app.get("/")
 def index():
-    # get name, types, and filters from service and straight from request
-    name = request.args.get("name")
-    selected_types = request.args.getlist("types[]")
-    selected_filters = parse_filters(request.args.to_dict())
+    key = request.args.get("ref-key")
+    ref_types = request.args.getlist("ref-type")
+    filter_field_types = request.args.getlist("field-type")
+    filter_field_values = request.args.getlist("field-value")
+    field_filters = list(zip(filter_field_types, filter_field_values))
 
-    # get references with filters
-    references = ref_service.get_all()
+    refs = ref_service.get_all_meta(
+        name=key, types=ref_types, field_filters=field_filters
+    )
 
-    # get all possible fields and types
-    all_fields = ["title", "date", "year"]  # need service function!
-    all_types = sorted(list(get_reference_types()))
+    all_ref_types = sorted(get_reference_types())
+    all_field_types = sorted(get_all_field_types())
 
     return render_template(
         "index.html",
-        references=references,
-        all_fields=all_fields,
-        selected_filters=selected_filters,
-        all_types=all_types,
-        selected_types=selected_types,
-        selected_name=name,
+        nav="index",
+        refs=refs,
+        key=key,
+        ref_types=ref_types,
+        field_filters=field_filters,
+        all_ref_types=all_ref_types,
+        all_field_types=all_field_types,
     )
-
-
-# feat/ui code
-# refs = ref_service.get_all_meta()
-# return render_template(
-#     "index.html",
-#     nav="index",
-#     refs=refs,
-# )
 
 
 @app.get("/new-reference")
