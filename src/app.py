@@ -150,18 +150,6 @@ def show_import_export():
     return render_template("import-export.html", nav="import-export")
 
 
-@app.post("/export")
-def export_references():
-    refs = ref_service.get_all()
-    bibtex_text = references_to_bibtex(refs)
-
-    return Response(
-        bibtex_text,
-        mimetype="application/x-bibtex",
-        headers={"Content-Disposition": "attachment;filename=references.bib"},
-    )
-
-
 @app.post("/import/text")
 def import_from_text():
     bibtex_text = request.form.get("bibtex-text", "")
@@ -216,7 +204,19 @@ def import_from_file():
     return redirect(url_for("show_import_export"))
 
 
-@app.get("/export-text")
+@app.post("/export/file")
+def export_references():
+    refs = ref_service.get_all()
+    bibtex_text = references_to_bibtex(refs)
+
+    return Response(
+        bibtex_text,
+        mimetype="application/x-bibtex",
+        headers={"Content-Disposition": "attachment;filename=references.bib"},
+    )
+
+
+@app.get("/export/text")
 def export_text():
     refs = ref_service.get_all()
     bibtex_text = references_to_bibtex(refs)
