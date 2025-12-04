@@ -5,7 +5,9 @@
     --font-monospace: "Fira Code", monospace;
 
     --color-navbar: #eadbc8;
+    --color-navbar-dark: #d3c5b3;
     --color-card: #ffeede;
+    --color-card-light: #fff5eb;
 
     --color-text: #222;
     --color-ref-type: #2a4d8f;
@@ -69,6 +71,7 @@ body {
 
 .material-symbols-outlined {
     user-select: none;
+    color: inherit;
 }
 
 .flash-message {
@@ -97,6 +100,7 @@ body {
     width: 100%;
     background-color: var(--color-navbar);
     box-shadow: var(--box-shadow-medium);
+    z-index: 1;
 }
 
 .nav-list {
