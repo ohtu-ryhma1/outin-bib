@@ -1,3 +1,5 @@
+/* Main layout */
+
 main {
     place-self: center;
     display: grid;
@@ -9,79 +11,124 @@ main {
 section {
     display: grid;
     gap: 1.5rem;
-    background: var(--color-card);
     padding: 1.5rem;
     border-radius: 8px;
+    background: var(--color-card);
     box-shadow: var(--box-shadow-medium);
 }
 
-section > h2 {
+/* Section */
+
+.section-title {
     font-family: var(--font-display);
     font-size: 1.5rem;
 }
 
-section > p {
-    margin-bottom: 1rem;
-    color: var(--color-field-type);
-}
-
-form {
-    display: grid;
-    place-items: start;
-    gap: 1rem;
-}
-
-#export-file,
-#export-text,
-#import-text,
-#import-file {
+.section-block {
     padding: 1rem;
     border-radius: 8px;
     border: 1px dashed var(--color-text);
-    /* background: rgba(255, 255, 255, 0.2); */
+    background: var(--color-card-light);
 }
 
-#export-file p,
-#import-text p,
-#import-file p {
+/* Section Block */
+
+.block-description {
     margin-bottom: 0.75rem;
     color: var(--color-field-type);
     font-size: 0.9rem;
 }
 
-#bibtex-text {
-    width: 100%;
-    min-height: 10rem;
-    font-family: var(--font-monospace);
-    font-size: 0.9rem;
-    padding: 0.75rem;
-    resize: vertical;
-    background: var(--color-navbar);
-    border: none;
-    border-radius: 4px;
+#import-text-form,
+#import-file-form {
+    display: grid;
+    gap: 1rem;
+    place-items: start;
 }
 
-#bibtex-text:focus-visible,
-#bibtex-file:focus-visible,
-.action-btn:focus-visible {
+/* Textarea */
+
+.textarea-container {
+    position: relative;
+    display: grid;
+}
+
+.content-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-monospace);
+    font-size: 0.9rem;
+    resize: vertical;
+    background: var(--color-navbar);
+}
+
+#copy-export-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* Import file */
+
+#import-file-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    place-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border: 2px dashed var(--color-field-type);
+    border-radius: 8px;
+    background: var(--color-card);
+    transition: background-color 0.2s ease-in-out;
+}
+
+#import-file-container:hover,
+#import-file-container.drag-active {
+    background: var(--color-navbar-dark);
+}
+
+#import-file-separator {
+    font-size: 0.95rem;
+    color: var(--color-field-type);
+}
+
+#import-file-input {
+    padding: 0.5rem;
+    border: 1px solid var(--color-text);
+    border-radius: 8px;
+    background: var(--color-card-light);
+}
+
+#import-file-input:focus-visible {
     outline: none;
+}
+
+#import-file-input:focus-visible::file-selector-button {
     box-shadow: var(--box-shadow-small);
 }
 
-#bibtex-file {
-    display: flex;
-    gap: 1rem;
-}
-
 ::file-selector-button {
-    margin: 0;
+    margin-right: 1rem;
     padding: 0.5rem 0.75rem;
     border: none;
     border-radius: 4px;
+    background: var(--color-navbar);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-.action-btn,
-::file-selector-button {
+::file-selector-button:hover {
+    background: var(--color-text);
+    color: var(--color-navbar);
+}
+
+/* Buttons */
+
+.action-button {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -94,15 +141,40 @@ form {
     transition: background-color 0.1s linear, color 0.1s linear;
 }
 
-.action-btn:hover {
+.action-button:hover {
     background: var(--color-text);
     color: var(--color-navbar);
 }
 
-.action-btn:hover .material-symbols-outlined {
+.action-button:hover .material-symbols-outlined {
     color: var(--color-navbar);
 }
 
-.action-btn .material-symbols-outlined {
+.action-button .material-symbols-outlined {
     font-size: 1.2rem;
+}
+
+.icon-button {
+    display: flex;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: var(--color-field-type);
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.icon-button:hover {
+    color: var(--color-text);
+}
+
+/* Tab navigation */
+
+.content-textarea:focus-visible,
+.action-button:focus-visible,
+.icon-button:focus-visible,
+#import-file-input:focus-visible::file-selector-button {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
 }
