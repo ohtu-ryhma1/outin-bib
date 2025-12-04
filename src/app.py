@@ -214,3 +214,10 @@ def import_from_file():
         flash(error, "error")
 
     return redirect(url_for("show_import_export"))
+
+
+@app.get("/export-text")
+def export_text():
+    refs = ref_service.get_all()
+    bibtex_text = references_to_bibtex(refs)
+    return bibtex_text, 200, {"Content-Type": "text/plain; charset=utf-8"}
