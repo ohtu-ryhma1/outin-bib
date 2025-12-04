@@ -1,5 +1,4 @@
 import unittest
-from unittest.mock import MagicMock
 
 from src.services.bibtex_exporter import reference_to_bibtex, references_to_bibtex
 
