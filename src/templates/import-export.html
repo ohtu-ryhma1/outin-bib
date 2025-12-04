@@ -7,21 +7,24 @@
 {% endblock %}
 
 {% block body %}
-<div id="import-export-container">
+<main>
     <section id="export-section">
         <h2>Export References</h2>
-        <p>Download all your references as a BibTeX file.</p>
-        <form action="/export" method="post">
-            <button type="submit" class="action-btn">
-                <span class="material-symbols-outlined">download</span>
-                Export All
-            </button>
-        </form>
+        <div id="export-file">
+            <h3>Export as file</h3>
+            <p>Download as a BibTeX (.bib) file.</p>
+            <form action="/export" method="post">
+                <button type="submit" class="action-btn">
+                    <span class="material-symbols-outlined">download</span>
+                    Download
+                </button>
+            </form>
+        </div>
     </section>
 
     <section id="import-section">
         <h2>Import References</h2>
-        
+
         <div id="import-text">
             <h3>Import from Text</h3>
             <p>Paste BibTeX entries below:</p>
@@ -51,5 +54,5 @@
             </form>
         </div>
     </section>
-</div>
+</main>
 {% endblock %}
