@@ -10,25 +10,33 @@
 {% block title %}References{% endblock %}
 
 {% block navbar %}
-<button id="search-toggle">
-    <span id="search-icon" class="material-symbols-outlined">search</span>
+<button id="open-search-button">
+    <span id="open-search-icon" class="material-symbols-outlined">search</span>
 </button>
 {% endblock %}
 
 {% block body %}
 <div id="search-overlay">
-    <form action="/" method="get" id="search-form">
-        <div id="ref-key-search" class="search-container">
-            <label for="ref-key">Search by key</label>
+    <form id="search-form" action="/" method="get">
+        <div id="search-form-header">
+            <h2 id="search-form-title">Search References</h2>
+            <button id="close-search-button" class="icon-button" type="button">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div id="ref-key-search" class="search-block">
+            <label class="block-title" for="ref-key">Search by key</label>
+            <p class="block-description">Fuzzy search</p>
             {% if key %}
-            <input type="text" name="ref-key" id="ref-key" placeholder="Search by key" value="{{ key }}">
+            <input type="text" name="ref-key" id="ref-key" placeholder="key" value="{{ key }}">
             {% else %}
-            <input type="text" name="ref-key" id="ref-key" placeholder="Search by key">
+            <input type="text" name="ref-key" id="ref-key" placeholder="key">
             {% endif %}
         </div>
 
-        <div id="ref-type-filter" class="search-container">
-            <label for="ref-type">Filter by type</label>
+        <div id="ref-type-filter" class="search-block">
+            <label class="block-title" for="ref-type">Filter by type</label>
+            <p class="block-description">Inclusive OR</p>
             <select id="ref-type" name="ref-type" multiple>
                 {% for type in all_ref_types %}
                 {% if type in ref_types %}
@@ -40,12 +48,14 @@
             </select>
         </div>
 
-        <div id="field-search" class="search-container">
-            <label for="field-filters">Filter by field</label>
-            <button type="button" id="add-field-filter">
-                <span id="add-field-filter" class="material-symbols-outlined">add</span>
+        <div id="field-search" class="search-block">
+            <label class="block-title" for="field-filters">Filter by field</label>
+            <p class="block-description">Fuzzy search</p>
+            <button id="add-filter-button" type="button">
+                <span id="add-filter-icon" class="material-symbols-outlined">add</span>
+                Add filter
             </button>
-            <div id="field-filters" data-list='{{ all_field_types | tojson }}''>
+            <div id="field-filters" data-list='{{ all_field_types | tojson }}'>
                 {% for field_filter in field_filters %}
                 <div class="field-filter">
                     <select name="field-type">
@@ -57,17 +67,25 @@
                         {% endif %}
                         {% endfor %}
                     </select>
-                    <input type="text" name="field-value" value="{{ field_filter[1]}}" placeholder="Value">
+                    <input type="text" name="field-value" value="{{ field_filter[1]}}" placeholder="value">
                     <button type="button" class="remove-filter-button">
-                        <span class="material-symbols-outlined">close</span>
+                        <span class="remove-filter-icon material-symbols-outlined">close</span>
                     </button>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
-        <button id="submit-search" type="submit">Search</button>
-    </div>
+        <div id="search-form-controls">
+            <a id="reset-search-link" href="/">
+                Reset
+                <span id="reset-search-icon" class="material-symbols-outlined">replay</span>
+            </a>
+            <button id="submit-search-button" type="submit">
+                Search
+                <span id="submit-search-icon" class="material-symbols-outlined">search</span>
+            </button>
+        </div>
     </form>
 </div>
 

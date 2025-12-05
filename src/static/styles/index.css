@@ -1,6 +1,6 @@
 /* Search */
 
-#search-toggle {
+#open-search-button {
     place-self: center end;
     height: 100%;
     aspect-ratio: 1;
@@ -12,56 +12,312 @@
     padding: 0;
 }
 
-#search-toggle:focus-visible {
+#open-search-button:focus-visible {
     outline: none;
 }
 
-#search-toggle:focus-visible #search-icon {
+#open-search-button:focus-visible #open-search-icon,
+#open-search-button:hover #open-search-icon {
     text-decoration: underline;
 }
 
-
-#search-icon {
+#open-search-icon {
     font-size: 1.5rem;
 }
 
+/* Search overlay */
+
 #search-overlay {
-    display: none;
+    display: grid;
     position: fixed;
     inset: 0;
-    place-content: center;
-    align-items: center;
+    place-items: center;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
+    overflow-y: auto;
     opacity: 0;
-    transition: opacity 0.5s ease-in;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 10;
+    pointer-events: none;
 }
 
 #search-overlay.active {
-    display: flex;
+    pointer-events: all;
     opacity: 1;
 }
 
+/* Search form */
+
 #search-form {
-    min-width: 400px;
+    min-width: 500px;
     max-width: 600px;
-    margin: 2rem;
     display: grid;
-    gap: 1rem;
-    padding: 2rem;
-    background: var(--color-background-1);
-    border-radius: 8px;
+    margin: 2rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-2);
     box-shadow: var(--box-shadow-medium);
+    transform: translateY(1rem);
+    transition: transform 0.2s ease-in-out;
 }
 
-.search-container {
+#search-overlay.active #search-form {
+    transform: none;
+}
+
+/* Search form header */
+
+#search-form-header {
+    display: flex;
+    place-content: center space-between;
+}
+
+#search-form-title {
+    font-family: var(--font-display);
+}
+
+#close-search-button {
+    display: grid;
+    padding: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-medium);
+    background: none;
+    cursor: pointer;
+}
+
+#close-search-button:hover #close-open-search-icon {
+    text-decoration: underline;
+}
+
+#close-search-button:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}
+
+/* Search form blocks */
+
+.search-block {
+    display: grid;
+    padding: 1rem;
+    border-radius: var(--border-radius-medium);
+    border: 1px dashed var(--color-text);
+    background: var(--color-background-2-light);
+}
+
+.block-description {
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.75rem;
+}
+
+/* Filter by type (choices.js) */
+
+.choices__inner {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-1);
+}
+
+.is-open .choices__inner {
+    border-radius: var(--border-radius-medium);
+}
+
+/* Selected option container */
+
+.choices__list--multiple {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+/* Selected options */
+
+.choices__list--multiple .choices__item {
+    display: flex;
+    margin: 0;
+    padding: 0.25rem;
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-background-2-light) !important;
+    color: var(--color-text);
+}
+
+.choices__button {
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjIxIiBoZWlnaHQ9IjIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPGcgY2xhc3M9ImxheWVyIj4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBpZD0ic3ZnXzEiPgogICA8cGF0aCBkPSJtMi41OSwwLjA0bDE4LjM3LDE4LjM3bC0yLjU1LDIuNTVsLTE4LjM3LC0xOC4zN2wyLjU1LC0yLjU1eiIgZmlsbD0iIzAwMDAwMCIgaWQ9InN2Z18yIi8+CiAgIDxwYXRoIGQ9Im0wLDE4LjM2bDE4LjM2LC0xOC4zNmwyLjU1LDIuNTVsLTE4LjM2LDE4LjM2bC0yLjU1LC0yLjU1eiIgZmlsbD0iIzAwMDAwMCIgaWQ9InN2Z18zIi8+CiAgPC9nPgogPC9nPgo8L3N2Zz4=") !important;
+}
+
+/* Search box */
+
+.choices__input {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+}
+
+/* Select list */
+
+.choices__list--dropdown {
+    border: none;
+    border-radius: var(--border-radius-medium) !important;
+    background: transparent;
+}
+
+.choices__list {
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-1) !important;
+}
+
+/* Option */
+
+.choices__item--choice {
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+.choices__item--choice.is-highlighted {
+    background: var(--color-text) !important;
+    color: var(--color-background-1);
+}
+
+/* Add field filters */
+
+#add-filter-button {
+    place-self: start;
+    display: flex;
+    gap: 0.25rem;
+    place-items: center;
+    font-size: 0.9rem;
+    padding: 0.25rem;
+    padding-right: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    background: var(--color-background-1);
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+#add-filter-button:hover {
+    background: var(--color-text);
+    color: var(--color-background-1);
+}
+
+#add-filter-button:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}
+
+#add-filter-icon {
+    font-size: 0.9rem;
+}
+
+/* Field Filters */
+
+#field-filters {
     display: grid;
     gap: 0.5rem;
 }
 
-.search-container > label {
-    font-size: 0.8rem;
-    color: var(--color-text-light);
+/* Filter styles */
+
+.field-filter {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.field-filter:first-child {
+    margin-top: 0.5rem;
+}
+
+select[name="field-type"] {
+    cursor: pointer;
+}
+
+.remove-filter-button {
+    height: 100%;
+    aspect-ratio: 1;
+    display: grid;
+    place-content: center;
+    padding: 0.25rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.remove-filter-button:focus-visible {
+    outline: none;
+    text-decoration: underline;
+}
+
+.remove-filter-icon {
+    font-size: 1rem;
+}
+
+/* Search and reset buttons */
+
+#search-form-controls {
+    place-self: center;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#reset-search-link {
+    text-decoration: none;
+}
+
+#reset-search-link,
+#submit-search-button {
+    place-self: center;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    background: var(--color-background-1);
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+#reset-search-link:hover,
+#submit-search-button:hover {
+    background: var(--color-text);
+    color: var(--color-background-1);
+}
+
+#reset-search-link:focus-visible,
+#submit-search-button:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}
+
+#reset-search-icon,
+#submit-search-icon {
+    font-size: 1rem;
+}
+
+/* Input styles */
+
+#ref-key,
+select[name="field-type"],
+input[name="field-value"] {
+    background: var(--color-background-1);
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    font-family: var(--font-monospace);
+    transition: box-shadow 0.15s;
+}
+
+#ref-key:focus-visible,
+select[name="field-type"]:focus-visible,
+input[name="field-value"]:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
 }
 
 /* References */
@@ -74,6 +330,8 @@
     justify-content: flex-start;
 }
 
+/* Reference card */
+
 .ref-card {
     min-width: 250px;
     max-width: 450px;
@@ -82,15 +340,19 @@
     gap: 1rem;
     padding: 1rem;
     background: var(--color-background-2);
-    border-radius: 8px;
+    border-radius: var(--border-radius-medium);
     box-shadow: var(--box-shadow-medium);
     transition: box-shadow 0.2s, height ease 0.5s;
     text-decoration: none;
 }
 
+.ref-card:focus-visible,
 .ref-card:hover {
+    outline: none;
     box-shadow: var(--box-shadow-large);
 }
+
+/* Reference info */
 
 .ref-info {
     display: grid;
@@ -100,6 +362,7 @@
 }
 
 .ref-type {
+    font-family: var(--font-monospace);
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--color-accent);
@@ -122,6 +385,8 @@
     white-space: nowrap;
 }
 
+/* Reference fields */
+
 .fields {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -143,6 +408,7 @@
 }
 
 .field-type {
+    font-family: var(--font-monospace);
     font-weight: 600;
     color: var(--color-text-light);
 }
@@ -155,6 +421,8 @@
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+/* No references */
 
 #no-references {
     display: flex;
