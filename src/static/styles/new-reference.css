@@ -6,7 +6,7 @@
 
     margin: 2rem;
     padding: 1.5rem;
-    background: var(--color-card);
+    background: var(--color-background-2);
     border-radius: 8px;
     box-shadow: var(--box-shadow-medium);
 }
@@ -30,13 +30,13 @@
 #ref-type > label {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--color-ref-type);
+    color: var(--color-accent);
 }
 
 #ref-type-input {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--color-ref-type);
+    color: var(--color-accent);
     padding: 0.25rem;
 }
 
@@ -131,7 +131,7 @@ textarea {
 /* All */
 
 input, select, textarea, button {
-    background: var(--color-navbar);
+    background: var(--color-background-1);
     padding: 0.25rem 0.5rem;
     border: none;
     border-radius: 4px;
@@ -157,7 +157,7 @@ button, input[type="submit"] {
 
 button:hover, input[type="submit"]:hover {
     background: var(--color-text);
-    color: var(--color-navbar);
+    color: var(--color-background-1);
 }
 
 /* Select */
@@ -165,12 +165,12 @@ button:hover, input[type="submit"]:hover {
 /* Custom select dropdown, would need quite a bit of work */
 
 /* option {
-    background: var(--color-navbar);
+    background: var(--color-background-1);
 }
 
 option:hover {
     background: var(--color-text);
-    color: var(--color-navbar);
+    color: var(--color-background-1);
 } */
 
 /* select,

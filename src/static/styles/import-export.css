@@ -13,7 +13,7 @@ section {
     gap: 1.5rem;
     padding: 1.5rem;
     border-radius: 8px;
-    background: var(--color-card);
+    background: var(--color-background-2);
     box-shadow: var(--box-shadow-medium);
 }
 
@@ -28,14 +28,14 @@ section {
     padding: 1rem;
     border-radius: 8px;
     border: 1px dashed var(--color-text);
-    background: var(--color-card-light);
+    background: var(--color-background-2-light);
 }
 
 /* Section Block */
 
 .block-description {
     margin-bottom: 0.75rem;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
     font-size: 0.9rem;
 }
 
@@ -61,7 +61,7 @@ section {
     font-family: var(--font-monospace);
     font-size: 0.9rem;
     resize: vertical;
-    background: var(--color-navbar);
+    background: var(--color-background-1);
 }
 
 #copy-export-button {
@@ -80,27 +80,27 @@ section {
     place-items: center;
     gap: 0.5rem;
     padding: 1.5rem;
-    border: 2px dashed var(--color-field-type);
+    border: 2px dashed var(--color-text-light);
     border-radius: 8px;
-    background: var(--color-card);
+    background: var(--color-background-2);
     transition: background-color 0.2s ease-in-out;
 }
 
 #import-file-container:hover,
 #import-file-container.drag-active {
-    background: var(--color-navbar-dark);
+    background: var(--color-background-1-dark);
 }
 
 #import-file-separator {
     font-size: 0.95rem;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
 }
 
 #import-file-input {
     padding: 0.5rem;
     border: 1px solid var(--color-text);
     border-radius: 8px;
-    background: var(--color-card-light);
+    background: var(--color-background-2-light);
 }
 
 #import-file-input:focus-visible {
@@ -116,14 +116,14 @@ section {
     padding: 0.5rem 0.75rem;
     border: none;
     border-radius: 4px;
-    background: var(--color-navbar);
+    background: var(--color-background-1);
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 ::file-selector-button:hover {
     background: var(--color-text);
-    color: var(--color-navbar);
+    color: var(--color-background-1);
 }
 
 /* Buttons */
@@ -133,7 +133,7 @@ section {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
-    background: var(--color-navbar);
+    background: var(--color-background-1);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -143,11 +143,11 @@ section {
 
 .action-button:hover {
     background: var(--color-text);
-    color: var(--color-navbar);
+    color: var(--color-background-1);
 }
 
 .action-button:hover .material-symbols-outlined {
-    color: var(--color-navbar);
+    color: var(--color-background-1);
 }
 
 .action-button .material-symbols-outlined {
@@ -160,7 +160,7 @@ section {
     border: none;
     border-radius: 4px;
     background: none;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
     cursor: pointer;
     transition: color 0.2s ease-in-out;
 }
