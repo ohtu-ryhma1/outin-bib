@@ -44,7 +44,7 @@ Filter By Field Finds Reference
     Open Search Window
     Add Field Filter
     Set Field Filter    author    test_author
-    Click Button    id=submit-search
+    Submit Search
     Reference Should Exist    test_book_2
 
 Filter By Field Value Finds Multiple References
@@ -54,7 +54,7 @@ Filter By Field Value Finds Multiple References
     Open Search Window
     Add Field Filter
     Set Field Filter    author    ${EMPTY}
-    Click Button    id=submit-search
+    Submit Search
     Reference Should Exist    test_book_3
     Reference Should Exist    test_book_4
 
@@ -64,6 +64,5 @@ Filter By Field Value With No Matches
     Open Search Window
     Add Field Filter
     Set Field Filter    author    wrong_author
-    Click Button    id=submit-search
+    Submit Search
     Reference Should Not Exist    test_book_5
-    

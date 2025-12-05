@@ -15,11 +15,11 @@ ${INPUT_REF_KEY}              id:ref-key-input
 ${SELECT_FIELD_TYPE}          id:field-select
 ${BUTTON_ADD_FIELD}           id:field-select
 ${BUTTON_SUBMIT}              id:submit
-${BUTTON_SEARCH_LINK}         id:open-search-icon
+${BUTTON_SEARCH_OPEN}         id:open-search-button
 ${INPUT_SEARCH_KEY}           id:ref-key
 ${SELECT_FILTER_REF_TYPE}     id:ref-type
-${BUTTON_FILTER_ADD_FIELD}    id:add-filter-button
-${BUTTON_SEARCH_SUBMIT}       id:submit-search
+${BUTTON_FILTER_ADD}          id:add-filter-button
+${BUTTON_SEARCH_SUBMIT}       id:submit-search-button
 
 
 *** Keywords ***
@@ -74,7 +74,7 @@ Submit Reference Form
     Click Button    ${BUTTON_SUBMIT}
 
 Open Search Window
-    Click Element    ${BUTTON_SEARCH_LINK}
+    Click Element    ${BUTTON_SEARCH_OPEN}
 
 Input Search Key
     [Arguments]    ${search_key}
@@ -85,7 +85,7 @@ Select Search Type
     Select From List By Label    ${SELECT_FILTER_REF_TYPE}    ${search_type}
 
 Add Search Field Filter
-    Click Button    ${BUTTON_FILTER_ADD_FIELD}
+    Click Button    ${BUTTON_FILTER_ADD}
 
 Submit Search
     Click Button    ${BUTTON_SEARCH_SUBMIT}

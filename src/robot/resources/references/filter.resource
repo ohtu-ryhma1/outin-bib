@@ -31,7 +31,7 @@ Filter By Types
 
 Add Field Filter
     [Documentation]    Click “+” (Add filter) button to append a new field-filter row.
-    Click Button    id=add-field-filter
+    Click Button    ${BUTTON_FILTER_ADD}
     Wait Until Page Contains Element
     ...    xpath=//div[contains(@class,"field-filter")]
 
