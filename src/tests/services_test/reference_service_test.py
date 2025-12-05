@@ -145,3 +145,39 @@ class TestReferenceServiceUpdateWithIncorrectInput(BaseTestCase):
         self.ref_data["fields"].pop("author")
         with self.assertRaises(ValueError):
             self.service.update(ref_id, self.ref_data)
+
+
+class TestReferenceServiceMetadataMethods(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+        repo = ReferenceRepository(self.db)
+        self.service = ReferenceService(repo)
+        self.ref_data = {
+            "type": "book",
+            "key": "meta_test_key",
+            "fields": {
+                "author": "author_meta",
+                "title": "title_meta",
+                "year/date": "2025",
+            },
+        }
+        self.service.create(self.ref_data)
+
+    def test_get_all_meta_returns_references_with_counts(self):
+        refs = self.service.get_all_meta()
+        self.assertTrue(len(refs) >= 1)
+        ref = refs[0]
+        self.assertGreaterEqual(ref.required_count, 1)
+        self.assertGreaterEqual(ref.optional_count, 0)
+
+    def test_get_meta_returns_single_reference_with_counts(self):
+        ref_id = self.service.get().id
+        ref = self.service.get_meta(ref_id)
+        self.assertIsNotNone(ref)
+        self.assertTrue(hasattr(ref, "required_count"))
+        self.assertTrue(hasattr(ref, "optional_count"))
+
+    def test_delete_all_removes_all_references(self):
+        self.service.delete_all()
+        refs = self.service.get_all()
+        self.assertEqual(len(refs), 0)
