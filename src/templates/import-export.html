@@ -26,7 +26,7 @@
             <h3 class="block-title">Export as text</h3>
             <p class="block-description">Copy the contents manually or via the copy button</p>
             <div class="textarea-container">
-                <textarea id="export-textarea" class="content-textarea" name="export-textarea" readonly rows="10" placeholder="It appears there are no references..."></textarea>
+                <textarea id="export-textarea" class="content-textarea" name="export-textarea" readonly rows="10">{{ bibtex_text or '' }}</textarea>
                 <button id="copy-export-button" class="icon-button" type="button">
                     <span class="material-symbols-outlined">content_copy</span>
                 </button>

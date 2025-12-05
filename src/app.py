@@ -147,7 +147,9 @@ if app.config["TEST_ENV"]:
 
 @app.get("/import-export")
 def show_import_export():
-    return render_template("import-export.html", nav="import-export")
+    refs = ref_service.get_all()
+    bibtex_text = references_to_bibtex(refs)
+    return render_template("import-export.html", nav="import-export", bibtex_text=bibtex_text)
 
 
 @app.post("/import/text")
@@ -214,10 +216,3 @@ def export_references():
         mimetype="application/x-bibtex",
         headers={"Content-Disposition": "attachment;filename=references.bib"},
     )
-
-
-@app.get("/export/text")
-def export_text():
-    refs = ref_service.get_all()
-    bibtex_text = references_to_bibtex(refs)
-    return bibtex_text, 200, {"Content-Type": "text/plain; charset=utf-8"}
