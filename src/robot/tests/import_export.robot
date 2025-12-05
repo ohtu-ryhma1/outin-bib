@@ -13,6 +13,8 @@ Test Setup        Reset Db
 
 *** Variables ***
 ${VALID_BIBTEX}    @article{imported_article,\n  author = "Test Author",\n  title = "Imported Article Title",\n  journaltitle = "Test Journal",\n  year = 2024,\n}
+${CROSSREF_PARENT}    @book{parent_book,\n  author = {Glashow, Sheldon},\n  title = {Collected Works of S. Glashow},\n  publisher = {Oxford University Press},\n  date = {1965},\n}
+${CROSSREF_CHILD}     @inbook{glashow_partial,\n  author = {Glashow, Sheldon},\n  title = {Partial Symmetries of Weak Interactions},\n  crossref = {parent_book},\n  pages = {579--588},\n}
 
 
 *** Test Cases ***
@@ -27,3 +29,32 @@ Import Reference From Text Succeeds
     Import Export Page Should Be Open
     Go To Homepage
     Reference Should Exist    imported_article
+
+Import Duplicate Reference Shows Error
+    Go To Import Export Page
+    Input Bibtex Text    ${VALID_BIBTEX}
+    Click Import From Text Button
+    Go To Import Export Page
+    Input Bibtex Text    ${VALID_BIBTEX}
+    Click Import From Text Button
+    Page Should Contain    Reference with this key already exists
+
+Import Crossref Parent Succeeds
+    Go To Import Export Page
+    Input Bibtex Text    ${CROSSREF_PARENT}
+    Click Import From Text Button
+    Go To Homepage
+    Reference Should Exist    parent_book
+
+Import Crossref Parent Then Child Succeeds
+    Go To Import Export Page
+    Input Bibtex Text    ${CROSSREF_PARENT}
+    Click Import From Text Button
+    Go To Homepage
+    Reference Should Exist    parent_book
+
+    Go To Import Export Page
+    Input Bibtex Text    ${CROSSREF_CHILD}
+    Click Import From Text Button
+    Go To Homepage
+    Reference Should Exist    glashow_partial

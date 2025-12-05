@@ -10,8 +10,8 @@ Resource    ../shared/browser.resource
 *** Variables ***
 ${IMPORT_EXPORT_URL}    http://localhost:5001/import-export
 
-${BIBTEX_TEXTAREA}      id:bibtex-text
-${BIBTEX_FILE_INPUT}    id:bibtex-file
+${BIBTEX_TEXTAREA}      id:import-textarea
+${BIBTEX_FILE_INPUT}    id:import-file-input
 
 
 *** Keywords ***
@@ -23,6 +23,7 @@ Import Export Page Should Be Open
 
 Input Bibtex Text
     [Arguments]    ${text}
+    Wait Until Element Is Visible    ${BIBTEX_TEXTAREA}    timeout=5s
     Input Text    ${BIBTEX_TEXTAREA}    ${text}
 
 Click Export All Button
