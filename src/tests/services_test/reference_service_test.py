@@ -105,7 +105,7 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
             self.service.create(self.ref_data)
 
     def test_field_too_long(self):
-        self.ref_data["fields"]["author"] = "x" * 501
+        self.ref_data["fields"]["author"] = "x" * 1501
         with self.assertRaises(ValueError):
             self.service.create(self.ref_data)
 
