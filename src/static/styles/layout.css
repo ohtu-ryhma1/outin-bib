@@ -1,62 +1,16 @@
-:root {
-    color-scheme: light;
-    --font-primary: "Lexend", sans-serif;
-    --font-display: "Playfair Display", serif;
-    --font-monospace: "Fira Code", monospace;
+/* layout.css */
+/* Rules for the layout of all pages (navbar, body) */
+/* Commonly used styles are defined in common.css */
 
-    --color-background-1: #eadbc8;
-    --color-background-1-dark: #d3c5b3;
-    --color-background-2: #ffeede;
-    --color-background-2-light: #fff5eb;
-
-    --color-text: #222;
-    --color-text-light: #555;
-    --color-accent: #2a4d8f;
-
-    --box-shadow-small: 0 1px 4px rgba(0,0,0,0.5);
-    --box-shadow-medium: 0 2px 8px rgba(0,0,0,0.1);
-    --box-shadow-large: 0 4px 16px rgba(0,0,0,0.2);
-}
-
-::selection {
-    color: var(--color-background-1);
-    background: var(--color-text);
-}
-
-@keyframes slide-in {
-    from {
-        transform: translateX(calc(100% + 1.5rem));
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slide-out {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(calc(100% + 1.5rem));
-    }
-}
-
-* {
-    font-family: --var(--font-primary);
-    font-optical-sizing: auto;
-    font-weight: normal;
-    font-style: normal;
-    color: var(--color-text);
-    scrollbar-color: var(--color-text) var(--color-background-1);
-}
+/* Body layout */
 
 body {
     display: grid;
     align-content: start;
     min-height: 100vh;
 }
+
+/* Background image */
 
 .bg {
     position: fixed;
@@ -68,10 +22,7 @@ body {
     z-index: -1;
 }
 
-.material-symbols-outlined {
-    user-select: none;
-    color: inherit;
-}
+/* Flash message */
 
 .flash-message {
     max-width: 20rem;
@@ -83,15 +34,12 @@ body {
 
     background: var(--color-background-1);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: var(--border-radius-medium);
     box-shadow: var(--box-shadow-medium);
     animation: slide-in 0.5s ease-out forwards, slide-out 0.5s ease-in 5s forwards;
 }
 
-#nav {
-    display: grid;
-    grid-template-columns: auto 1fr;
-}
+/* Navbar */
 
 .navbar {
     position: sticky;
@@ -100,6 +48,11 @@ body {
     background-color: var(--color-background-1);
     box-shadow: var(--box-shadow-medium);
     z-index: 1;
+}
+
+#nav {
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
 
 .nav-list {

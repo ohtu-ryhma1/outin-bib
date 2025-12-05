@@ -49,7 +49,7 @@ class TestValidateReference(unittest.TestCase):
         )
 
     def test_validate_reference_field_too_long(self):
-        self.valid_fields["title"] = "x" * 501
+        self.valid_fields["title"] = "x" * 1501
         with self.assertRaises(ValueError) as context:
             validate_reference(self.ref_data)
-        self.assertIn("cannot exceed 500 characters", str(context.exception))
+        self.assertIn("cannot exceed 1500 characters", str(context.exception))
