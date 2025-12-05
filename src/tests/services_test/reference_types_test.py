@@ -1,7 +1,11 @@
 import unittest
 
 from src.scripts.bibtex_types import generic_fields, types
-from src.services.reference_types import get_reference_fields, get_reference_types
+from src.services.reference_types import (
+    get_all_field_types,
+    get_reference_fields,
+    get_reference_types,
+)
 
 
 class TestReferenceTypes(unittest.TestCase):
@@ -109,3 +113,9 @@ class TestReferenceTypes(unittest.TestCase):
                     optional_set,
                     f"Required field '{field}' found in optional for {ref_type}",
                 )
+
+    def test_get_all_field_types_contains_common_fields(self):
+        fields = get_all_field_types()
+        assert isinstance(fields, set)
+        assert "author" in fields
+        assert "title" in fields
