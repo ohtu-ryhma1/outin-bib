@@ -43,5 +43,5 @@ def validate_reference(ref_data: dict):
         raise ValueError("Unknown fields: " + ", ".join(unknown_fields))
 
     for name, value in ref_fields.items():
-        if value and len(value) > 500:
-            raise ValueError(f"Field '{name}' cannot exceed 500 characters")
+        if value and len(value) > 1500:
+            raise ValueError(f"Field '{name}' cannot exceed 1500 characters")
