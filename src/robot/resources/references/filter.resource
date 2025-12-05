@@ -29,7 +29,7 @@ Filter By Types
 Add Field Filter
     # Click “Add filter” to append a row dynamically
     # TODO: verify id
-    Click Button    id=add-field-filter
+    Click Button    id=add-filter-button
 
     # Wait until a new row appears
     Wait Until Page Contains Element    xpath=//div[contains(@class,"filter-row")]

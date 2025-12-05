@@ -15,10 +15,10 @@ ${INPUT_REF_KEY}              id:ref-key-input
 ${SELECT_FIELD_TYPE}          id:field-select
 ${BUTTON_ADD_FIELD}           id:field-select
 ${BUTTON_SUBMIT}              id:submit
-${BUTTON_SEARCH_LINK}         id:search-icon
+${BUTTON_SEARCH_LINK}         id:open-search-icon
 ${INPUT_SEARCH_KEY}           id:ref-key
 ${SELECT_FILTER_REF_TYPE}     id:ref-type
-${BUTTON_FILTER_ADD_FIELD}    id:add-field-filter
+${BUTTON_FILTER_ADD_FIELD}    id:add-filter-button
 ${BUTTON_SEARCH_SUBMIT}       id:submit-search
 
 
