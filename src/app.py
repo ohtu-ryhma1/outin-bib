@@ -152,7 +152,7 @@ def show_import_export():
 
 @app.post("/import/text")
 def import_from_text():
-    bibtex_text = request.form.get("bibtex-text", "")
+    bibtex_text = request.form.get("import-textarea", "")
 
     if not bibtex_text.strip():
         flash("No BibTeX text provided", "error")
