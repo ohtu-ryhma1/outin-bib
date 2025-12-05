@@ -6,11 +6,23 @@
     aspect-ratio: 1;
     display: grid;
     place-items: center;
+    cursor: pointer;
+    background: var(--color-background-1);
+    border: none;
+    padding: 0;
 }
+
+#search-toggle:focus-visible {
+    outline: none;
+}
+
+#search-toggle:focus-visible #search-icon {
+    text-decoration: underline;
+}
+
 
 #search-icon {
     font-size: 1.5rem;
-    cursor: pointer;
 }
 
 #search-overlay {
@@ -37,7 +49,7 @@
     display: grid;
     gap: 1rem;
     padding: 2rem;
-    background: var(--color-navbar);
+    background: var(--color-background-1);
     border-radius: 8px;
     box-shadow: var(--box-shadow-medium);
 }
@@ -49,7 +61,7 @@
 
 .search-container > label {
     font-size: 0.8rem;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
 }
 
 /* References */
@@ -69,7 +81,7 @@
     display: grid;
     gap: 1rem;
     padding: 1rem;
-    background: var(--color-card);
+    background: var(--color-background-2);
     border-radius: 8px;
     box-shadow: var(--box-shadow-medium);
     transition: box-shadow 0.2s, height ease 0.5s;
@@ -90,7 +102,7 @@
 .ref-type {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--color-ref-type);
+    color: var(--color-accent);
 }
 
 .ref-key {
@@ -132,13 +144,14 @@
 
 .field-type {
     font-weight: 600;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
 }
 
 .field-value {
     width: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
@@ -151,14 +164,5 @@
 
 #no-references > p {
     font-size: 1.5rem;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
 }
-
-
-/* TEMP
-    .filters { margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; }
-    .filter-row { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; }
-    .filter-row select, .filter-row input { padding: 0.35rem; }
-    .filter-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
-    .remove-filter { background: transparent; border: none; color: #a00; cursor: pointer; font-weight: bold; }
-*/
