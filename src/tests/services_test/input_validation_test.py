@@ -13,7 +13,7 @@ class TestValidateReference(unittest.TestCase):
         }
         self.ref_data = {
             "type": "article",
-            "name": "ref1",
+            "key": "ref1",
             "fields": self.valid_fields,
         }
 
@@ -32,20 +32,20 @@ class TestValidateReference(unittest.TestCase):
             validate_reference(self.ref_data)
         self.assertIn("Unknown fields", str(context.exception))
 
-    def test_validate_reference_name_min_length(self):
-        self.ref_data["name"] = ""
+    def test_validate_reference_key_min_length(self):
+        self.ref_data["key"] = ""
         with self.assertRaises(ValueError) as context:
             validate_reference(self.ref_data)
         self.assertIn(
-            "Reference name must be 1-100 characters long", str(context.exception)
+            "Reference key must be 1-100 characters long", str(context.exception)
         )
 
-    def test_validate_reference_name_max_length(self):
-        self.ref_data["name"] = "x" * 101
+    def test_validate_reference_key_max_length(self):
+        self.ref_data["key"] = "x" * 101
         with self.assertRaises(ValueError) as context:
             validate_reference(self.ref_data)
         self.assertIn(
-            "Reference name must be 1-100 characters long", str(context.exception)
+            "Reference key must be 1-100 characters long", str(context.exception)
         )
 
     def test_validate_reference_field_too_long(self):

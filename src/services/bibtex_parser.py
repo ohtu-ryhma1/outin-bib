@@ -249,7 +249,7 @@ class BibtexParser:
 
         return {
             "type": entry_type,
-            "name": entry_key,
+            "key": entry_key,
             "fields": fields,
         }
 

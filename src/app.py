@@ -28,7 +28,7 @@ def index():
     field_filters = list(zip(filter_field_types, filter_field_values))
 
     refs = ref_service.get_all_meta(
-        name=key, types=ref_types, field_filters=field_filters
+        key=key, types=ref_types, field_filters=field_filters
     )
 
     all_ref_types = sorted(get_reference_types())
@@ -74,7 +74,7 @@ def new_reference():
 
     ref_data = {
         "type": ref_type,
-        "name": ref_key,
+        "key": ref_key,
         "fields": fields,
     }
 
@@ -122,7 +122,7 @@ def edit_reference():
 
     ref_data = {
         "type": ref_type,
-        "name": ref_key,
+        "key": ref_key,
         "fields": fields,
     }
 

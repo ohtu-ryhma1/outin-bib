@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     Basic search tests (name and type).
+Documentation     Basic search tests (key and type).
 
 Library           ../libraries/app_library.py
 

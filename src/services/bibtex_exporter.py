@@ -6,12 +6,12 @@ def reference_to_bibtex(ref) -> str:
     Convert a Reference object to BibTeX format.
 
     Args:
-        ref: Reference object with type, name, and fields attributes.
+        ref: Reference object with type, key, and fields attributes.
 
     Returns:
         BibTeX formatted string for the reference.
     """
-    lines = [f"@{ref.type}{{{ref.name},"]
+    lines = [f"@{ref.type}{{{ref.key},"]
 
     for field in ref.fields:
         value = field.value

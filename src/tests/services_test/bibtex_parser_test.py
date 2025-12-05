@@ -78,7 +78,7 @@ class TestBibtexParser(unittest.TestCase):
         self.assertEqual(len(entries), 1)
         entry = entries[0]
         self.assertEqual(entry["type"], "article")
-        self.assertEqual(entry["name"], "testkey")
+        self.assertEqual(entry["key"], "testkey")
         self.assertEqual(entry["fields"]["author"], "John Doe")
         self.assertEqual(entry["fields"]["title"], "Test Article")
         self.assertEqual(entry["fields"]["journaltitle"], "Test Journal")
@@ -96,7 +96,7 @@ class TestBibtexParser(unittest.TestCase):
         self.assertEqual(len(entries), 1)
         entry = entries[0]
         self.assertEqual(entry["type"], "book")
-        self.assertEqual(entry["name"], "bookkey")
+        self.assertEqual(entry["key"], "bookkey")
         self.assertEqual(entry["fields"]["author"], "Jane Smith")
         self.assertEqual(entry["fields"]["publisher"], "Test Publisher")
 
@@ -116,8 +116,8 @@ class TestBibtexParser(unittest.TestCase):
         entries = parse_bibtex(text)
 
         self.assertEqual(len(entries), 2)
-        self.assertEqual(entries[0]["name"], "first")
-        self.assertEqual(entries[1]["name"], "second")
+        self.assertEqual(entries[0]["key"], "first")
+        self.assertEqual(entries[1]["key"], "second")
 
     def test_parse_case_insensitive_fields(self):
         text = """@article{key,
@@ -164,7 +164,7 @@ class TestBibtexParser(unittest.TestCase):
         self.assertEqual(len(entries), 1)
         entry = entries[0]
         self.assertEqual(entry["type"], "article")
-        self.assertEqual(entry["name"], "CitekeyArticle")
+        self.assertEqual(entry["key"], "CitekeyArticle")
         self.assertEqual(entry["fields"]["author"], "P. J. Cohen")
         self.assertEqual(
             entry["fields"]["title"], "The independence of the continuum hypothesis"

@@ -10,9 +10,9 @@ class MockField:
 
 
 class MockReference:
-    def __init__(self, ref_type, name, fields):
+    def __init__(self, ref_type, key, fields):
         self.type = ref_type
-        self.name = name
+        self.key = key
         self.fields = [MockField(k, v) for k, v in fields.items()]
 
 

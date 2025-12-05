@@ -12,7 +12,7 @@ class TestReferenceServiceWithReference(BaseTestCase):
 
         self.ref_data = {
             "type": "book",
-            "name": "test_name",
+            "key": "test_key",
             "fields": {
                 "author": "test_author",
                 "title": "test_title",
@@ -38,13 +38,13 @@ class TestReferenceServiceWithReference(BaseTestCase):
         field = reference.fields[0]
         self.assertEqual(field.type, "author")
 
-    def test_update_reference_name(self):
+    def test_update_reference_key(self):
         ref_id = self.service.get().id
-        self.ref_data["name"] = "new_test_name"
+        self.ref_data["key"] = "new_test_key"
         self.service.update(ref_id, self.ref_data)
 
-        ref_name = self.service.get(ref_id=ref_id).name
-        self.assertEqual(ref_name, "new_test_name")
+        ref_key = self.service.get(ref_id=ref_id).key
+        self.assertEqual(ref_key, "new_test_key")
 
 
 class TestReferenceServiceWithoutReference(BaseTestCase):
@@ -71,7 +71,7 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
 
         self.ref_data = {
             "type": "book",
-            "name": "test_name",
+            "key": "test_key",
             "fields": {
                 "author": "test_author",
                 "title": "test_title",
@@ -79,8 +79,8 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
             },
         }
 
-    def test_missing_name(self):
-        self.ref_data["name"] = ""
+    def test_missing_key(self):
+        self.ref_data["key"] = ""
         with self.assertRaises(ValueError):
             self.service.create(self.ref_data)
 
@@ -94,8 +94,8 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
         with self.assertRaises(ValueError):
             self.service.create(self.ref_data)
 
-    def test_too_long_name(self):
-        self.ref_data["name"] = "test_name" * 100
+    def test_too_long_key(self):
+        self.ref_data["key"] = "test_key" * 100
         with self.assertRaises(ValueError):
             self.service.create(self.ref_data)
 
@@ -112,7 +112,7 @@ class TestReferenceServiceWithIncorrectInput(BaseTestCase):
     def test_valid_reference_creation(self):
         result = self.service.create(self.ref_data)
         self.assertIsNotNone(result)
-        self.assertEqual(result.name, self.ref_data["name"])
+        self.assertEqual(result.key, self.ref_data["key"])
 
 
 class TestReferenceServiceUpdateWithIncorrectInput(BaseTestCase):
@@ -124,7 +124,7 @@ class TestReferenceServiceUpdateWithIncorrectInput(BaseTestCase):
 
         self.ref_data = {
             "type": "book",
-            "name": "test_name",
+            "key": "test_key",
             "fields": {
                 "author": "test_author",
                 "title": "test_title",
@@ -134,9 +134,9 @@ class TestReferenceServiceUpdateWithIncorrectInput(BaseTestCase):
 
         self.service.create(self.ref_data)
 
-    def test_update_incorrect_reference_name(self):
+    def test_update_incorrect_reference_key(self):
         ref_id = self.service.get().id
-        self.ref_data["name"] = "new_test_name" * 50
+        self.ref_data["key"] = "new_test_key" * 50
         with self.assertRaises(ValueError):
             self.service.update(ref_id, self.ref_data)
 

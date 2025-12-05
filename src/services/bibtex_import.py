@@ -55,7 +55,7 @@ def import_bibtex_text(text: str) -> tuple:
 
             ref_data = {
                 "type": entry["type"],
-                "name": entry["name"],
+                "key": entry["key"],
                 "fields": normalized_fields,
             }
 
@@ -70,10 +70,10 @@ def import_bibtex_text(text: str) -> tuple:
 
             success_count += 1
         except ValueError as err:
-            errors.append(f"Entry '{entry['name']}': {str(err)}")
+            errors.append(f"Entry '{entry['key']}': {str(err)}")
         except IntegrityError:
             errors.append(
-                f"Entry '{entry['name']}': Reference with this key already exists"
+                f"Entry '{entry['key']}': Reference with this key already exists"
             )
 
     return success_count, errors

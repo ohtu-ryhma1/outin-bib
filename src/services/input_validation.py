@@ -9,18 +9,18 @@ def validate_reference(ref_data: dict):
 
     Args:
         reference_type (str): Type of the BibTeX-reference
-        reference_name (str): Unique identifier for the reference.
+        reference_key (str): Unique identifier for the reference.
         fields (dict[str, str]): Dictionary of field_name and field_value.
 
     Raises:
         ValueError: If any validation rule fails.
     """
     ref_type = ref_data["type"]
-    ref_name = ref_data["name"]
+    ref_key = ref_data["key"]
     ref_fields = ref_data["fields"]
 
-    if not ref_name.strip() or len(ref_name) > 100:
-        raise ValueError("Reference name must be 1-100 characters long")
+    if not ref_key.strip() or len(ref_key) > 100:
+        raise ValueError("Reference key must be 1-100 characters long")
 
     required_fields, optional_fields = get_reference_fields(ref_type)
 

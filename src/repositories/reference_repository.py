@@ -11,9 +11,9 @@ class ReferenceRepository:
         self._db = database
 
     def get_all(
-        self, name: str = None, types: list = None, field_filters: list = None
+        self, key: str = None, types: list = None, field_filters: list = None
     ) -> list:
-        stmt = self._query(name, types, field_filters)
+        stmt = self._query(key, types, field_filters)
         refs = self._db.session.scalars(stmt)
         return list(refs)
 
@@ -35,7 +35,7 @@ class ReferenceRepository:
     def create(self, ref_data: dict) -> Reference:
         ref = Reference(
             type=ref_data["type"],
-            name=ref_data["name"],
+            key=ref_data["key"],
         )
 
         for field_type, field_value in ref_data["fields"].items():
@@ -55,7 +55,7 @@ class ReferenceRepository:
         ref = self.get(ref_id)
 
         ref.type = ref_data["type"]
-        ref.name = ref_data["name"]
+        ref.key = ref_data["key"]
 
         ref.fields.clear()
 
@@ -78,11 +78,11 @@ class ReferenceRepository:
         self._db.session.commit()
         return True
 
-    def _query(self, name=None, types=None, field_filters=None):
+    def _query(self, key=None, types=None, field_filters=None):
         stmt = select(Reference)
 
-        if name:
-            stmt = stmt.where(Reference.name.contains(name))
+        if key:
+            stmt = stmt.where(Reference.key.contains(key))
 
         if types:
             stmt = stmt.where(Reference.type.in_(types))
