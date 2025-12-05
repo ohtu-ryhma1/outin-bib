@@ -1,0 +1,73 @@
+/* common.css */
+/* Common rules for different types of elements */
+
+/* Variables */
+
+:root {
+    color-scheme: light;
+    --font-primary: "Lexend", sans-serif;
+    --font-display: "Playfair Display", serif;
+    --font-monospace: "Fira Code", monospace;
+
+    --color-background-1: #eadbc8;
+    --color-background-1-dark: #d3c5b3;
+    --color-background-2: #ffeede;
+    --color-background-2-light: #fff5eb;
+
+    --color-text: #222;
+    --color-text-light: #555;
+    --color-accent: #2a4d8f;
+
+    --box-shadow-small: 0 1px 4px rgba(0,0,0,0.5);
+    --box-shadow-medium: 0 2px 8px rgba(0,0,0,0.1);
+    --box-shadow-large: 0 4px 16px rgba(0,0,0,0.2);
+
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+}
+
+/* Animations */
+
+@keyframes slide-in {
+    from {
+        transform: translateX(calc(100% + 1.5rem));
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(100% + 1.5rem));
+    }
+}
+
+/* General selectors */
+
+::selection {
+    color: var(--color-background-1);
+    background: var(--color-text);
+}
+
+* {
+    font-family: --var(--font-primary);
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    color: var(--color-text);
+    scrollbar-color: var(--color-text) var(--color-background-1);
+}
+
+/* Icons */
+
+.material-symbols-outlined {
+    user-select: none;
+    color: inherit;
+    transition: inherit;
+}
