@@ -1,38 +1,25 @@
-"""BibTeX export functionality for converting references to BibTeX format."""
+from bibtexparser import dumps
+from bibtexparser.bibdatabase import BibDatabase
+from bibtexparser.bwriter import BibTexWriter
 
-
-def reference_to_bibtex(ref) -> str:
-    """
-    Convert a Reference object to BibTeX format.
-
-    Args:
-        ref: Reference object with type, key, and fields attributes.
-
-    Returns:
-        BibTeX formatted string for the reference.
-    """
-    lines = [f"@{ref.type}{{{ref.key},"]
-
+def to_dict(ref) -> str:
+    ref_dict = {
+        "ENTRYTYPE": ref.type,
+        "ID" : ref.key,
+    }
     for field in ref.fields:
-        value = field.value
-        # Escape special characters and wrap in braces
-        lines.append(f"  {field.type} = {{{value}}},")
+        ref_dict[field.type] = field.value
 
-    lines.append("}")
-    return "\n".join(lines)
+    return ref_dict
 
 
 def references_to_bibtex(refs: list) -> str:
-    """
-    Convert a list of Reference objects to BibTeX format.
-
-    Args:
-        refs: List of Reference objects.
-
-    Returns:
-        BibTeX formatted string containing all references.
-    """
-    entries = []
+    db = BibDatabase()
+    db.entries = []
     for ref in refs:
-        entries.append(reference_to_bibtex(ref))
-    return "\n\n".join(entries)
+        db.entries.append(to_dict(ref))
+
+    writer = BibTexWriter()
+    writer.contents = ['entries']
+    writer.indent = '  '
+    return dumps(db, writer)
