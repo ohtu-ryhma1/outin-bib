@@ -2,35 +2,28 @@
 Documentation    This file provides keywords for interacting with the
 ...              import/export page elements.
 
-Library    SeleniumLibrary
-
-Resource    ../shared/browser.resource
-
-
-*** Variables ***
-${IMPORT_EXPORT_URL}    http://localhost:5001/import-export
-
-${BIBTEX_TEXTAREA}      id:import-textarea
-${BIBTEX_FILE_INPUT}    id:import-file-input
+Resource    import_export_ui.resource
 
 
 *** Keywords ***
-Go To Import Export Page
+Go To Import Export
     Go To    ${IMPORT_EXPORT_URL}
 
-Import Export Page Should Be Open
-    Location Should Contain    /import-export
+Import Export Should Be Open
+    Import Export Page Should Be Open
 
-Input Bibtex Text
-    [Arguments]    ${text}
-    Wait Until Element Is Visible    ${BIBTEX_TEXTAREA}    timeout=5s
-    Input Text    ${BIBTEX_TEXTAREA}    ${text}
+Import From Text
+    [Arguments]    ${bibtex_text}
+    Go To Import Export Page
+    Input Bibtex Text    ${bibtex_text}
+    Click Import From Text Button
 
-Click Export All Button
-    Click Button    xpath://button[contains(., 'Export All')]
+Import From File
+    [Arguments]    ${file_path}
+    Go To Import Export Page
+    Choose File    ${BIBTEX_FILE_INPUT}    ${file_path}
+    Click Import From File Button
 
-Click Import From Text Button
-    Click Button    xpath://button[contains(., 'Import from Text')]
-
-Click Import From File Button
-    Click Button    xpath://button[contains(., 'Import from File')]
+Export All
+    Go To Import Export Page
+    Click Export All Button

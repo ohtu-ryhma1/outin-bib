@@ -1,4 +1,5 @@
 *** Settings ***
+Library            OperatingSystem
 Library           ../libraries/app_library.py
 
 Resource          ../resources/shared/browser.resource
@@ -58,3 +59,18 @@ Import Crossref Parent Then Child Succeeds
     Click Import From Text Button
     Go To Homepage
     Reference Should Exist    glashow_partial
+
+Import Reference From File Succeeds
+    Go To Import Export Page
+    ${path}=    Normalize Path    ${CURDIR}/../resources/test_files/valid_import.bib
+    Choose File    id:import-file-input    ${path}
+    Click Import From File Button
+    Go To Homepage
+    Reference Should Exist    file_imported_ref
+
+Import Reference From Invalid File Shows Error
+    Go To Import Export Page
+    ${path}=    Normalize Path    ${CURDIR}/../resources/test_files/invalid_import.bib
+    Choose File    id:import-file-input    ${path}
+    Click Import From File Button
+    Page Should Contain    Parse error

@@ -20,6 +20,10 @@ ${INPUT_SEARCH_KEY}           id:ref-key
 ${SELECT_FILTER_REF_TYPE}     id:ref-type
 ${BUTTON_FILTER_ADD}          id:add-filter-button
 ${BUTTON_SEARCH_SUBMIT}       id:submit-search-button
+${REF_TYPE_DROPDOWN}          xpath=//div[@id="ref-type-filter"]//div[contains(@class,"choices")]
+${REF_TYPE_DROPDOWN_LIST}     xpath=//div[contains(@class,"choices__list--dropdown")]//div[contains(@class,"choices__item")]
+${FIELD_FILTER_LAST_SELECT}   xpath=(//div[contains(@class,"field-filter")])[last()]//select
+${FIELD_FILTER_LAST_INPUT}    xpath=(//div[contains(@class,"field-filter")])[last()]//input
 
 
 *** Keywords ***
@@ -89,3 +93,27 @@ Add Search Field Filter
 
 Submit Search
     Click Button    ${BUTTON_SEARCH_SUBMIT}
+
+Open Reference Type Dropdown
+    Click Element    ${REF_TYPE_DROPDOWN}
+    Wait Until Page Contains Element    ${REF_TYPE_DROPDOWN_LIST}    timeout=10s
+    Wait Until Element Is Visible       ${REF_TYPE_DROPDOWN_LIST}    timeout=10s
+    Sleep    0.5s
+
+Select Reference Type Option
+    [Arguments]    ${type}
+    Wait Until Element Is Visible    xpath=//div[contains(@class,"choices__item") and normalize-space(text())="${type}"]    timeout=10s
+    Wait Until Keyword Succeeds    3x    1s    Click Element    xpath=//div[contains(@class,"choices__item") and normalize-space(text())="${type}"]
+
+Close Reference Type Dropdown
+    Execute JavaScript    document.querySelector('#ref-type').closest('.choices').classList.remove('is-open');
+
+Add Field Filter
+    Click Button    ${BUTTON_FILTER_ADD}
+    Wait Until Page Contains Element    xpath=//div[contains(@class,"field-filter")]
+
+Set Field Filter
+    [Arguments]    ${field}    ${value}
+    Wait Until Page Contains Element    xpath=//div[contains(@class,"field-filter")]
+    Select From List By Label    ${FIELD_FILTER_LAST_SELECT}    ${field}
+    Input Text    ${FIELD_FILTER_LAST_INPUT}    ${value}
