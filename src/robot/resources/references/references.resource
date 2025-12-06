@@ -99,7 +99,6 @@ Submit Search
 Open Reference Type Dropdown
     Click Element    ${REF_TYPE_DROPDOWN}
     Wait For Element Visible    ${REF_TYPE_DROPDOWN_LIST}
-    Wait For Element Visible      ${REF_TYPE_DROPDOWN_LIST}
     Sleep    0.5s
 
 Select Reference Type Option
@@ -112,10 +111,10 @@ Close Reference Type Dropdown
 
 Add Field Filter
     Click Button    ${BUTTON_FILTER_ADD}
-    Wait Until Page Contains Element    xpath=//div[contains(@class,"field-filter")]
+    Wait For Element Visible    xpath=//div[contains(@class,"field-filter")]
 
 Set Field Filter
     [Arguments]    ${field}    ${value}
-    Wait Until Page Contains Element    xpath=//div[contains(@class,"field-filter")]
+    Wait For Element Visible    xpath=//div[contains(@class,"field-filter")]
     Select From List By Label    ${FIELD_FILTER_LAST_SELECT}    ${field}
     Input Text    ${FIELD_FILTER_LAST_INPUT}    ${value}

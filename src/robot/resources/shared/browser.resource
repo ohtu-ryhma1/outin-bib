@@ -30,4 +30,3 @@ Open And Configure Browser
 Wait For Element Visible
     [Arguments]  ${locator}  ${timeout}=5s
     Wait Until Element Is Visible  ${locator}  timeout=${timeout}
-
