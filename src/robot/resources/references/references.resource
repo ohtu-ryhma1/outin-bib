@@ -4,6 +4,8 @@ Documentation    This file provides keywords for interacting with the
 
 Library    SeleniumLibrary
 
+Resource   ../shared/browser.resource
+
 *** Variables ***
 ${HOME_URL}             http://localhost:5001
 ${NEW_REFERENCE_URL}    new-reference
@@ -96,13 +98,13 @@ Submit Search
 
 Open Reference Type Dropdown
     Click Element    ${REF_TYPE_DROPDOWN}
-    Wait Until Page Contains Element    ${REF_TYPE_DROPDOWN_LIST}    timeout=10s
-    Wait Until Element Is Visible       ${REF_TYPE_DROPDOWN_LIST}    timeout=10s
+    Wait For Element Visible    ${REF_TYPE_DROPDOWN_LIST}
+    Wait For Element Visible      ${REF_TYPE_DROPDOWN_LIST}
     Sleep    0.5s
 
 Select Reference Type Option
     [Arguments]    ${type}
-    Wait Until Element Is Visible    xpath=//div[contains(@class,"choices__item") and normalize-space(text())="${type}"]    timeout=10s
+    Wait For Element Visible    xpath=//div[contains(@class,"choices__item") and normalize-space(text())="${type}"]
     Wait Until Keyword Succeeds    3x    1s    Click Element    xpath=//div[contains(@class,"choices__item") and normalize-space(text())="${type}"]
 
 Close Reference Type Dropdown

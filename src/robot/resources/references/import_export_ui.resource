@@ -24,7 +24,7 @@ Import Export Page Should Be Open
 
 Input Bibtex Text
     [Arguments]    ${text}
-    Wait Until Element Is Visible    ${BIBTEX_TEXTAREA}    timeout=5s
+    Wait For Element Visible    ${BIBTEX_TEXTAREA}
     Input Text    ${BIBTEX_TEXTAREA}    ${text}
 
 Click Export All Button
