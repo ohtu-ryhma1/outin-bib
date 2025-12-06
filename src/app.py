@@ -149,7 +149,9 @@ if app.config["TEST_ENV"]:
 def show_import_export():
     refs = ref_service.get_all()
     bibtex_text = references_to_bibtex(refs)
-    return render_template("import-export.html", nav="import-export", bibtex_text=bibtex_text)
+    return render_template(
+        "import-export.html", nav="import-export", bibtex_text=bibtex_text
+    )
 
 
 @app.post("/import/text")
@@ -173,11 +175,11 @@ def import_from_text():
 
 @app.post("/import/file")
 def import_from_file():
-    if "bibtex-file" not in request.files:
+    if "import-file-input" not in request.files:
         flash("No file provided", "error")
         return redirect(url_for("show_import_export"))
 
-    file = request.files["bibtex-file"]
+    file = request.files["import-file-input"]
 
     if file.filename == "":
         flash("No file selected", "error")
