@@ -71,6 +71,7 @@ Does Field Exist
     RETURN    ${field_exists}
 
 Submit Reference Form
+    Scroll Element Into View    ${BUTTON_SUBMIT}
     Click Button    ${BUTTON_SUBMIT}
 
 Open Search Window
