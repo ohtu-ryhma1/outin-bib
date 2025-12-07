@@ -16,7 +16,7 @@ body {
     position: fixed;
     width: max(100vw, 100%);
     height: max(100vh, 100%);
-    background-image: url(../images/background.jpg);
+    background-image: url(../images/background-0.jpg);
     background-size: cover;
     background-position: center;
     z-index: -1;
