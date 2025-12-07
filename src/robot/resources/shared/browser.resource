@@ -26,3 +26,7 @@ Open And Configure Browser
         Set Selenium Speed  ${DELAY}
     END
     Open Browser  browser=${BROWSER}  options=${options}
+
+Wait For Element Visible
+    [Arguments]  ${locator}  ${timeout}=5s
+    Wait Until Element Is Visible  ${locator}  timeout=${timeout}

@@ -1,9 +1,9 @@
 """BibTeX import service for parsing and importing BibTeX entries."""
 
 from sqlalchemy.exc import IntegrityError
+from bibtexparser import loads
 
 from src.repositories.reference_repository import reference_repository
-from src.services.bibtex_parser import parse_bibtex
 from src.services.input_validation import validate_reference
 from src.services.reference_service import reference_service
 
@@ -38,7 +38,7 @@ def import_bibtex_text(text: str) -> tuple:
         Tuple of (success_count, errors) where errors is a list of error messages.
     """
     try:
-        entries = parse_bibtex(text)
+        entries = loads(text).entries
     except ValueError as err:
         return 0, [f"Parse error: {str(err)}"]
 
@@ -47,17 +47,19 @@ def import_bibtex_text(text: str) -> tuple:
 
     for entry in entries:
         try:
+            ref_data = {
+                "type": entry["ENTRYTYPE"],
+                "key": entry["ID"],
+            }
+            entry.pop("ENTRYTYPE")
+            entry.pop("ID")
             # Normalize field names
             normalized_fields = {}
-            for field_name, field_value in entry["fields"].items():
+            for field_name, field_value in entry.items():
                 normalized_name = normalize_field_name(field_name)
                 normalized_fields[normalized_name] = field_value
 
-            ref_data = {
-                "type": entry["type"],
-                "key": entry["key"],
-                "fields": normalized_fields,
-            }
+            ref_data["fields"] = normalized_fields
 
             # If entry uses crossref, skip strict required-field validation
             # per BibLaTeX rules - entries with crossref inherit fields from parent
@@ -75,5 +77,4 @@ def import_bibtex_text(text: str) -> tuple:
             errors.append(
                 f"Entry '{entry['key']}': Reference with this key already exists"
             )
-
     return success_count, errors
