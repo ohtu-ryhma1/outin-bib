@@ -8,21 +8,21 @@
 {% endblock %}
 
 {% block body %}
-<main>
-    <section class="export-section">
+<main class="layout-section">
+    <section class="section">
         <h2 class="section-title">Export References</h2>
-        <div class="section-block export-file">
+        <div class="block">
             <h3 class="block-title">Export as file</h3>
             <p class="block-description">Download as a BibTeX (.bib) file</p>
             <form action="/export/file" method="post">
-                <button type="submit" class="action-button">
+                <button type="submit" class="button">
                     <span class="material-symbols-outlined">download</span>
                     Download
                 </button>
             </form>
         </div>
 
-        <div class="section-block export-text">
+        <div class="block export-text">
             <h3 class="block-title">Export as text</h3>
             <p class="block-description">Copy the contents manually or via the copy button</p>
             <div class="textarea-container">
@@ -34,9 +34,9 @@
         </div>
     </section>
 
-    <section class="import-section">
+    <section class="section">
         <h2 class="section-title">Import References</h2>
-        <div class="section-block import-text">
+        <div class="block import-text">
             <h3 class="block-title">Import from Text</h3>
             <p class="block-description">Paste BibTeX entries directly</p>
             <form id="import-text-form" action="/import/text" method="post">
@@ -46,26 +46,25 @@
   journaltitle = {Journal Name},
   year = {2024},
 }"></textarea>
-                <button type="submit" class="action-button">
+                <button type="submit" class="button">
                     <span class="material-symbols-outlined">content_paste_go</span>
                     Import from Text
                 </button>
             </form>
         </div>
 
-        <div class="section-block import-file">
+        <div class="block import-file">
             <h3 class="block-title">Import from File</h3>
             <p class="block-description">Upload a .bib file:</p>
             <form id="import-file-form" action="/import/file" method="post" enctype="multipart/form-data">
                 <label id="import-file-container" for="import-file-input">
-                    <span id="import-file-instruction">Drop a file here</span>
-                    <span id="import-file-separator">or</span>
-                    <input id="import-file-input" type="file" name="import-file-input" accept=".bib,.bibtex,text/plain">
+                    <span id="import-file-instruction">Drop a file here or click to select a file</span>
                 </label>
-                <button type="submit" class="action-button">
+                <button type="submit" class="button">
                     <span class="material-symbols-outlined">upload_file</span>
                     Import from File
                 </button>
+                <input id="import-file-input" type="file" name="import-file-input" accept=".bib,.bibtex,text/plain">
             </form>
         </div>
     </section>
