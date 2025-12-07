@@ -30,7 +30,7 @@ addFilterBtn.addEventListener("click", () => {
   const fieldTypes = JSON.parse(fieldFilters.dataset.list)
 
   // create select element and append the options
-  let selectHTML = '<select name="field-type">';
+  let selectHTML = '<select class="input-select" name="field-type">';
   fieldTypes.forEach(function (field) {
     selectHTML += `<option>${field}</option>`;
   });
@@ -41,8 +41,8 @@ addFilterBtn.addEventListener("click", () => {
   filterDiv.className = "field-filter";
   filterDiv.innerHTML = `
         ${selectHTML}
-        <input type="text" name="field-value" placeholder="value">
-        <button type="button" class="remove-filter-button">
+        <input class="input-text" type="text" name="field-value" placeholder="value">
+        <button type="button" class="icon-button remove-filter-button">
             <span class="remove-filter-icon material-symbols-outlined">close</span>
         </button>`;
 
