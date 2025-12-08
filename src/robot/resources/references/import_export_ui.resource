@@ -10,7 +10,7 @@ Resource    ../shared/browser.resource
 ${IMPORT_EXPORT_URL}    http://localhost:5001/import-export
 ${BIBTEX_TEXTAREA}      id:import-textarea
 ${BIBTEX_FILE_INPUT}    id:import-file-input
-${BUTTON_EXPORT_ALL}    xpath=//button[contains(., 'Export All')]
+${BUTTON_EXPORT_ALL}    xpath://button[contains(., 'Export All')]
 ${BUTTON_IMPORT_TEXT}   xpath://button[contains(., 'Import from Text')]
 ${BUTTON_IMPORT_FILE}   xpath://button[contains(., 'Import from File')]
 ${EXPORT_FILE_BUTTON}   xpath=//form[@action="/export/file"]//button
