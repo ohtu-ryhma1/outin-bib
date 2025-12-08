@@ -36,6 +36,7 @@ The goal of our project was to develop a reference management web application th
 - **Challenges:** Parallelising work was challenging along with time-consuming architectural updates.
 
 ### Sprint 4 – Import/Export feature
+- Added import and export features
 - Unified all resource files and cleaned test architecture.  
 - Improved communication between frontend and backend for file uploads.  
 - **Challenges:** merging concurrent test and UI updates.
