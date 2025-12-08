@@ -58,7 +58,8 @@ The goal of our project was to develop a reference management web application th
 ---
 
 ## 5. What We Learned
-- Effective use of for end-to-end testing.  
+- Effective use of Unittests to ensure code functionality in backend
+- Robot framework for end-to-end testing.  
 - Handling complex parsing (BibTeX import/export) and validating input.  
 - Coordinating teamwork through communicating channels, GitHub Issues and Pull Requests.
 - Working in collaboration with the product owner and offering agile methods to support their needs.
