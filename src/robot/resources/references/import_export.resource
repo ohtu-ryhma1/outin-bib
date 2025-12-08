@@ -2,8 +2,13 @@
 Documentation    This file provides keywords for interacting with the
 ...              import/export page elements.
 
+Library     OperatingSystem
 Resource    import_export_ui.resource
 
+*** Variables ***
+${OUTPUT_DIR}        ${CURDIR}/../downloads
+${EXPORT_FILE}       exported_references.bib
+${EXPORT_FILE_PATH}  ${OUTPUT_DIR}/${EXPORT_FILE}
 
 *** Keywords ***
 Go To Import Export
@@ -27,3 +32,22 @@ Import From File
 Export All
     Go To Import Export Page
     Click Export All Button
+
+Export Text Should Contain
+    [Arguments]  ${expected}
+    ${text}=  Get Value  ${EXPORT_TEXTAREA}
+    Should Contain  ${text}  ${expected}
+
+Export File
+    [Documentation]  Click Export as file and wait until file exists
+    Go To Import Export Page
+    Click Element  ${EXPORT_FILE_BUTTON}
+    Wait Until Keyword Succeeds  10x  1s  File Should Exist  ${EXPORT_FILE_PATH}
+
+Exported File Should Exist
+    File Should Exist  ${EXPORT_FILE_PATH}
+
+Exported File Should Contain
+    [Arguments]  ${text}
+    ${content}=  Get File  ${EXPORT_FILE_PATH}
+    Should Contain  ${content}  ${text}
