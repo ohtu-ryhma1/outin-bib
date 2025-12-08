@@ -27,7 +27,7 @@ The goal of our project was to develop a reference management web application th
 - Implemented BibTeX-support.
 - Added editing functionality
 - Switched to SQL Alchemy Orm.  
-- **Challenges:** Chnages were time-consuming and it was necessery to better estimate the managable workflow for the next sprint to ensure good work quality.
+- **Challenges:** Changes were time-consuming and it was necessery to better estimate the managable workflow for the next sprint to ensure good work quality.
 
 ### Sprint 3 – Search feature
 - Refactored UI for better visual styling.  
