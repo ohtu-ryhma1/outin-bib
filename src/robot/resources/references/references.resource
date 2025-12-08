@@ -118,3 +118,7 @@ Set Field Filter
     Wait For Element Visible    xpath=//div[contains(@class,"field-filter")]
     Select From List By Label    ${FIELD_FILTER_LAST_SELECT}    ${field}
     Input Text    ${FIELD_FILTER_LAST_INPUT}    ${value}
+
+Wait For Element Visible
+    [Arguments]  ${locator}  ${timeout}=5s
+    Wait Until Element Is Visible  ${locator}  timeout=${timeout}
