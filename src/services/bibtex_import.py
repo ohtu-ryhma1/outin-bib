@@ -38,7 +38,8 @@ def import_bibtex_text(text: str) -> tuple:
         Tuple of (success_count, errors) where errors is a list of error messages.
     """
     try:
-        entries = loads(text).entries
+        de_text = text.replace("year/date", "year")
+        entries = loads(de_text).entries
     except ValueError as err:
         return 0, [f"Parse error: {str(err)}"]
 
