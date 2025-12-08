@@ -6,8 +6,8 @@ Library     OperatingSystem
 Resource    import_export_ui.resource
 
 *** Variables ***
-${OUTPUT_DIR}        ${CURDIR}/../downloads
-${EXPORT_FILE}       exported_references.bib
+${OUTPUT_DIR}        ${CURDIR}/../downloads  #Menee väärään paikkaan etsiessään tallennettuja tiedostoja
+${EXPORT_FILE}       references.bib
 ${EXPORT_FILE_PATH}  ${OUTPUT_DIR}/${EXPORT_FILE}
 
 ${VALID_BIBTEX}       @article{imported_article,\n  author = "Test Author",\n  title = "Imported Article Title",\n  journaltitle = "Test Journal",\n  year = 2024,\n}

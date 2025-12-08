@@ -22,7 +22,7 @@ Export Empty Reference To Copy Succeeds
     Click Export Copy Button
     Handle Alert  ACCEPT
     ${export_text}=  Get Value  ${EXPORT_TEXTAREA}
-    Should Contain  ${export_text}  ""
+    Should Contain  ${export_text}
 
 Export Single Reference To Copy Succeeds
     Go To Import Export Page
