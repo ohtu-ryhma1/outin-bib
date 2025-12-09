@@ -9,6 +9,9 @@ Resource    import_export_ui.resource
 ${VALID_BIBTEX}       @article{imported_article,\n  author = "Test Author",\n  title = "Imported Article Title",\n  journaltitle = "Test Journal",\n  year = 2024,\n}
 ${CROSSREF_PARENT}    @book{parent_book,\n  author = {Glashow, Sheldon},\n  title = {Collected Works of S. Glashow},\n  publisher = {Oxford University Press},\n  date = {1965},\n}
 ${CROSSREF_CHILD}     @inbook{glashow_partial,\n  author = {Glashow, Sheldon},\n  title = {Partial Symmetries of Weak Interactions},\n  crossref = {parent_book},\n  pages = {579--588},\n}
+&{DICT_BOOK}       author=test_author    title=test_title    year/date=test_year/date
+&{DICT_ARTICLE}    author=testAuthor     title=testTitle     journaltitle=journalTitle    year/date=test_year_article
+${FILE_NAME}       references.bib
 
 *** Keywords ***
 Go To Import Export

@@ -1,0 +1,5 @@
+@book{book_key,
+  author = {test_author},
+  title = {test_title},
+  year/date = {test_year/date}
+}

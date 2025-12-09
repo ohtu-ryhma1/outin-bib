@@ -13,12 +13,6 @@ Suite Setup       Open And Configure Browser
 Suite Teardown    Close Browser
 Test Setup        Reset Db
 
-*** Variables ***
-&{DICT_BOOK}       author=test_author    title=test_title    year/date=test_year/date
-&{DICT_ARTICLE}    author=testAuthor     title=testTitle     journaltitle=journalTitle    year/date=test_year_article
-${DOWNLOAD_DIR}    Evaluate    os.path.abspath('downloads')    modules=os
-${FILE_NAME}       references.bib
-${FILE_PATH}       ${DOWNLOAD_DIR}/${FILE_NAME}
 
 *** Test Cases ***
 Import Export Page Is Accessible
@@ -55,9 +49,8 @@ Export Multiple Reference To Copy Succeeds
     Should Contain  ${export_text}  ${DICT_ARTICLE.title}
     Should Contain  ${export_text}  ${DICT_ARTICLE.journaltitle}
 
-Export Reference File Works Without Browser
-    FileExport.Download Reference File    ${HOME_URL}    ${FILE_PATH}
-    FileExport.File Should Exist    ${FILE_PATH}
-
-    ${content}=    Get File    ${FILE_PATH}
-    Should Contain    ${content}    @
+Export Reference To File Succeeds
+    Go To Import Export Page
+    Click Element  ${EXPORT_FILE_BUTTON}
+    Wait For Downloaded File    ${DOWNLOAD_DIR}    references.bib
+    File Should Exist    ${DOWNLOAD_DIR}${/}references.bib

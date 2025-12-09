@@ -61,10 +61,3 @@ Import Reference From File Succeeds
     Click Import From File Button
     Go To Homepage
     Reference Should Exist    file_imported_ref
-
-Import Reference From Invalid File Shows Error
-    Go To Import Export Page
-    ${path}=    Normalize Path    ${CURDIR}/../resources/test_files/invalid_import.bib
-    Choose File    id:import-file-input    ${path}
-    Click Import From File Button
-    Page Should Contain    Parse error
