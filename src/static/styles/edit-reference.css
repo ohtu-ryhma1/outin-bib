@@ -178,3 +178,41 @@ option:hover {
 ::picker(select) {
   appearance: base-select;
 } */
+
+#edit-form-controls {
+    place-self: center;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#back-button {
+    text-decoration: none;
+}
+
+#back-button {
+    place-self: center;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.25rem 1rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    background: var(--color-background-1);
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+#back-button:hover {
+    background: var(--color-text);
+    color: var(--color-background-1);
+}
+
+#back-button:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}
+
+#back-button-icon {
+    font-size: 1rem;
+}
