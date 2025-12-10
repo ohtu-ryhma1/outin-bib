@@ -1,32 +1,46 @@
 *** Settings ***
-Library    SeleniumLibrary
+Documentation       Low level keywords for interacting with the browser.
+
+Library             SeleniumLibrary
 
 
 *** Variables ***
-${SERVER}      localhost:5001
-${HOME_URL}    http://${SERVER}
 ${BROWSER}     chrome
 ${HEADLESS}    false
-${DELAY}       0.1 seconds
+${DELAY}       0
+
+${URL_SERVER}    localhost:5001
+${URL_HOME}      http://${URL_SERVER}
 
 
 *** Keywords ***
 Open And Configure Browser
     IF  $BROWSER == 'chrome'
-        ${options}  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys
-        Call Method  ${options}  add_argument  --incognito
+        ${options} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
+        Call Method    ${options}    add_argument    --incognito
     ELSE IF  $BROWSER == 'firefox'
-        ${options}  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys
-        Call Method  ${options}  add_argument  --private-window
+        ${options}    Evaluate    sys.modules['selenium.webdriver'].FirefoxOptions()    sys
+        Call Method    ${options}    add_argument    --private-window
     END
-    IF  $HEADLESS == 'true'
-        Set Selenium Speed  0 seconds
-        Call Method  ${options}  add_argument  --headless
-    ELSE
-        Set Selenium Speed  ${DELAY}
-    END
-    Open Browser  browser=${BROWSER}  options=${options}
 
-Wait For Element Visible
-    [Arguments]  ${locator}  ${timeout}=5s
-    Wait Until Element Is Visible  ${locator}  timeout=${timeout}
+    IF  $HEADLESS == 'true'
+        Call Method    ${options}     add_argument    --headless
+    ELSE
+        Set Selenium Speed    ${DELAY}
+    END
+
+    Open Browser    browser=${BROWSER}    options=${options}
+
+Go To Homepage
+    Go To    ${URL_HOME}
+
+Go To Page
+    [Arguments]    ${url}
+    Go To    ${URL_HOME}/${url}
+
+Homepage Should Be Open
+    Location Should Contain    ${URL_HOME}
+
+Page Should Be Open
+    [Arguments]    ${url}
+    Location Should Contain    ${url}
