@@ -10,7 +10,7 @@ from src.services.reference_types import get_reference_fields
 
 
 def normalize_field_name(field_name: str) -> str:
-    # Map common BibTeX field names to our schema
+    """Normalize BibTeX field names to internal representation."""
     field_mapping = {
         "journal": "journaltitle",
         "year": "year/date",
