@@ -1,25 +1,11 @@
-from bibtexparser import dumps
-from bibtexparser.bibdatabase import BibDatabase
-from bibtexparser.bwriter import BibTexWriter
-
-def to_dict(ref) -> str:
-    ref_dict = {
-        "ENTRYTYPE": ref.type,
-        "ID" : ref.key,
-    }
-    for field in ref.fields:
-        ref_dict[field.type] = field.value
-
-    return ref_dict
-
+from bibtexparser import write_string
+from bibtexparser.library import Library
+from bibtexparser.model import Field, Entry
 
 def references_to_bibtex(refs: list) -> str:
-    db = BibDatabase()
-    db.entries = []
-    for ref in refs:
-        db.entries.append(to_dict(ref))
+    lib = Library()
 
-    writer = BibTexWriter()
-    writer.contents = ['entries']
-    writer.indent = '  '
-    return dumps(db, writer)
+    for ref in refs:
+        lib.add(Entry(ref.type, ref.key, [Field(f.type, f.value) for f in ref.fields]))
+
+    return write_string(lib)

@@ -26,17 +26,22 @@ files = [
 
 [[package]]
 name = "bibtexparser"
-version = "1.4.3"
+version = "2.0.0b8"
 description = "Bibtex parser for python 3"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "bibtexparser-1.4.3.tar.gz", hash = "sha256:a9c7ded64bc137720e4df0b1b7f12734edc1361185f1c9097048ff7c35af2b8f"},
+    {file = "bibtexparser-2.0.0b8-py3-none-any.whl", hash = "sha256:eda1e6dbc7bbc040d351c926ead97a36f4734858656f3514a933259878bd37f1"},
+    {file = "bibtexparser-2.0.0b8.tar.gz", hash = "sha256:11eaaa1fe80154f70092e91fa7e3fed5e5c81021f6c6c09151e36b8533f36994"},
 ]
 
 [package.dependencies]
-pyparsing = ">=2.0.3"
+pylatexenc = ">=2.10"
+
+[package.extras]
+docs = ["sphinx"]
+test = ["jupyter", "pytest", "pytest-cov", "pytest-xdist"]
 
 [[package]]
 name = "black"
@@ -1082,6 +1087,17 @@ files = [
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pylatexenc"
+version = "2.10"
+description = "Simple LaTeX parser providing latex-to-unicode and unicode-to-latex conversion"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "pylatexenc-2.10.tar.gz", hash = "sha256:3dd8fd84eb46dc30bee1e23eaab8d8fb5a7f507347b23e5f38ad9675c84f40d3"},
+]
+
+[[package]]
 name = "pylint"
 version = "4.0.3"
 description = "python code static checker"
@@ -1105,21 +1121,6 @@ tomlkit = ">=0.10.1"
 [package.extras]
 spelling = ["pyenchant (>=3.2,<4.0)"]
 testutils = ["gitpython (>3)"]
-
-[[package]]
-name = "pyparsing"
-version = "3.2.5"
-description = "pyparsing - Classes and methods to define and execute parsing grammars"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "pyparsing-3.2.5-py3-none-any.whl", hash = "sha256:e38a4f02064cf41fe6593d328d0512495ad1f3d8a91c4f73fc401b3079a59a5e"},
-    {file = "pyparsing-3.2.5.tar.gz", hash = "sha256:2df8d5b7b2802ef88e8d016a2eb9c7aeaa923529cd251ed0fe4608275d4105b6"},
-]
-
-[package.extras]
-diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pysocks"
@@ -1629,4 +1630,4 @@ h11 = ">=0.16.0,<1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "a65393a88337105a4a8256a422fc305e0debf1240d73eeaf7d705605dcadecdf"
+content-hash = "3ddeea88ada87d0f1de9ae18f0ffec1a373c6027a9217a41c0956b0a97eb5793"

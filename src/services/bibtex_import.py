@@ -1,7 +1,7 @@
 """BibTeX import service for parsing and importing BibTeX entries."""
 
 from sqlalchemy.exc import IntegrityError
-from bibtexparser import loads
+from bibtexparser import parse_string
 
 from src.repositories.reference_repository import reference_repository
 from src.services.input_validation import validate_reference
@@ -9,15 +9,6 @@ from src.services.reference_service import reference_service
 
 
 def normalize_field_name(field_name: str) -> str:
-    """
-    Normalize BibTeX field names to match the database schema.
-
-    Args:
-        field_name: The field name from BibTeX.
-
-    Returns:
-        Normalized field name.
-    """
     # Map common BibTeX field names to our schema
     field_mapping = {
         "journal": "journaltitle",
@@ -28,18 +19,8 @@ def normalize_field_name(field_name: str) -> str:
 
 
 def import_bibtex_text(text: str) -> tuple:
-    """
-    Import BibTeX entries from text.
-
-    Args:
-        text: BibTeX formatted text.
-
-    Returns:
-        Tuple of (success_count, errors) where errors is a list of error messages.
-    """
     try:
-        de_text = text.replace("year/date", "year")
-        entries = loads(de_text).entries
+        entries = parse_string(text).entries
     except ValueError as err:
         return 0, [f"Parse error: {str(err)}"]
 
@@ -49,16 +30,13 @@ def import_bibtex_text(text: str) -> tuple:
     for entry in entries:
         try:
             ref_data = {
-                "type": entry["ENTRYTYPE"],
-                "key": entry["ID"],
+                "type": entry.entry_type,
+                "key": entry.key,
             }
-            entry.pop("ENTRYTYPE")
-            entry.pop("ID")
-            # Normalize field names
             normalized_fields = {}
-            for field_name, field_value in entry.items():
+            for field_name, field_value in entry.fields_dict.items():
                 normalized_name = normalize_field_name(field_name)
-                normalized_fields[normalized_name] = field_value
+                normalized_fields[normalized_name] = field_value.value
 
             ref_data["fields"] = normalized_fields
 
@@ -73,7 +51,7 @@ def import_bibtex_text(text: str) -> tuple:
 
             success_count += 1
         except ValueError as err:
-            errors.append(f"Entry '{entry['key']}': {str(err)}")
+            errors.append(f"Entry '{entry.key}': {str(err)}")
         except IntegrityError:
             errors.append(
                 f"Entry '{entry['key']}': Reference with this key already exists"
