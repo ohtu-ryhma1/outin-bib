@@ -9,6 +9,7 @@ from flask import (
     send_file,
     url_for,
 )
+from sqlalchemy.exc import IntegrityError
 
 from src.config import app
 from src.services.bibtex_exporter import references_to_bibtex
@@ -158,19 +159,23 @@ def show_import_export():
 
 @app.post("/import/text")
 def import_from_text():
-    bibtex_text = request.form.get("import-textarea", "")
+    try:
+        bibtex_text = request.form.get("import-textarea", "")
+        if not bibtex_text.strip():
+            flash("No BibTeX text provided", "error")
+            return redirect(url_for("show_import_export"))
 
-    if not bibtex_text.strip():
-        flash("No BibTeX text provided", "error")
-        return redirect(url_for("show_import_export"))
+        success_count, errors = import_bibtex_text(bibtex_text)
+        if success_count > 0:
+            flash(f"Successfully imported {success_count} reference(s)")
 
-    success_count, errors = import_bibtex_text(bibtex_text)
+        for error in errors:
+            flash(error, "error")
 
-    if success_count > 0:
-        flash(f"Successfully imported {success_count} reference(s)")
-
-    for error in errors:
-        flash(error, "error")
+    except IntegrityError:
+        flash("A reference with this key already exists.", "error")
+    except Exception as e:
+        flash(f"Unexpected error: {str(e)}", "error")
 
     return redirect(url_for("show_import_export"))
 
