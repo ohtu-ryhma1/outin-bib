@@ -1050,6 +1050,7 @@ generic_fields = {
     "langid",
     "langidopts",
     "language",
+    "lccn",
     "library",
     "location",
     "mainsubtitle",
