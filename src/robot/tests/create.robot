@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Test suite for creating references.
 
-Library           ../libraries/app_library.py
+Library           ../libraries/repository_api.py
 
 Resource          ../resources/shared/browser.resource
 Resource          ../resources/actions/create.resource
@@ -20,18 +20,18 @@ ${URL_NEW_REFERENCE}    new-reference
 *** Test Cases ***
 Creating A Reference Succeeds
     Create Reference    ref_type=book    ref_key=test_key    fields=${FIELDS}
-    Homepage Should Be Open
+    Wait Until Page Is Homepage
     Reference Card Should Have Correct Data    test_key    ref_type=book    fields=${FIELDS}
 
 Creating A Reference Without Key Fails
     Create Reference    ref_type=book    fields=${FIELDS}
-    Page Should Be Open    ${URL_NEW_REFERENCE}
+    Wait Until Page Is Open    ${URL_NEW_REFERENCE}
     Go To Homepage
     Reference Card Should Not Be Visible    test_key
 
 Creating A Reference Without Required Fields Fails
     Create Reference    ref_type=book    ref_key=test_key
-    Page Should Be Open    ${URL_NEW_REFERENCE}
+    Wait Until Page Is Open    ${URL_NEW_REFERENCE}
     Go To Homepage
     Reference Card Should Not Be Visible    test_key
 

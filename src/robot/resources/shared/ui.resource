@@ -74,3 +74,10 @@ UI Choose File
     [Documentation]    Upload a file located at `file_path` to the input at `locator`.
     [Arguments]    ${locator}    ${file_path}
     Choose File    ${locator}    ${file_path}
+
+UI Get Text
+    [Documentation]    Wait until the element at `locator` is visible and return its text.
+    [Arguments]    ${locator}
+    UI Wait Until Element Is Visible    ${locator}
+    ${text} =    Get Text    ${locator}
+    RETURN    ${text}

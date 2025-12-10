@@ -1,10 +1,12 @@
+from io import BytesIO
+
 from flask import (
-    Response,
     flash,
     jsonify,
     redirect,
     render_template,
     request,
+    send_file,
     url_for,
 )
 
@@ -213,8 +215,11 @@ def export_references():
     refs = ref_service.get_all()
     bibtex_text = references_to_bibtex(refs)
 
-    return Response(
-        bibtex_text,
+    buffer = BytesIO(bibtex_text.encode("utf-8"))
+    buffer.seek(0)
+    return send_file(
+        buffer,
         mimetype="application/x-bibtex",
-        headers={"Content-Disposition": "attachment;filename=references.bib"},
+        as_attachment=True,
+        download_name="references.bib",
     )

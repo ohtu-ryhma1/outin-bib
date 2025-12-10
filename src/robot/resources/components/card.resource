@@ -8,6 +8,7 @@ Resource          ../shared/ui.resource
 Get Reference Card Webelement
     [Documentation]    Get the WebElement of the reference card with a given `ref_key`.
     [Arguments]    ${ref_key}
+    UI Wait Until Element Is Visible    xpath://a[@class='ref-card' and .//p[text()='${ref_key}']]
     ${ref_card} =    Get Webelement    xpath://a[@class='ref-card' and .//p[text()='${ref_key}']]
     RETURN    ${ref_card}
 

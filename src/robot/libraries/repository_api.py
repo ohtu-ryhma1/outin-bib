@@ -1,7 +1,7 @@
 import requests
 
 
-class AppLibrary:
+class RepositoryApi:
     def __init__(self):
         self._base_url = "http://localhost:5001"
 
@@ -14,4 +14,4 @@ class AppLibrary:
         requests.post(f"{self._base_url}/new-reference", data=ref_data, timeout=5)
 
 
-app_library = AppLibrary
+repository_api = RepositoryApi

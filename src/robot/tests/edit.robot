@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Test suite for editing references.
 
-Library           ../libraries/app_library.py
+Library           ../libraries/repository_api.py
 
 Resource          ../resources/shared/browser.resource
 Resource          ../resources/actions/edit.resource
@@ -28,7 +28,7 @@ Editing Key Succeeds
     Go To Homepage
     Click Reference Card    test_key
     Edit Reference    test_key    new_ref_key=test_key_2
-    Homepage Should Be Open
+    Wait Until Page Is Homepage
     Reference Card Should Have Correct Data    test_key_2    book    ${FIELDS_1}
 
 Editing Required Fields Succeeds
@@ -36,7 +36,7 @@ Editing Required Fields Succeeds
     Go To Homepage
     Click Reference Card    test_key
     Edit Reference    test_key    new_fields=${FIELDS_2}
-    Homepage Should Be Open
+    Wait Until Page Is Homepage
     Reference Card Should Have Correct Data    test_key    book    ${FIELDS_2}
 
 Adding Optional Fields Succeeds
@@ -44,7 +44,7 @@ Adding Optional Fields Succeeds
     Go To Homepage
     Click Reference Card    test_key
     Edit Reference    test_key    new_fields=${FIELDS_OPTIONAL_1}
-    Homepage Should Be Open
+    Wait Until Page Is Homepage
     Reference Card Should Have Correct Data    test_key    book    ${FIELDS_1}
     Click Reference Card    test_key
     Reference Form Should Have Correct Data    test_key    book    ${FIELDS_OPTIONAL_1}
@@ -55,7 +55,7 @@ Editing Optional Fields Succeeds
     Go To Homepage
     Click Reference Card    test_key
     Edit Reference    test_key    new_fields=${FIELDS_OPTIONAL_2}
-    Homepage Should Be Open
+    Wait Until Page Is Homepage
     Reference Card Should Have Correct Data    test_key    book    ${FIELDS_1}
     Click Reference Card    test_key
     Reference Form Should Have Correct Data    test_key    book    ${FIELDS_OPTIONAL_2}
@@ -65,7 +65,7 @@ Removing Required Field Fails
     Go To Homepage
     Click Reference Card    test_key
     Edit Reference    test_key    new_fields=${FIELDS_3}
-    Page Should Be Open    ${URL_EDIT_REFERENCE}
+    Wait Until Page Is Open    ${URL_EDIT_REFERENCE}
     Go To Homepage
     Reference Card Should Have Correct Data    test_key    book    ${FIELDS_1}
 

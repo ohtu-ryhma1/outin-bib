@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Test suite for Searching references.
 
-Library           ../libraries/app_library.py
+Library           ../libraries/repository_api.py
 
 Resource          ../resources/shared/browser.resource
 Resource          ../resources/actions/search.resource
