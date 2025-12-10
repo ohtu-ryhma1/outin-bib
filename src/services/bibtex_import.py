@@ -1,7 +1,7 @@
 """BibTeX import service for parsing and importing BibTeX entries."""
 
-from sqlalchemy.exc import IntegrityError
 from bibtexparser import parse_string
+from sqlalchemy.exc import IntegrityError
 
 from src.repositories.reference_repository import reference_repository
 from src.services.input_validation import validate_reference
@@ -54,6 +54,6 @@ def import_bibtex_text(text: str) -> tuple:
             errors.append(f"Entry '{entry.key}': {str(err)}")
         except IntegrityError:
             errors.append(
-                f"Entry '{entry['key']}': Reference with this key already exists"
+                f"Entry '{entry.key}': Reference with this key already exists"
             )
     return success_count, errors
