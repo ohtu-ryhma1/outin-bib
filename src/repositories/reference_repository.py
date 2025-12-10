@@ -1,4 +1,5 @@
 from sqlalchemy import and_, select
+from sqlalchemy.exc import IntegrityError
 
 from src.config import db
 from src.models.field import Field
@@ -46,10 +47,11 @@ class ReferenceRepository:
                 )
             )
 
-        self._db.session.add(ref)
-        self._db.session.commit()
-
-        return ref
+        try:
+            self._db.session.add(ref)
+            self._db.session.commit()
+        except IntegrityError:
+            self._db.session.rollback()
 
     def update(self, ref_id: int, ref_data: dict) -> Reference:
         ref = self.get(ref_id)
