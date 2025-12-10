@@ -228,3 +228,12 @@ def export_references():
         as_attachment=True,
         download_name="references.bib",
     )
+
+
+if app.config["TEST_ENV"]:
+
+    @app.post("/test/reset-db")
+    def reset_db():
+        if ref_service.delete_all():
+            return jsonify("database reset successfully"), 200
+        return jsonify("database reset unsuccessful"), 500
