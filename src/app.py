@@ -64,12 +64,12 @@ def show_new_reference():
 
 @app.post("/new-reference")
 def new_reference():
-    ref_type = request.form.get("ref-type-input")
+    ref_type = request.form.get("ref-type-select")
     ref_key = request.form.get("ref-key-input")
     fields = {
         key: value
         for key, value in request.form.items()
-        if key not in ("ref-type-input", "ref-key-input", "field-select") and value
+        if key not in ("ref-type-select", "ref-key-input", "field-select") and value
     }
 
     ref_data = {
@@ -111,12 +111,12 @@ def show_edit_reference():
 @app.post("/edit-reference")
 def edit_reference():
     ref_id = request.args.get("id")
-    ref_type = request.form.get("ref-type-input")
+    ref_type = request.form.get("ref-type-select")
     ref_key = request.form.get("ref-key-input")
     fields = {
         key: value
         for key, value in request.form.items()
-        if key not in ("id", "ref-type-input", "ref-key-input", "field-select")
+        if key not in ("id", "ref-type-select", "ref-key-input", "field-select")
         and value
     }
 

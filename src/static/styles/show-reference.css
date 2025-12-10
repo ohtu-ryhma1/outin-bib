@@ -10,7 +10,7 @@
     gap: 1rem;
 }
 
-#ref-type-input {
+#ref-type-select {
     place-self: start;
     font-family: var(--font-monospace);
 }

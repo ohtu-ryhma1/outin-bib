@@ -22,11 +22,11 @@
             <h3 class="block-title">Type and Key</h3>
             <p class="block-description">Type cannot be changed. Key is usually formed from the authors' names.</p>
             <div class="ref-info">
-                <label for="ref-type-input">Type</label>
-                <select id="ref-type-input" class="input-select" name="ref-type-input" disabled required>
+                <label for="ref-type-select">Type</label>
+                <select id="ref-type-select" class="input-select" name="ref-type-select" disabled required>
                     <option selected>{{ ref.type }}</option>
                 </select>
-                <input type="hidden" name="ref-type-input" value="{{ ref.type }}">
+                <input type="hidden" name="ref-type-select" value="{{ ref.type }}">
 
                 <label for="ref-key-input">Key</label>
                 <input id="ref-key-input" class="input-text" type="text" name="ref-key-input" value="{{ ref.key }}"

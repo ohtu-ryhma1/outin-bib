@@ -1,5 +1,5 @@
 // event listener for changing reference type
-const refTypeSelect = document.querySelector("#ref-type-input");
+const refTypeSelect = document.querySelector("#ref-type-select");
 
 refTypeSelect.addEventListener("change", () => {
     const refTypes = refTypeSelect.children;

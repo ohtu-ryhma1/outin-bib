@@ -15,7 +15,7 @@
             <h3 class="block-title">Export as file</h3>
             <p class="block-description">Download as a BibTeX (.bib) file</p>
             <form action="/export/file" method="post">
-                <button type="submit" class="button">
+                <button id="download-export-button" class="button" type="submit">
                     <span class="material-symbols-outlined">download</span>
                     Download
                 </button>
@@ -46,7 +46,7 @@
   journaltitle = {Journal Name},
   year = {2024},
 }"></textarea>
-                <button type="submit" class="button">
+                <button id="import-text-button" class="button" type="submit">
                     <span class="material-symbols-outlined">content_paste_go</span>
                     Import from Text
                 </button>
@@ -60,7 +60,7 @@
                 <label id="import-file-container" for="import-file-input">
                     <span id="import-file-instruction">Drop a file here or click to select a file</span>
                 </label>
-                <button type="submit" class="button">
+                <button id="import-file-button" class="button" type="submit">
                     <span class="material-symbols-outlined">upload_file</span>
                     Import from File
                 </button>
