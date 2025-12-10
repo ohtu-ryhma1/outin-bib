@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from src.repositories.reference_repository import reference_repository
 from src.services.input_validation import validate_reference
 from src.services.reference_service import reference_service
+from src.services.reference_types import get_reference_fields
 
 
 def normalize_field_name(field_name: str) -> str:
