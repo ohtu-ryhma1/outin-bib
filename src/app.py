@@ -90,11 +90,13 @@ def new_reference():
 
     try:
         ref_service.create(ref_data)
-        flash("New reference created!")
+        flash("New reference created.", category="success")
         return redirect("/")
-
     except ValueError as error:
-        flash(str(error), "error")
+        flash(str(error), category="error")
+        return redirect(url_for("show_new_reference", type=ref_type))
+    except IntegrityError:
+        flash("A reference with this key already exists.", category="error")
         return redirect(url_for("show_new_reference", type=ref_type))
 
 
@@ -138,11 +140,11 @@ def edit_reference():
 
     try:
         ref_service.update(ref_id, ref_data)
-        flash("Reference updated succesfully")
+        flash("Reference updated succesfully", category="success")
         return redirect("/")
 
     except ValueError as error:
-        flash(str(error), "error")
+        flash(str(error), category="error")
         return redirect(url_for("edit_reference", ref_id=ref_id))
 
 
@@ -160,20 +162,23 @@ def import_from_text():
     try:
         bibtex_text = request.form.get("import-textarea", "")
         if not bibtex_text.strip():
-            flash("No BibTeX text provided", "error")
+            flash("Nothing to import.", category="error")
             return redirect(url_for("show_import_export"))
 
         success_count, errors = import_bibtex_text(bibtex_text)
         if success_count:
-            flash(f"Successfully imported {success_count} reference(s)")
+            flash(
+                f"Successfully imported {success_count} reference(s)",
+                category="success",
+            )
 
         for error in errors:
-            flash(error, "error")
+            flash(error, category="error")
 
     except IntegrityError:
-        flash("A reference with this key already exists.", "error")
+        flash("A reference with this key already exists.", category="error")
     except Exception as e:
-        flash(f"Unexpected error: {str(e)}", "error")
+        flash(f"Unexpected error: {str(e)}", category="error")
 
     return redirect(url_for("show_import_export"))
 
@@ -181,25 +186,26 @@ def import_from_text():
 @app.post("/import/file")
 def import_from_file():
     if "import-file-input" not in request.files:
-        flash("No file provided", "error")
+        flash("No file provided", category="error")
         return redirect(url_for("show_import_export"))
 
     file = request.files["import-file-input"]
 
     if file.filename == "":
-        flash("No file selected", "error")
+        flash("No file selected", category="error")
         return redirect(url_for("show_import_export"))
 
     try:
         bibtex_text = file.read().decode("utf-8")
     except UnicodeDecodeError:
         flash(
-            "Could not read file. Please ensure it is a valid UTF-8 text file.", "error"
+            "Could not read file. Please ensure it is a valid UTF-8 text file.",
+            category="error",
         )
         return redirect(url_for("show_import_export"))
 
     if not bibtex_text.strip():
-        flash("File is empty", "error")
+        flash("File is empty", category="error")
         return redirect(url_for("show_import_export"))
 
     success_count, errors = import_bibtex_text(bibtex_text)
@@ -208,7 +214,7 @@ def import_from_file():
         flash(f"Successfully imported {success_count} reference(s)")
 
     for error in errors:
-        flash(error, "error")
+        flash(error, category="error")
 
     return redirect(url_for("show_import_export"))
 
