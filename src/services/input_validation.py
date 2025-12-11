@@ -1,63 +1,98 @@
-"""Functions to validate user input for reference creation."""
+"""Class to validate reference data"""
 
 from src.services.reference_types import get_reference_fields
 
 
-def validate_reference(ref_data: dict):
-    """
-    Validate a new reference input
+class ReferenceValidator:
+    """Class to validate reference data"""
 
-    Args:
-        reference_type (str): Type of the BibTeX-reference
-        reference_key (str): Unique identifier for the reference.
-        fields (dict[str, str]): Dictionary of field_name and field_value.
+    def __init__(
+        self, ref_data: dict, max_field_length: int = 1500, key_max_length: int = 100
+    ):
+        self.ref_data = ref_data
+        self.ref_type = ref_data["type"]
+        self.ref_key = ref_data["key"]
+        self.ref_fields = ref_data["fields"]
+        self.max_field_length = max_field_length
+        self.key_max_length = key_max_length
 
-    Raises:
-        ValueError: If any validation rule fails.
-    """
-    ref_type = ref_data["type"]
-    ref_key = ref_data["key"]
-    ref_fields = ref_data["fields"]
+        required_fields, optional_fields = get_reference_fields(self.ref_type)
+        self.required_fields = list(required_fields)
+        self.optional_fields = list(optional_fields)
 
-    if not ref_key.strip() or len(ref_key) > 100:
-        raise ValueError("Reference key must be 1-100 characters long")
+        self._checks = [
+            self._check_key,
+            self._check_missing_required,
+            self._check_unknown_fields,
+            self._check_field_lengths,
+        ]
 
-    required_fields, optional_fields = get_reference_fields(ref_type)
+    def validate(self) -> None:
+        """Run all validation checks. Raise ValueError on failure."""
+        for check in self._checks:
+            check()
 
-    missing_required = [
-        name
-        for name in required_fields
-        if name not in ref_fields or not ref_fields[name].strip()
-    ]
+    def _check_key(self) -> None:
+        ref_key = self.ref_key
+        if not ref_key.strip() or len(ref_key) > self.key_max_length:
+            raise ValueError(
+                f"Reference key must be 1-{self.key_max_length} characters long"
+            )
 
-    # If a required field contains '/', either one of the fields
-    # satisfies the requirement
-    if "year/date" in missing_required:
-        if ("year" in ref_fields and ref_fields["year"].strip()) or (
-            "date" in ref_fields and ref_fields["date"].strip()
-        ):
-            missing_required.remove("year/date")
-            required_fields = [f for f in required_fields if f != "year/date"]
+    def _check_missing_required(self) -> None:
+        ref_fields = self.ref_fields
+        missing_required = [
+            name
+            for name in self.required_fields
+            if name not in ref_fields or not ref_fields[name].strip()
+        ]
 
-    if "author/editor" in missing_required:
-        if ("author" in ref_fields and ref_fields["author"].strip()) or (
-            "editor" in ref_fields and ref_fields["editor"].strip()
-        ):
-            missing_required.remove("author/editor")
-            required_fields = [f for f in required_fields if f != "author/editor"]
+        if "year/date" in missing_required:
+            if ("year" in ref_fields and ref_fields["year"].strip()) or (
+                "date" in ref_fields and ref_fields["date"].strip()
+            ):
+                missing_required.remove("year/date")
+                self.required_fields = [
+                    f for f in self.required_fields if f != "year/date"
+                ]
 
-    if missing_required:
-        raise ValueError("Required fields missing: " + ", ".join(missing_required))
+        if "author/editor" in missing_required:
+            if ("author" in ref_fields and ref_fields["author"].strip()) or (
+                "editor" in ref_fields and ref_fields["editor"].strip()
+            ):
+                missing_required.remove("author/editor")
+                self.required_fields = [
+                    f for f in self.required_fields if f != "author/editor"
+                ]
 
-    unknown_fields = [
-        name
-        for name in ref_fields
-        if name not in required_fields and name not in optional_fields
-    ]
+        if missing_required:
+            raise ValueError("Required fields missing: " + ", ".join(missing_required))
 
-    if unknown_fields:
-        raise ValueError("Unknown fields: " + ", ".join(unknown_fields))
+    def _check_unknown_fields(self) -> None:
+        unknown_fields = [
+            name
+            for name in self.ref_fields
+            if name not in self.required_fields and name not in self.optional_fields
+        ]
 
-    for name, value in ref_fields.items():
-        if value and len(value) > 1500:
-            raise ValueError(f"Field '{name}' cannot exceed 1500 characters")
+        if unknown_fields:
+            raise ValueError("Unknown fields: " + ", ".join(unknown_fields))
+
+    def _check_field_lengths(self) -> None:
+        for name, value in self.ref_fields.items():
+            if value and len(value) > self.max_field_length:
+                raise ValueError(
+                    f"Field '{name}' cannot exceed {self.max_field_length} characters"
+                )
+
+
+def validate_reference(
+    ref_data: dict,
+    max_field_length: int = 1500,
+    key_max_length: int = 100,
+) -> None:
+    ReferenceValidator(
+        ref_data,
+        max_field_length=max_field_length,
+        key_max_length=key_max_length,
+    ).validate()
