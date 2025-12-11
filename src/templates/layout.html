@@ -12,6 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+        <script defer src="../static/scripts/flash.js"></script>
         {% block head %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -36,15 +37,20 @@
             {% if messages %}
                 <aside class="flash-container">
                     {% for category, message in messages %}
-                    <div class="flash-card">
+                        {% set category, duration = category.split('|') %}
+                        <div class="flash-card {{ category }}" data-duration="{{ duration }}">
                         {% if category == 'success' %}
                         <span class="material-symbols-outlined flash-icon success">check_circle</span>
                         {% elif category == 'error' %}
                         <span class="material-symbols-outlined flash-icon error">error</span>
                         {% else %}
-                        <span class="material-symbols-outlined flash-icon">info</span>
+                        <span class="material-symbols-outlined flash-icon info">info</span>
                         {% endif %}
                         <p class="flash-message">{{ message }}</p>
+                        <button class="flash-close">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                        <div class="flash-progress"></div>
                     </div>
                     {% endfor %}
                 </aside>

@@ -1,7 +1,7 @@
 from io import BytesIO
 
+from flask import flash as _flash
 from flask import (
-    flash,
     jsonify,
     redirect,
     render_template,
@@ -9,6 +9,13 @@ from flask import (
     send_file,
     url_for,
 )
+
+
+def flash(message, category="info", duration=10000):
+    category = f"{category}|{duration}"
+    _flash(message, category)
+
+
 from sqlalchemy.exc import IntegrityError
 
 from src.config import app
