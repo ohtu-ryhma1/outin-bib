@@ -139,15 +139,6 @@ def edit_reference():
         return redirect(url_for("edit_reference", ref_id=ref_id))
 
 
-if app.config["TEST_ENV"]:
-
-    @app.post("/test/reset-db")
-    def reset_db():
-        if ref_service.delete_all():
-            return jsonify("database reset successfully"), 200
-        return jsonify("database reset unsuccessful"), 500
-
-
 @app.get("/import-export")
 def show_import_export():
     refs = ref_service.get_all()
@@ -166,7 +157,7 @@ def import_from_text():
             return redirect(url_for("show_import_export"))
 
         success_count, errors = import_bibtex_text(bibtex_text)
-        if success_count > 0:
+        if success_count:
             flash(f"Successfully imported {success_count} reference(s)")
 
         for error in errors:
@@ -237,3 +228,14 @@ if app.config["TEST_ENV"]:
         if ref_service.delete_all():
             return jsonify("database reset successfully"), 200
         return jsonify("database reset unsuccessful"), 500
+
+    @app.get("/test/flash")
+    def test_flash():
+        for _ in range(5):
+            flash("This is a test flash message.")
+            flash(
+                "This is a veeeeeeeeeeeeeeeeeeeeeeeeeeery long test flash message.",
+                "error",
+            )
+            flash("This is a test flash message.", "success")
+        return redirect(url_for("index"))

@@ -1,8 +1,6 @@
-/* layout.css */
-/* Rules for the layout of all pages (navbar, body) */
-/* Commonly used styles are defined in common.css */
-
-/* Body layout */
+/* ---- */
+/* Body */
+/* ---- */
 
 body {
     display: grid;
@@ -10,7 +8,10 @@ body {
     min-height: 100vh;
 }
 
-/* Background image */
+
+/* ---------- */
+/* Background */
+/* ---------- */
 
 .bg {
     position: fixed;
@@ -22,24 +23,56 @@ body {
     z-index: -1;
 }
 
-/* Flash message */
 
-.flash-message {
-    max-width: 20rem;
+/* -------------- */
+/* Flash Messages */
+/* -------------- */
+
+.flash-container {
     position: fixed;
-    top: 5.5rem;
-    right: 1.5rem;
+    top: 0;
+    right: 0;
+    margin: 2rem;
     display: grid;
-    place-content: center;
-
-    background: var(--color-background-1);
-    padding: 1rem;
-    border-radius: var(--border-radius-medium);
-    box-shadow: var(--box-shadow-medium);
-    animation: slide-in 0.5s ease-out forwards, slide-out 0.5s ease-in 5s forwards;
+    place-items: end;
+    gap: 2rem;
+    z-index: 2;
 }
 
+.flash-card {
+    max-width: min(90vw, 25rem);
+    display: flex;
+    place-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--color-text);
+    color: var(--color-background-1);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--box-shadow-medium);
+    animation: slide-in 0.5s ease-out forwards;
+}
+
+.flash-icon {
+    font-size: 1.5rem;
+    color: var(--color-text);
+}
+
+.flash-icon.success {
+    color: var(--color-success);
+}
+
+.flash-icon.error {
+    color: var(--color-error);
+}
+
+.flash-message {
+    color: inherit;
+}
+
+
+/* ------ */
 /* Navbar */
+/* ------ */
 
 .navbar {
     position: sticky;

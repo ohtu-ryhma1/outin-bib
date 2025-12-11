@@ -34,9 +34,20 @@
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for category, message in messages %}
-                <p class="flash-message">{{ message }}</p>
-                {% endfor %}
+                <aside class="flash-container">
+                    {% for category, message in messages %}
+                    <div class="flash-card">
+                        {% if category == 'success' %}
+                        <span class="material-symbols-outlined flash-icon success">check_circle</span>
+                        {% elif category == 'error' %}
+                        <span class="material-symbols-outlined flash-icon error">error</span>
+                        {% else %}
+                        <span class="material-symbols-outlined flash-icon">info</span>
+                        {% endif %}
+                        <p class="flash-message">{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                </aside>
             {% endif %}
         {% endwith %}
     </body>

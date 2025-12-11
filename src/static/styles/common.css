@@ -12,6 +12,8 @@
     --color-background-1-dark: #d3c5b3;
     --color-background-2: #ffeede;
     --color-background-2-light: #fff5eb;
+    --color-success: rgb(160, 255, 160);
+    --color-error: rgb(255, 160, 160);
 
     --color-text: #222;
     --color-text-light: #555;
@@ -32,7 +34,7 @@
 
 @keyframes slide-in {
     from {
-        transform: translateX(calc(100% + 1.5rem));
+        transform: translateX(100%);
     }
 
     to {
@@ -40,15 +42,6 @@
     }
 }
 
-@keyframes slide-out {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(calc(100% + 1.5rem));
-    }
-}
 
 /* ----------------- */
 /* General selectors */
