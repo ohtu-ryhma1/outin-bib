@@ -1,7 +1,7 @@
 from src.models.reference import Reference
 from src.repositories.reference_repository import reference_repository
-from src.services.input_validation import validate_reference
 from src.services.reference_types import get_reference_fields
+from src.services.reference_validation import validate_reference
 
 
 class ReferenceService:

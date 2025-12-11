@@ -1,6 +1,6 @@
 import unittest
 
-from src.services.input_validation import validate_reference
+from src.services.reference_validation import validate_reference
 
 
 class TestValidateReference(unittest.TestCase):
