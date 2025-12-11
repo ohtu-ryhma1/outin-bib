@@ -166,6 +166,11 @@ def import_from_text():
             return redirect(url_for("show_import_export"))
 
         success_count, errors = import_bibtex_text(bibtex_text)
+
+        if not success_count and not errors:
+            flash("No references detected", category="info")
+            return redirect(url_for("show_import_export"))
+
         if success_count:
             flash(
                 f"Successfully imported {success_count} reference(s)",
