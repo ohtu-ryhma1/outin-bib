@@ -22,6 +22,8 @@ def normalize_field_name(field_name: str) -> str:
 def import_bibtex_text(text: str) -> tuple:
     try:
         entries = parse_string(text).entries
+        if not entries:
+            return 0, ["Parse error: No valid entries found"]
     except ValueError as err:
         return 0, [f"Parse error: {str(err)}"]
 

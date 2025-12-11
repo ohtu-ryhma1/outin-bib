@@ -24,23 +24,27 @@ def validate_reference(ref_data: dict):
 
     required_fields, optional_fields = get_reference_fields(ref_type)
 
-    # If a required field contains '/', either one of the fields
-    # satisfies the requirement
-    conditional_pairs = {
-        "author/editor": ("author", "editor"),
-        "year/date": ("year", "date"),
-    }
-
-    for combined, (first, second) in conditional_pairs.items():
-        if combined in required_fields:
-            if first in ref_fields or second in ref_fields:
-                required_fields = [f for f in required_fields if f != combined]
-
     missing_required = [
         name
         for name in required_fields
         if name not in ref_fields or not ref_fields[name].strip()
     ]
+
+    # If a required field contains '/', either one of the fields
+    # satisfies the requirement
+    if "year/date" in missing_required:
+        if ("year" in ref_fields and ref_fields["year"].strip()) or (
+            "date" in ref_fields and ref_fields["date"].strip()
+        ):
+            missing_required.remove("year/date")
+            required_fields = [f for f in required_fields if f != "year/date"]
+
+    if "author/editor" in missing_required:
+        if ("author" in ref_fields and ref_fields["author"].strip()) or (
+            "editor" in ref_fields and ref_fields["editor"].strip()
+        ):
+            missing_required.remove("author/editor")
+            required_fields = [f for f in required_fields if f != "author/editor"]
 
     if missing_required:
         raise ValueError("Required fields missing: " + ", ".join(missing_required))
