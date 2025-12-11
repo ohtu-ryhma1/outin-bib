@@ -62,6 +62,9 @@ def show_new_reference():
     required, optional = get_reference_fields(ref_type)
     all_refs = sorted(list(get_reference_types()))
 
+    required = sorted(required)
+    optional = sorted(optional)
+
     return render_template(
         "new-reference.html",
         nav="new",
@@ -109,6 +112,9 @@ def show_edit_reference():
     ref_types = sorted(list(get_reference_types()))
 
     ref.optional = set(field.type for field in ref.fields if field.type in optional)
+
+    required = sorted(required)
+    optional = sorted(optional)
 
     return render_template(
         "edit-reference.html",
