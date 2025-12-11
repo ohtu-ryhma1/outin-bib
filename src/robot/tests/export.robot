@@ -31,7 +31,7 @@ Clipboard Text Is Empty With No References
 File Is Empty With No References
     Export File
     ${download_dir} =    Normalize Path    ${DOWNLOAD_DIR}
-    ${export_file} =    Wait Until Keyword Succeeds    5s    0.5s    Get Latest File    ${download_dir}
+    ${export_file} =    Wait Until Keyword Succeeds    5s    0.5s    Get Latest Exported File Path   ${download_dir}
     ${file_content} =    Get File    ${export_file}
     Should Be Empty    ${file_content}
 
@@ -53,7 +53,7 @@ File Has Correct Reference
     Reload Page
     Export File
     ${download_dir} =    Normalize Path    ${DOWNLOAD_DIR}
-    ${export_file} =    Wait Until Keyword Succeeds    5s    0.5s    Get Latest File    ${download_dir}
+    ${export_file} =    Wait Until Keyword Succeeds    5s    0.5s    Get Latest Exported File Path    ${download_dir}
     ${file_content} =    Get File    ${export_file}
     Should Contain    ${file_content}    test_author
 
