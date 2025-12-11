@@ -1,6 +1,25 @@
 """Class to validate reference data"""
 
+from enum import StrEnum, auto
+
 from src.services.reference_types import get_reference_fields
+
+
+class ErrorCode(StrEnum):
+    """Enumeration of error codes for validation errors"""
+
+    KEY_LENGTH_INVALID = auto()
+    FIELD_LENGTH_INVALID = auto()
+    REQUIRED_FIELD_MISSING = auto()
+    UNKNOWN_FIELD_PRESENT = auto()
+
+
+class ValidationException(Exception):
+    """Exception for validation errors. Supports error codes."""
+
+    def __init__(self, code: ErrorCode, message: str):
+        super().__init__(message)
+        self.code = code
 
 
 class ReferenceValidator:
@@ -22,24 +41,25 @@ class ReferenceValidator:
 
         self._checks = [
             self._check_key,
-            self._check_missing_required,
+            self._check_required_fields,
             self._check_unknown_fields,
             self._check_field_lengths,
         ]
 
     def validate(self) -> None:
-        """Run all validation checks. Raise ValueError on failure."""
+        """Run all validation checks. Raise ValidationException with appropriate error code on failure."""
         for check in self._checks:
             check()
 
     def _check_key(self) -> None:
         ref_key = self.ref_key
         if not ref_key.strip() or len(ref_key) > self.key_max_length:
-            raise ValueError(
-                f"Reference key must be 1-{self.key_max_length} characters long"
+            raise ValidationException(
+                ErrorCode.KEY_LENGTH_INVALID,
+                f"Reference key must be 1-{self.key_max_length} characters long",
             )
 
-    def _check_missing_required(self) -> None:
+    def _check_required_fields(self) -> None:
         ref_fields = self.ref_fields
         missing_required = [
             name
@@ -47,26 +67,20 @@ class ReferenceValidator:
             if name not in ref_fields or not ref_fields[name].strip()
         ]
 
-        if "year/date" in missing_required:
-            if ("year" in ref_fields and ref_fields["year"].strip()) or (
-                "date" in ref_fields and ref_fields["date"].strip()
-            ):
-                missing_required.remove("year/date")
-                self.required_fields = [
-                    f for f in self.required_fields if f != "year/date"
-                ]
-
-        if "author/editor" in missing_required:
-            if ("author" in ref_fields and ref_fields["author"].strip()) or (
-                "editor" in ref_fields and ref_fields["editor"].strip()
-            ):
-                missing_required.remove("author/editor")
-                self.required_fields = [
-                    f for f in self.required_fields if f != "author/editor"
-                ]
+        # handle alternative required fields (e.g., "author/editor")
+        for field_type in missing_required:
+            if "/" in field_type:
+                parts = field_type.split("/")
+                if any(
+                    part in ref_fields and ref_fields[part].strip() for part in parts
+                ):
+                    missing_required.remove(field_type)
 
         if missing_required:
-            raise ValueError("Required fields missing: " + ", ".join(missing_required))
+            raise ValidationException(
+                ErrorCode.REQUIRED_FIELD_MISSING,
+                "Required fields missing: " + ", ".join(missing_required),
+            )
 
     def _check_unknown_fields(self) -> None:
         unknown_fields = [
@@ -76,13 +90,17 @@ class ReferenceValidator:
         ]
 
         if unknown_fields:
-            raise ValueError("Unknown fields: " + ", ".join(unknown_fields))
+            raise ValidationException(
+                ErrorCode.UNKNOWN_FIELD_PRESENT,
+                "Unknown fields: " + ", ".join(unknown_fields),
+            )
 
     def _check_field_lengths(self) -> None:
         for name, value in self.ref_fields.items():
             if value and len(value) > self.max_field_length:
-                raise ValueError(
-                    f"Field '{name}' cannot exceed {self.max_field_length} characters"
+                raise ValidationException(
+                    ErrorCode.FIELD_LENGTH_INVALID,
+                    f"Field '{name}' cannot exceed {self.max_field_length} characters",
                 )
 
 

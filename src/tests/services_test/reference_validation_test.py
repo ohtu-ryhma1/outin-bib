@@ -1,55 +1,56 @@
 import unittest
 
-from src.services.reference_validation import validate_reference
+from src.services.reference_validation import (
+    ErrorCode,
+    ValidationException,
+    validate_reference,
+)
 
 
 class TestValidateReference(unittest.TestCase):
     def setUp(self):
         self.valid_fields = {
-            "author": "Random Author",
-            "title": "Example Article",
-            "journaltitle": "Journal of Examples",
+            "author": "test_author",
+            "title": "test_title",
+            "journaltitle": "test_journaltitle",
             "year/date": "2025",
         }
+
         self.ref_data = {
             "type": "article",
-            "key": "ref1",
+            "key": "test_key",
             "fields": self.valid_fields,
         }
 
-    def test_validate_reference_success(self):
+    def test_valid_date_succeeds(self):
         validate_reference(self.ref_data)
 
-    def test_validate_reference_missing_required(self):
+    def test_missing_required_field_fails(self):
         self.valid_fields.pop("year/date")
-        with self.assertRaises(ValueError) as context:
+        with self.assertRaises(ValidationException) as context:
             validate_reference(self.ref_data)
-        self.assertIn("Required fields missing", str(context.exception))
+        self.assertIs(context.exception.code, ErrorCode.REQUIRED_FIELD_MISSING)
 
-    def test_validate_reference_unknown_field(self):
-        self.valid_fields["nonexistent"] = "unknown"
-        with self.assertRaises(ValueError) as context:
+    def test_unknown_field_fails(self):
+        self.valid_fields["invalid_field"] = "value"
+        with self.assertRaises(ValidationException) as context:
             validate_reference(self.ref_data)
-        self.assertIn("Unknown fields", str(context.exception))
+        self.assertIs(context.exception.code, ErrorCode.UNKNOWN_FIELD_PRESENT)
 
-    def test_validate_reference_key_min_length(self):
+    def test_key_too_short_fails(self):
         self.ref_data["key"] = ""
-        with self.assertRaises(ValueError) as context:
+        with self.assertRaises(ValidationException) as context:
             validate_reference(self.ref_data)
-        self.assertIn(
-            "Reference key must be 1-100 characters long", str(context.exception)
-        )
+        self.assertIs(context.exception.code, ErrorCode.KEY_LENGTH_INVALID)
 
-    def test_validate_reference_key_max_length(self):
+    def test_key_too_long_fails(self):
         self.ref_data["key"] = "x" * 101
-        with self.assertRaises(ValueError) as context:
+        with self.assertRaises(ValidationException) as context:
             validate_reference(self.ref_data)
-        self.assertIn(
-            "Reference key must be 1-100 characters long", str(context.exception)
-        )
+        self.assertIs(context.exception.code, ErrorCode.KEY_LENGTH_INVALID)
 
-    def test_validate_reference_field_too_long(self):
+    def test_field_too_long_fails(self):
         self.valid_fields["title"] = "x" * 1501
-        with self.assertRaises(ValueError) as context:
+        with self.assertRaises(ValidationException) as context:
             validate_reference(self.ref_data)
-        self.assertIn("cannot exceed 1500 characters", str(context.exception))
+        self.assertIs(context.exception.code, ErrorCode.FIELD_LENGTH_INVALID)
