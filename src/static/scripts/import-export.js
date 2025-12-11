@@ -2,7 +2,30 @@
 document.querySelector("#copy-export-button").addEventListener("click", function () {
   const textarea = document.querySelector("#export-textarea");
   const text = textarea.value;
+  const icon = document.querySelector("#copy-export-button .material-symbols-outlined");
   navigator.clipboard.writeText(text)
+    .then(() => {
+      if (icon) icon.textContent = "check";
+      if (window.__copyExportTimeoutId) {
+        clearTimeout(window.__copyExportTimeoutId);
+        window.__copyExportTimeoutId = null;
+      }
+      window.__copyExportTimeoutId = setTimeout(() => {
+        if (icon) icon.textContent = "content_copy";
+        window.__copyExportTimeoutId = null;
+      }, 2000);
+    })
+    .catch(() => {
+      if (icon) icon.textContent = "close";
+      if (window.__copyExportTimeoutId) {
+        clearTimeout(window.__copyExportTimeoutId);
+        window.__copyExportTimeoutId = null;
+      }
+      window.__copyExportTimeoutId = setTimeout(() => {
+        if (icon) icon.textContent = "content_copy";
+        window.__copyExportTimeoutId = null;
+      }, 2000);
+    });
 });
 
 // Import file hover detection
