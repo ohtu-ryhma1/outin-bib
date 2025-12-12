@@ -9,13 +9,6 @@ from flask import (
     send_file,
     url_for,
 )
-
-
-def flash(message, category="info", duration=10000):
-    category = f"{category}|{duration}"
-    _flash(message, category)
-
-
 from sqlalchemy.exc import IntegrityError
 
 from src.config import app
@@ -27,6 +20,11 @@ from src.services.reference_types import (
     get_reference_fields,
     get_reference_types,
 )
+
+
+def flash(message, category="info", duration=10000):
+    category = f"{category}|{duration}"
+    _flash(message, category)
 
 
 @app.get("/")
