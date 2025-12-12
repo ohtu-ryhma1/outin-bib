@@ -1,11 +1,14 @@
 from src.models.reference import Reference
-from src.repositories.reference_repository import reference_repository
+from src.repositories.reference_repository import (
+    ReferenceRepository,
+    reference_repository,
+)
 from src.services.reference_types import get_reference_fields
 from src.services.reference_validation import validate_reference
 
 
 class ReferenceService:
-    def __init__(self, repo):
+    def __init__(self, repo: ReferenceRepository):
         self._repo = repo
 
     def get_all(self) -> list:
