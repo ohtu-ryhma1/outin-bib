@@ -1,55 +1,6 @@
-:root {
-    color-scheme: light;
-    --font-primary: "Lexend", sans-serif;
-    --font-display: "Playfair Display", serif;
-    --font-monospace: "Fira Code", monospace;
-
-    --color-navbar: #eadbc8;
-    --color-card: #ffeede;
-
-    --color-text: #222;
-    --color-ref-type: #2a4d8f;
-    --color-field-type: #555;
-
-    --box-shadow-small: 0 1px 4px rgba(0,0,0,0.5);
-    --box-shadow-small-strong: 0 1px 4px rgba(0,0,0,1);
-    --box-shadow-medium: 0 2px 8px rgba(0,0,0,0.1);
-    --box-shadow-large: 0 4px 16px rgba(0,0,0,0.2);
-}
-
-::selection {
-    color: var(--color-navbar);
-    background: var(--color-text);
-}
-
-@keyframes slide-in {
-    from {
-        transform: translateX(calc(100% + 1.5rem));
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slide-out {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(calc(100% + 1.5rem));
-    }
-}
-
-* {
-    font-family: --var(--font-primary);
-    font-optical-sizing: auto;
-    font-weight: normal;
-    font-style: normal;
-    color: var(--color-text);
-    scrollbar-color: var(--color-text) var(--color-navbar);
-}
+/* ---- */
+/* Body */
+/* ---- */
 
 body {
     display: grid;
@@ -57,46 +8,149 @@ body {
     min-height: 100vh;
 }
 
+
+/* ---------- */
+/* Background */
+/* ---------- */
+
 .bg {
     position: fixed;
     width: max(100vw, 100%);
     height: max(100vh, 100%);
-    background-image: url(../images/background.jpg);
+    background-image: url(../images/background-0.jpg);
     background-size: cover;
     background-position: center;
     z-index: -1;
 }
 
-.material-symbols-outlined {
-    user-select: none;
+
+/* -------------- */
+/* Flash Messages */
+/* -------------- */
+
+.flash-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 2rem;
+    display: grid;
+    place-items: end;
+    gap: 2rem;
+    z-index: 2;
+}
+
+.flash-card {
+    position: relative;
+    max-width: min(90vw, 25rem);
+    display: flex;
+    place-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--color-text);
+    color: var(--color-background-1);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--box-shadow-medium);
+    overflow: hidden;
+    /* start offscreen to the right and invisible; will transition into view when `.enter` is added */
+    transform: translateX(calc(100% + 2rem));
+    opacity: 0;
+    transition: transform 1000ms ease, opacity 300ms ease;
+}
+
+/* visible state: slide to place and fade in */
+.flash-card.enter {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.flash-close {
+    display: grid;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-background-1);
+    font-size: 1.5rem;
+}
+
+.flash-close:focus-visible,
+.flash-close:hover {
+    outline: none;
+    text-decoration: underline;
+}
+
+.flash-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--color-info);
+    animation: flash-progress var(--flash-duration, 10s) linear forwards;
+}
+
+.flash-card.error .flash-progress {
+    background: var(--color-error);
+}
+
+.flash-card.success .flash-progress {
+    background: var(--color-success);
+}
+
+.flash-card.removing {
+    opacity: 0;
+    transform: translateX(5rem);
+    transition-duration: 300ms;
+}
+
+@keyframes flash-progress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+.flash-icon {
+    font-size: 1.5rem;
+    color: var(--color-text);
+}
+
+.flash-icon.info {
+    color: var(--color-info);
+}
+
+.flash-icon.success {
+    color: var(--color-success);
+}
+
+.flash-icon.error {
+    color: var(--color-error);
 }
 
 .flash-message {
-    max-width: 20rem;
-    position: fixed;
-    top: 5.5rem;
-    right: 1.5rem;
-    display: grid;
-    place-content: center;
-
-    background: var(--color-navbar);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: var(--box-shadow-medium);
-    animation: slide-in 0.5s ease-out forwards, slide-out 0.5s ease-in 5s forwards;
+    color: inherit;
 }
 
-#nav {
-    display: grid;
-    grid-template-columns: auto 1fr;
-}
+
+/* ------ */
+/* Navbar */
+/* ------ */
 
 .navbar {
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: var(--color-navbar);
+    background-color: var(--color-background-1);
     box-shadow: var(--box-shadow-medium);
+    z-index: 1;
+}
+
+#nav {
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
 
 .nav-list {
@@ -111,12 +165,17 @@ body {
     align-items: center;
 }
 
+.nav-link:focus-visible {
+    outline: none;
+    text-decoration: underline;
+}
+
 .nav-item.current {
     background: var(--color-text);
 }
 
 .nav-item.current .nav-link {
-    color: var(--color-navbar);
+    color: var(--color-background-1);
 }
 
 .nav-link {

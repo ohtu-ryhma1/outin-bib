@@ -1,16 +1,23 @@
-// toggle the search window via the search icon
-const searchIcon = document.querySelector("#search-icon");
 const searchOverlay = document.querySelector("#search-overlay");
-searchIcon.addEventListener("click", () => {
+
+// toggle the search window via the search button
+const searchButton = document.querySelector("#open-search-button");
+searchButton.addEventListener("click", () => {
+  searchOverlay.classList.toggle("active");
+});
+
+// close the search window via the close button
+const closeButton = document.querySelector("#close-search-button");
+closeButton.addEventListener("click", () => {
   searchOverlay.classList.toggle("active");
 });
 
 // create Choises object for reference type filter
 const refTypesSelect = document.querySelector("#ref-type");
 new Choices(refTypesSelect, {
-  removeItemButton: true,
   placeholder: true,
   placeholderValue: "Select types",
+  removeItemButton: true,
   searchPlaceholderValue: "Search type",
   shouldSort: true,
 });
@@ -18,12 +25,12 @@ new Choices(refTypesSelect, {
 const fieldFilters = document.querySelector("#field-filters");
 
 // add a new filter
-const addFilterBtn = document.querySelector("#add-field-filter");
+const addFilterBtn = document.querySelector("#add-filter-button");
 addFilterBtn.addEventListener("click", () => {
   const fieldTypes = JSON.parse(fieldFilters.dataset.list)
 
   // create select element and append the options
-  let selectHTML = '<select name="field-type">';
+  let selectHTML = '<select class="input-select" name="field-type">';
   fieldTypes.forEach(function (field) {
     selectHTML += `<option>${field}</option>`;
   });
@@ -34,9 +41,9 @@ addFilterBtn.addEventListener("click", () => {
   filterDiv.className = "field-filter";
   filterDiv.innerHTML = `
         ${selectHTML}
-        <input type="text" name="field-value" placeholder="Value">
-        <button type="button" class="remove-filter-button">
-            <span class="material-symbols-outlined">close</span>
+        <input class="input-text" type="text" name="field-value" placeholder="value">
+        <button type="button" class="icon-button remove-filter-button">
+            <span class="remove-filter-icon material-symbols-outlined">close</span>
         </button>`;
 
   // remove this field when the remove button is clicked
@@ -47,7 +54,7 @@ addFilterBtn.addEventListener("click", () => {
     });
 
   // add the field to the DOM
-  document.querySelector("#field-filters").appendChild(filterDiv);
+  fieldFilters.appendChild(filterDiv);
 });
 
 // add remove button functionality to existing filters

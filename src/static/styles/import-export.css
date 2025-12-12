@@ -1,0 +1,90 @@
+/* ----------- */
+/* Export text */
+/* ----------- */
+
+.textarea-container {
+    position: relative;
+    display: grid;
+}
+
+#copy-export-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--color-text-light);
+}
+
+
+/* ----------- */
+/* Import text */
+/* ----------- */
+
+#import-text-form {
+    display: grid;
+    gap: 1rem;
+    place-items: start;
+}
+
+
+/* ----------- */
+/* Import file */
+/* ----------- */
+
+#import-file-form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    place-items: center start;
+}
+
+#import-file-container {
+    grid-column: 1 / 3;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border: 2px dashed var(--color-text-light);
+    border-radius: var(--border-radius-medium);
+    transition: background-color 0.2s ease-in-out;
+}
+
+#import-file-container:hover,
+#import-file-container.drag-active {
+    background: var(--color-background-1-dark);
+}
+
+#import-file-input {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+#import-file-input:focus-visible {
+    outline: none;
+    background: none;
+    text-decoration: underline;
+}
+
+::file-selector-button {
+    display: none;
+}
+
+/* -------- */
+/* Textarea */
+/* -------- */
+
+.content-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    font-family: var(--font-monospace);
+    font-size: 0.9rem;
+    resize: vertical;
+    background: var(--color-background-1);
+}
+
+.content-textarea:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}

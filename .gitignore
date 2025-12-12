@@ -7,3 +7,4 @@ report.html
 *.png
 .coverage
 .DS_Store
+*downloads/

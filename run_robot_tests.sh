@@ -18,7 +18,7 @@ echo "Server ready"
 
 # run robot tests
 echo "Starting robot tests"
-poetry run robot --variable HEADLESS:true src/robot/tests
+poetry run robot -v HEADLESS:True src/robot/tests
 status=$?
 echo "Robot tests complete"
 

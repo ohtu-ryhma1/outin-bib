@@ -7,7 +7,7 @@ class TestReferenceWithField(BaseTestCase):
     def setUp(self):
         super().setUp()
 
-        reference = Reference(type="book", name="test_name")
+        reference = Reference(type="book", key="test_key")
         field = Field(type="author", value="test_author")
 
         reference.fields.append(field)
@@ -22,8 +22,8 @@ class TestReferenceWithField(BaseTestCase):
     def test_attribute_type(self):
         self.assertEqual(self.reference.type, "book")
 
-    def test_attribute_name(self):
-        self.assertEqual(self.reference.name, "test_name")
+    def test_attribute_key(self):
+        self.assertEqual(self.reference.key, "test_key")
 
     def test_field_type(self):
         field = self.reference.fields[0]
@@ -34,7 +34,7 @@ class TestReferenceWithField(BaseTestCase):
         self.assertEqual(field.value, "test_author")
 
     def test_reference_repr(self):
-        string = "Reference(id=1, type='book', name='test_name')"
+        string = "Reference(id=1, type='book', key='test_key')"
         self.assertEqual(repr(self.reference), string)
 
     def test_field_repr(self):
@@ -47,7 +47,7 @@ class TestReferenceWithoutField(BaseTestCase):
     def setUp(self):
         super().setUp()
 
-        reference = Reference(type="book", name="test_name")
+        reference = Reference(type="book", key="test_key")
 
         self.db.session.add(reference)
         self.db.session.commit()
@@ -61,5 +61,5 @@ class TestReferenceWithoutField(BaseTestCase):
         self.assertEqual(self.reference.fields, [])
 
     def test_reference_repr(self):
-        string = "Reference(id=1, type='book', name='test_name')"
+        string = "Reference(id=1, type='book', key='test_key')"
         self.assertEqual(repr(self.reference), string)

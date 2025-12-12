@@ -1,55 +1,175 @@
-/* Search */
+/* ------------- */
+/* Search Button */
+/* ------------- */
 
-#search-toggle {
+#open-search-button {
     place-self: center end;
     height: 100%;
     aspect-ratio: 1;
-    display: grid;
-    place-items: center;
 }
 
-#search-icon {
+#open-search-icon {
     font-size: 1.5rem;
-    cursor: pointer;
 }
+
+
+/* -------------- */
+/* Search Overlay */
+/* -------------- */
 
 #search-overlay {
-    display: none;
+    display: grid;
     position: fixed;
     inset: 0;
-    place-content: center;
-    align-items: center;
+    place-items: center;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
+    overflow-y: auto;
     opacity: 0;
-    transition: opacity 0.5s ease-in;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 10;
+    pointer-events: none;
 }
 
 #search-overlay.active {
-    display: flex;
+    pointer-events: all;
     opacity: 1;
 }
 
+
+/* ----------- */
+/* Search Form */
+/* ----------- */
+
 #search-form {
-    min-width: 400px;
+    min-width: 500px;
     max-width: 600px;
     margin: 2rem;
-    display: grid;
-    gap: 1rem;
-    padding: 2rem;
-    background: var(--color-navbar);
-    border-radius: 8px;
-    box-shadow: var(--box-shadow-medium);
+    transform: translateY(1rem);
+    transition: transform 0.2s ease-in-out;
 }
 
-.search-container {
+#search-overlay.active #search-form {
+    transform: none;
+}
+
+.reset-search-link {
+    text-decoration: none;
+}
+
+
+/* -------------- */
+/* Filter by key */
+/* -------------- */
+
+#ref-key {
+    font-family: var(--font-monospace);
+}
+
+
+/* -------------- */
+/* Filter by type */
+/* -------------- */
+
+.choices__inner {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-1);
+}
+
+.is-open .choices__inner {
+    border-radius: var(--border-radius-medium);
+}
+
+/* Selected option container */
+
+.choices__list--multiple {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Selected options */
+
+.choices__list--multiple .choices__item {
+    display: flex;
+    margin: 0;
+    padding: 0.25rem;
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-background-2-light) !important;
+    color: var(--color-text);
+}
+
+.choices__button {
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjIxIiBoZWlnaHQ9IjIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPGcgY2xhc3M9ImxheWVyIj4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGcgZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBpZD0ic3ZnXzEiPgogICA8cGF0aCBkPSJtMi41OSwwLjA0bDE4LjM3LDE4LjM3bC0yLjU1LDIuNTVsLTE4LjM3LC0xOC4zN2wyLjU1LC0yLjU1eiIgZmlsbD0iIzAwMDAwMCIgaWQ9InN2Z18yIi8+CiAgIDxwYXRoIGQ9Im0wLDE4LjM2bDE4LjM2LC0xOC4zNmwyLjU1LDIuNTVsLTE4LjM2LDE4LjM2bC0yLjU1LC0yLjU1eiIgZmlsbD0iIzAwMDAwMCIgaWQ9InN2Z18zIi8+CiAgPC9nPgogPC9nPgo8L3N2Zz4=") !important;
+}
+
+/* Search box */
+
+.choices__input {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+}
+
+/* Select list */
+
+.choices__list--dropdown {
+    border: none;
+    border-radius: var(--border-radius-medium) !important;
+    background: transparent;
+}
+
+.choices__list {
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-1) !important;
+}
+
+/* Option */
+
+.choices__item--choice {
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+.choices__item--choice.is-highlighted {
+    background: var(--color-text) !important;
+    color: var(--color-background-1);
+}
+
+
+/* ------------- */
+/* Field Filters */
+/* ------------- */
+
+#add-filter-button {
+    place-self: start;
+}
+
+#field-filters {
     display: grid;
     gap: 0.5rem;
 }
 
-.search-container > label {
-    font-size: 0.8rem;
-    color: var(--color-field-type);
+.field-filter {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.field-filter:first-child {
+    margin-top: 0.5rem;
+}
+
+.field-filter .input-select {
+    font-family: var(--font-monospace);
+}
+
+.remove-filter-icon {
+    font-size: 1rem;
 }
 
 /* References */
@@ -62,6 +182,8 @@
     justify-content: flex-start;
 }
 
+/* Reference card */
+
 .ref-card {
     min-width: 250px;
     max-width: 450px;
@@ -69,16 +191,20 @@
     display: grid;
     gap: 1rem;
     padding: 1rem;
-    background: var(--color-card);
-    border-radius: 8px;
+    background: var(--color-background-1);
+    border-radius: var(--border-radius-medium);
     box-shadow: var(--box-shadow-medium);
     transition: box-shadow 0.2s, height ease 0.5s;
     text-decoration: none;
 }
 
+.ref-card:focus-visible,
 .ref-card:hover {
+    outline: none;
     box-shadow: var(--box-shadow-large);
 }
+
+/* Reference info */
 
 .ref-info {
     display: grid;
@@ -88,9 +214,10 @@
 }
 
 .ref-type {
+    font-family: var(--font-monospace);
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--color-ref-type);
+    color: var(--color-accent);
 }
 
 .ref-key {
@@ -109,6 +236,8 @@
     font-family: var(--font-monospace);
     white-space: nowrap;
 }
+
+/* Reference fields */
 
 .fields {
     display: grid;
@@ -131,17 +260,21 @@
 }
 
 .field-type {
+    font-family: var(--font-monospace);
     font-weight: 600;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
 }
 
 .field-value {
     width: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+/* No references */
 
 #no-references {
     display: flex;
@@ -149,16 +282,7 @@
     margin: 3rem;
 }
 
-#no-references > p {
+#no-references>p {
     font-size: 1.5rem;
-    color: var(--color-field-type);
+    color: var(--color-text-light);
 }
-
-
-/* TEMP
-    .filters { margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; }
-    .filter-row { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem; }
-    .filter-row select, .filter-row input { padding: 0.35rem; }
-    .filter-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
-    .remove-filter { background: transparent; border: none; color: #a00; cursor: pointer; font-weight: bold; }
-*/
