@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from src.repositories.reference_repository import reference_repository
 from src.services.reference_service import reference_service
+from src.services.reference_validation import ValidationException
 
 
 def normalize_field_name(field_name: str) -> str:
@@ -57,4 +58,6 @@ def import_bibtex_text(text: str) -> tuple:
             errors.append(
                 f"Entry '{entry.key}': Reference with this key already exists"
             )
+        except ValidationException as err:
+            errors.append(f"Entry '{entry.key}': {str(err)}")
     return success_count, errors
