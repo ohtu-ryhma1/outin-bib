@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2025-12-12
+
+### Changed
+
+- Updated changelog formatting
+- Updated readme environment variables and invoke tasks
+
 ## [0.4.0] - 2025-12-12
 
 ### Added
@@ -16,18 +23,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed
 
-- updated UI
+- Updated UI
 
 ## [0.3.0] - 2025-12-1
 
 ### Added
 
 - Searchbar for filtering the references
-- Updated UI
+- Reworked UI
 
 #### Changed
 
-- Removed ability to edit type of existing reference
+- Removed ability to edit the type of an existing reference
 
 ## [0.2.0] - 2025-11-23
 
