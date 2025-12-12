@@ -54,3 +54,8 @@ class TestValidateReference(unittest.TestCase):
         with self.assertRaises(ValidationException) as context:
             validate_reference(self.ref_data)
         self.assertIs(context.exception.code, ErrorCode.FIELD_LENGTH_INVALID)
+
+    def test_alternative_required_field_succeeds(self):
+        self.valid_fields.pop("year/date")
+        self.valid_fields["year"] = "2025"
+        validate_reference(self.ref_data)
