@@ -23,14 +23,16 @@ BibTeX Reference Manager is a tool for managing references using the BibTeX-form
 4. Create a .env file in the project root with the following variables:
 ```
 PRODUCTION_DB_URL=<url>
+TEST_ENV=true
 TEST_DB_URL=sqlite+pysqlite:///:memory:
 TEST_DB=true
 SECRET_KEY=key
 ```
 > PRODUCTION_DB_URL: connection string for production database <br>
+> TEST_ENV: enable testing routes. Required for robot tests <br>
 > TEST_DB_URL: connection string for testing database (default: sqlite) <br>
 > TEST_DB: use test database (default: true) <br>
-> SECRET_KEY: define the Flask secret_key
+> SECRET_KEY: define the Flask secret_key (unused)
 
 ### Usage
 1. Start the Flask server: `poetry run invoke start`
@@ -39,4 +41,5 @@ SECRET_KEY=key
 ### Testing
 - Run unit tests and coverage with `poetry run invoke coverage`
 - To generate a coverage report, run `poetry run invoke coverage-report`
-- Run robot tests with `poetry run invoke robot_tests`
+- Run robot tests with `poetry run invoke robot`
+- Run robot tests in headless mode `poetry run invoke robot-headless`
