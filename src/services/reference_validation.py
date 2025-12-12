@@ -8,6 +8,7 @@ from src.services.reference_types import get_reference_fields
 class ErrorCode(StrEnum):
     """Enumeration of error codes for validation errors"""
 
+    UNSPECIFIED = auto()
     KEY_LENGTH_INVALID = auto()
     FIELD_LENGTH_INVALID = auto()
     REQUIRED_FIELD_MISSING = auto()
@@ -17,7 +18,7 @@ class ErrorCode(StrEnum):
 class ValidationException(Exception):
     """Exception for validation errors. Supports error codes."""
 
-    def __init__(self, code: ErrorCode, message: str):
+    def __init__(self, code: ErrorCode = ErrorCode.UNSPECIFIED, message: str = None):
         super().__init__(message)
         self.code = code
 
