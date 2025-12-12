@@ -1,0 +1,202 @@
+/* --------- */
+/* Variables */
+/* --------- */
+
+:root {
+    color-scheme: light;
+    --font-primary: "Lexend", sans-serif;
+    --font-display: "Playfair Display", serif;
+    --font-monospace: "Fira Code", monospace;
+
+    --color-background-1: #eadbc8;
+    --color-background-1-dark: #d3c5b3;
+    --color-background-2: #ffeede;
+    --color-background-2-light: #fff5eb;
+    --color-info: #5c6cff;
+    --color-success: rgb(160, 255, 160);
+    --color-error: rgb(255, 160, 160);
+
+    --color-text: #222;
+    --color-text-light: #555;
+    --color-accent: #2a4d8f;
+
+    --box-shadow-small: 0 1px 4px rgba(0,0,0,0.5);
+    --box-shadow-medium: 0 2px 8px rgba(0,0,0,0.1);
+    --box-shadow-large: 0 4px 16px rgba(0,0,0,0.2);
+
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+}
+
+
+/* ---------- */
+/* Animations */
+/* ---------- */
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+/* ----------------- */
+/* General selectors */
+/* ----------------- */
+
+::selection {
+    color: var(--color-background-1);
+    background: var(--color-text);
+}
+
+* {
+    font-family: --var(--font-primary);
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    color: var(--color-text);
+    scrollbar-color: var(--color-text) var(--color-background-1);
+}
+
+
+/* ----- */
+/* Icons */
+/* ----- */
+
+.material-symbols-outlined {
+    user-select: none;
+    text-decoration: inherit;
+    color: inherit;
+    transition: inherit;
+}
+
+
+/* -------- */
+/* Sections */
+/* -------- */
+
+.layout-section {
+    place-self: center;
+    display: grid;
+    gap: 2rem;
+    width: min(100%, 50rem);
+    padding: 2rem;
+}
+
+.section {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-1);
+    box-shadow: var(--box-shadow-medium);
+}
+
+.section-header {
+    display: flex;
+    place-content: center space-between;
+}
+
+.section-title {
+    font-family: var(--font-display);
+}
+
+.section-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.block {
+    display: grid;
+    padding: 1rem;
+    border: 1px dashed var(--color-text);
+    border-radius: var(--border-radius-medium);
+    background: var(--color-background-2);
+}
+
+.block-title {
+    font-size: 1.15rem;
+}
+
+.block-description {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.75rem;
+}
+
+
+/* ------- */
+/* Buttons */
+/* ------- */
+
+.button {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--color-background-1);
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+.button:hover {
+    background: var(--color-text);
+    color: var(--color-background-1);
+}
+
+.button .material-symbols-outlined {
+    font-size: 1.2rem;
+}
+
+.icon-button {
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    background: none;
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    text-decoration: underline;
+}
+
+
+/* ------ */
+/* Inputs */
+/* ------ */
+
+.input-text,
+.input-select {
+    background: var(--color-background-1);
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: var(--border-radius-small);
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+.input-text:focus-visible,
+.input-select:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}
+
+
+/* ------------------------------ */
+/* Focus-visible (tab-navigation) */
+/* ------------------------------ */
+
+.button:focus-visible,
+.icon-button:focus-visible {
+    outline: none;
+    box-shadow: var(--box-shadow-small);
+}

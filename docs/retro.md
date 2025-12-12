@@ -61,3 +61,35 @@
 ### Things to improve
 
 - Taking less user stories for the next sprint
+
+
+## Week 3
+
+### Glad Sad Mad
+
+<details>
+  <summary>Glad</summary>
+
+  - Reached the sprint goal
+  - Application works well
+  - Solid and maintainable architecture
+  
+</details>
+
+<details>
+  <summary>Sad</summary>
+
+  - Time-consuming architectural updates
+  - Things were finalised close to deadline
+</details>
+
+<details>
+  <summary>Mad</summary>
+
+  - Difficulties in parallelising the work 
+</details>
+
+### Things to improve
+
+- Maintain a single development branch  
+- Communicate better: keep a clear record of planned and completed work

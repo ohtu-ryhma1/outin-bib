@@ -10,7 +10,7 @@ class TestReferenceRepositoryWithReference(BaseTestCase):
 
         self.ref_data = {
             "type": "book",
-            "name": "test_name",
+            "key": "test_key",
             "fields": {"author": "test_author"},
         }
 
@@ -32,13 +32,13 @@ class TestReferenceRepositoryWithReference(BaseTestCase):
         field = reference.fields[0]
         self.assertEqual(field.type, "author")
 
-    def test_update_reference_name(self):
+    def test_update_reference_key(self):
         ref_id = self.repo.get().id
-        self.ref_data["name"] = "new_test_name"
+        self.ref_data["key"] = "new_test_key"
         self.repo.update(ref_id, self.ref_data)
 
-        ref_name = self.repo.get(ref_id=ref_id).name
-        self.assertEqual(ref_name, "new_test_name")
+        ref_key = self.repo.get(ref_id=ref_id).key
+        self.assertEqual(ref_key, "new_test_key")
 
     def test_update_reference_type(self):
         ref_id = self.repo.get().id

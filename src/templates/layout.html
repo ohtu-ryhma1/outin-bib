@@ -5,13 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../static/styles/reset.css">
         <link rel="stylesheet" href="../static/styles/layout.css">
-
+        <link rel="stylesheet" href="../static/styles/common.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+        <script defer src="../static/scripts/flash.js"></script>
         {% block head %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -24,6 +25,7 @@
                 <ul class="nav-list">
                     <li class="nav-item {% if nav == 'index' %}current{% endif %}"><a class="nav-link" href="/">References</a></li>
                     <li class="nav-item {% if nav == 'new' %}current{% endif %}"><a class="nav-link" href="/new-reference">New Reference</a></li>
+                    <li class="nav-item {% if nav == 'import-export' %}current{% endif %}"><a class="nav-link" href="/import-export">Import / Export</a></li>
                 </ul>
                 {% block navbar %}{% endblock %}
             </nav>
@@ -33,9 +35,25 @@
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for category, message in messages %}
-                <p class="flash-message">{{ message }}</p>
-                {% endfor %}
+                <aside class="flash-container">
+                    {% for category, message in messages %}
+                        {% set category, duration = category.split('|') %}
+                        <div class="flash-card {{ category }}" data-duration="{{ duration }}">
+                        {% if category == 'success' %}
+                        <span class="material-symbols-outlined flash-icon success">check_circle</span>
+                        {% elif category == 'error' %}
+                        <span class="material-symbols-outlined flash-icon error">error</span>
+                        {% else %}
+                        <span class="material-symbols-outlined flash-icon info">info</span>
+                        {% endif %}
+                        <p class="flash-message">{{ message }}</p>
+                        <button class="flash-close">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                        <div class="flash-progress"></div>
+                    </div>
+                    {% endfor %}
+                </aside>
             {% endif %}
         {% endwith %}
     </body>

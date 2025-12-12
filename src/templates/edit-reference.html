@@ -3,52 +3,68 @@
 {% block title %}Edit Reference{% endblock %}
 
 {% block head %}
-<script src="../static/scripts/edit-reference.js" defer></script>
-<link rel="stylesheet" href="../static/styles/edit-reference.css">
+<script src="../static/scripts/show-reference.js" defer></script>
+<link rel="stylesheet" href="../static/styles/show-reference.css">
 {% endblock %}
 
-
 {% block body %}
-<form id="form" action="/edit-reference" method="post">
-    <div id="header">
-        <div id="ref-type">
-            <label for="ref-type-input">@</label>
-            <select name="ref-type-input" id="ref-type-input" disabled required>
-                <option selected>{{ ref.type }}</option>
-            </select>
-        </div>
-        <div id="ref-key">
-            <label for="ref-key-input">Key</label>
-            <input type="text" name="ref-key-input" id="ref-key-input" value="{{ ref.name }}" maxlength="100" required>
-        </div>
-    </div>
-
-    <div id="fields">
-        <div id="field-adder">
-            <label for="field-select">Add Field</label>
-            <div id="field-adder-input">
-                <select name="field-select" id="field-select">
-                    {% for field in optional if field not in ref.optional %}
-                    <option>{{ field }}</option>
-                    {% endfor %}
-                </select>
-                <button type="button" id="add-field">
-                    <span class="material-symbols-outlined">add</span>
+<form class="layout-section" action="/edit-reference" method="post">
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Edit Reference</h2>
+            <div class="section-icons">
+                <button id="submit" class="icon-button" type="submit" title="Edit">
+                    <span class="material-symbols-outlined">edit</span>
                 </button>
             </div>
         </div>
-        {% for field in ref.fields %}
-        {% if field.type in required %}
-        <label for="{{ field.type }}">{{ field.type }}<span>*</span></label>
-        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" required maxlength="500" rows="1">{{ field.value }}</textarea>
-        {% else %}
-        <label for="{{ field.type }}">{{ field.type }}</label>
-        <textarea name="{{ field.type }}" id="{{ field.type }}" class="field-value" maxlength="500" rows="1">{{ field.value }}</textarea>
-        {% endif %}
-        {% endfor %}
-    </div>
-    <input type="hidden" name="ref-type-input" value="{{ ref.type }}">
-    <input id="submit" type="submit" value="Edit">
+        <div class="block">
+            <h3 class="block-title">Type and Key</h3>
+            <p class="block-description">Type cannot be changed. Key is usually formed from the authors' names.</p>
+            <div class="ref-info">
+                <label for="ref-type-select">Type</label>
+                <select id="ref-type-select" class="input-select" name="ref-type-select" disabled required>
+                    <option selected>{{ ref.type }}</option>
+                </select>
+                <input type="hidden" name="ref-type-select" value="{{ ref.type }}">
+
+                <label for="ref-key-input">Key</label>
+                <input id="ref-key-input" class="input-text" type="text" name="ref-key-input" value="{{ ref.key }}"
+                    maxlength="100" required>
+            </div>
+        </div>
+
+        <div class="block">
+            <h3 class="block-title">Fields</h3>
+            <p class="block-description">Fields marked with <span>*</span> are required.</p>
+            <div id="fields">
+                <div id="field-adder">
+                    <label for="field-select">Add Field</label>
+                    <div id="field-adder-input">
+                        <select id="field-select" class="input-select" name="field-select">
+                            {% for field in optional if field not in ref.optional %}
+                            <option>{{ field }}</option>
+                            {% endfor %}
+                        </select>
+                        <button id="add-field-button" class="button" type="button">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+                {% for field in ref.fields %}
+                {% if field.type in required %}
+                <label for="{{ field.type }}">{{ field.type }}<span>*</span></label>
+                <textarea id="{{ field.type }}" class="field-value input-select" name="{{ field.type }}" required
+                    maxlength="500" rows="1">{{ field.value }}</textarea>
+                {% else %}
+                <label for="{{ field.type }}">{{ field.type }}</label>
+                <textarea id="{{ field.type }}" class="field-value input-select" name="{{ field.type }}" maxlength="500"
+                    rows="1">{{ field.value }}</textarea>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </form>
 
 {% endblock %}

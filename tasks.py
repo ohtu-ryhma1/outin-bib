@@ -23,7 +23,7 @@ def robot(ctx):
 
 @task()
 def robot_headless(ctx):
-    ctx.run("robot --variable HEADLESS:true src/robot/tests")
+    ctx.run("robot --variable HEADLESS:True src/robot/tests")
 
 
 @task()
