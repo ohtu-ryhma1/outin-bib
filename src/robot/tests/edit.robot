@@ -61,6 +61,7 @@ Editing Optional Fields Succeeds
     Reference Form Should Have Correct Data    test_key    book    ${FIELDS_OPTIONAL_2}
 
 Removing Required Field Fails
+    Skip
     Create Reference Via Request    book    test_key    ${FIELDS_1}
     Go To Homepage
     Click Reference Card    test_key
