@@ -2,13 +2,6 @@ import unittest
 
 from src.services.bibtex_exporter import references_to_bibtex
 
-"""
-self.assertEqual(
-            {            
-                "ENTRYTYPE": "",
-                "ID": "",
-            }, result )
-"""
 
 class MockField:
     def __init__(self, field_type, value):
