@@ -1,78 +1,70 @@
-# Project Report – *[Miniprojekti]*
-
-**Team members:**
+# End Report
+**Team members**
 - Halla-Aho Veeti
 - Husu-Petrova Anastasia
 - Hätönen Leevi
 - Kauhanen Markus
 
-**Course:** [Ohjelmistotuotanto]  
-**Date:** December 2025
+**Course:** Ohjelmistotuotanto
 
----
+**Period:** 2/25
 
 ## 1. Project Overview
-
-The goal of our project was to develop a reference management web application that supports importing and exporting BibTeX data, editing references through a web interface, and automated end-to-end testing using Robot Framework.
-
----
+The goal of the project was to develop a web application for managing references/citations using the BibTeX-format. Key functionality included support for the BibTeX-format, CRUD-operations and importing and exporting references in the .bib file-format. The development of the project was executed using scrum, following agile software development principles. Most notably automated unit- and integration testing was implemented to allow for continuous integration.
 
 ## 2. Sprint Summaries and Challenges
 
-### Sprint 1 – Setup and Basic Functionality
-- Set up the Flask backend, database, and basic front-end views.
-- **Challenges:** coordinating in remote-work environment dividing work into tasks without interdependencies. Building the project on top of the course boilerplate.
+### Sprint 1 – Adding and Viewing References
+- Set up the Flask backend, database, and basic front-end pages
+- Implement creating and viewing simple references
+- **Challenges**
+    - Coordination and communication while working remotely
+    - Dividing the work into tasks without interdependencies
+    - Converting the course boilerplate app
 
-### Sprint 2 – Support for BibTeX-reference types and Editing feature
-- Implemented BibTeX-support.
+### Sprint 2 – Support for BibTeX-reference Types and Editing References
+- Implemented support for the BibTeX-format
 - Added editing functionality
-- Switched to SQL Alchemy Orm.  
-- **Challenges:** Changes were time-consuming and it was necessery to better estimate the managable workflow for the next sprint to ensure good work quality.
+- Switched the database implementation to the SQLAlchemy ORM
+- **Challenges:**
+    - The workload was too high, this was adjusted for the next sprint
 
-### Sprint 3 – Search feature
-- Refactored UI for better visual styling.  
-- Added search feature.
-- Stabilized architecture  
-- **Challenges:** Parallelising work was challenging along with time-consuming architectural updates.
+### Sprint 3 – Searching References
+- Added a search feature.
+- Improved the UI
+- Refactored the program architecture
+- **Challenges:**
+    - Parallelising work
+    - Refactoring the architecture took a loot of effort, leading
 
-### Sprint 4 – Import/Export feature
+### Sprint 4 – Importing/Exporting References
 - Added import and export features
-- Unified all resource files and cleaned test architecture.  
-- Improved communication between frontend and backend for file uploads.  
-- **Challenges:** merging concurrent test and UI updates.
-
----
+- Refactored robot-tests.
+- Further improved the UI
+- Improved communication between frontend and backend.
+- **Challenges:**
+    - Developing new robot-tests during UI changes
 
 ## 3. What Went Well
-- Smooth collaboration with clear Git branching and review process.  
-- Robot tests helped with code quality and maintainability.  
-- Consistent documentation and readable resource structure.  
-- Everyone contributed to planning, code structure and testing.
+- All team members were active and contributed to different parts of the project.
+- Robust and systematic scrum implementation
+- Documentation quality and overall project architecture
+- Integration tests
 
----
+## 4. What Could Have Been Done Better
+- More detailed sprint planning; multiple tasks often overlapped near the deadline.
+- Excessive use of feature branches caused unnecessary work and overlap. Using only a single branch per user story in the last sprint improved the workflow substantially and helped with merge-conflicts and overlapping work.
 
-## 4. What Could Be Improved
-- More consistent sprint planning, sometimes multiple tasks overlapped near deadlines.  
-- Working on different branches turned out challenging and time-consuming. Using less branches in the last sprint improved work flow and helped with merging conflicts and overlapping work.
-
----
-
-## 5. What We Learned
-- Effective use of Unittests to ensure code functionality in backend
-- Robot framework for end-to-end testing.  
-- Handling complex parsing (BibTeX import/export) and validating input.  
-- Coordinating teamwork through communicating channels, GitHub Issues and Pull Requests.
-- Working in collaboration with the product owner and offering agile methods to support their needs.
-
----
+## 5. Key Takeaways
+- Good quality unit-testing pays off in the long term.
+- Integration testing with Robot Framework allowed detecting problems early.
+- Implementing a complex external specification (BibTeX) proved quite difficult, both for storing data and validating it.
+- Effective communication and using tools such as Github Projects to manage the scrum workflow made managing development easier.
 
 ## 6. What We Would Like to Learn Next
-- Collaborating in bigger groups with more complex projects
-- Better understanding the different phases of the project to maximize work not done, to produce more value to the product owner and further implement systematic work strategies.
-
----
+- Working in bigger teams on more complex projects
+- Further develop and hone the systematic approach to development
+- Maximize work not done to produce more value to the customer
 
 ## 7. Reflection
-The project was an invaluable experience to learn working as a member of a group. Projects like this always come with challenges ranging from overlapping work to technical details and having hands-on experience was necessary to understand the ideology behing agile methods. Unfortunately the project was quite short as much more could have been learnt. Despite that it was a good fit for the course as there will be a bigger course specifically for more challenging project and this was a necessary step in understanding what areas to improve.
-
----
+The project was an invaluable experience for learning how to develop software in a team. Getting hands-on experience with using agile methods was necessary to be able to further improve working a team.Challenges were bound to occur, but overcoming them ultimately gained even more experience.  Unfortunately the project was quite short, but it serves as a good introduction to the course *Ohjelmistoprojekti*.
