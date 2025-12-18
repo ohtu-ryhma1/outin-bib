@@ -12,6 +12,10 @@ UI Click Element
     Scroll Element Into View    ${locator}
     Click Element    ${locator}
 
+UI Scroll To Top
+    [Documentation]    Scroll to the top of the page.
+    Execute JavaScript    window.scrollTo(0, 0);
+
 UI Input Text
     [Documentation]    Wait until the element is visible, scroll it into view, and input the given `text` at the input at `locator`.
     [Arguments]    ${locator}    ${text}

@@ -42,8 +42,8 @@ Does Field Exist
 
 Submit Reference Form
     [Documentation]    Submit the reference form.
-    Scroll Element Into View    ${BUTTON_SUBMIT}
-    Click Button    ${BUTTON_SUBMIT}
+    UI Scroll To Top
+    UI Click Element    ${BUTTON_SUBMIT}
 
 Reference Form Should Have Correct Key
     [Documentation]    Assert that the reference form has the correct `ref_key`.
