@@ -2,7 +2,7 @@
 
 **Team members:**
 - Halla-Aho Veeti
-- Husu-Petrova Anastasia
+- Petrova Anastasia
 - Hätönen Leevi
 - Kauhanen Markus
 
