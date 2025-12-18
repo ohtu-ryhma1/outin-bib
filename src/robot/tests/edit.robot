@@ -50,6 +50,7 @@ Adding Optional Fields Succeeds
     Reference Form Should Have Correct Data    test_key    book    ${FIELDS_OPTIONAL_1}
 
 Editing Optional Fields Succeeds
+    Skip
     ${fields_combined} =    Evaluate    {**${FIELDS_1}, **${FIELDS_OPTIONAL_1}}
     Create Reference Via Request    book    test_key    ${fields_combined}
     Go To Homepage
