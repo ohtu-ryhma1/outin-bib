@@ -42,6 +42,7 @@ Does Field Exist
 
 Submit Reference Form
     [Documentation]    Submit the reference form.
+    UI Scroll To Top
     UI Click Element    ${BUTTON_SUBMIT}
 
 Reference Form Should Have Correct Key
